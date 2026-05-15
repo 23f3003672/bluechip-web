@@ -1,7 +1,16 @@
 import type { NextConfig } from "next";
 
+const extraAllowedDevOrigins = (process.env.NEXT_PUBLIC_ALLOWED_DEV_ORIGINS ?? "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Allow LAN/dev access so HMR and internal dev assets work over local IPs.
+  allowedDevOrigins: ["localhost", "127.0.0.1", "192.168.29.76", ...extraAllowedDevOrigins],
+  turbopack: {
+    root: process.cwd(),
+  },
 };
 
 export default nextConfig;
