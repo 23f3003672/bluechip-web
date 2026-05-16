@@ -160,28 +160,28 @@ export const HOME_SERVICES: HomeService[] = [
     title: "EPC",
     icon: "Building2",
     description: "End-to-End turnkey solutions",
-    imageUrl: "/home/what-we-do/home-epc.webp",
+    imageUrl: "/home/what-we-do/epc.png",
   },
   {
     id: "2",
     title: "Civil Construction",
     icon: "Construction",
     description: "Building structures that last",
-    imageUrl: "/home/what-we-do/home-civil.webp",
+    imageUrl: "/home/what-we-do/civil.png",
   },
   {
     id: "3",
     title: "Mechanical Works",
     icon: "Wrench",
     description: "Advanced engineering solutions",
-    imageUrl: "/home/what-we-do/home-mechanical.webp",
+    imageUrl: "/home/what-we-do/mechanical.png",
   },
   {
     id: "4",
     title: "Facade Engineering",
     icon: "Building",
     description: "Innovative exterior systems",
-    imageUrl: "/home/what-we-do/home-facade.webp",
+    imageUrl: "/home/what-we-do/facade.png",
   },
 ];
 
@@ -197,8 +197,12 @@ export const TRUSTED_BRANDS: TrustedBrand[] = [
   { id: "1", name: "Bharat Petroleum", imageUrl: "/home/logos/bpcl.webp" },
   { id: "2", name: "Essar", imageUrl: "/home/logos/Essar-logo.webp" },
   { id: "3", name: "Larsen & Toubro", imageUrl: "/home/logos/L&T-logo.webp" },
-  { id: "4", name: "Indiabulls Real Estate", imageUrl: "/home/logos/indiabulls.webp" },
+  { id: "4", name: "Indiabulls Real Estate", imageUrl: "/home/logos/ibre.webp" },
   { id: "5", name: "Aditya Birla Group", imageUrl: "/home/logos/aditya-birla.webp" },
+  { id: "6", name: "Garud Gandhinagar", imageUrl: "/home/logos/garud-gandhinagar-logo.webp" },
+  { id: "7", name: "Airports Authority of India", imageUrl: "/home/logos/aai.webp" },
+  { id: "8", name: "Oil and Natural Gas Corporation", imageUrl: "/home/logos/ongc.webp" },
+
 ];
 
 /* ─── Journey Timeline ───────────────────────────────────────────── */

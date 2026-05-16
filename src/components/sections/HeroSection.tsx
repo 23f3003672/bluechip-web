@@ -7,6 +7,7 @@ import { Container } from "@/components/layout/Container";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { SiteButtonLink } from "@/components/ui/site-button";
 import { HERO_SLIDES } from "@/lib/mock-data";
+import { Phone, Mail, X } from "lucide-react";
 
 export function HeroSection() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -15,6 +16,7 @@ export function HeroSection() {
   const [didSwipe, setDidSwipe] = useState(false);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [touchStartY, setTouchStartY] = useState<number | null>(null);
+  const [contactOpen, setContactOpen] = useState(false);
 
   const activeSlide = useMemo(() => HERO_SLIDES[activeIndex], [activeIndex]);
 
@@ -84,7 +86,7 @@ export function HeroSection() {
     <>
       <section className="relative isolate overflow-hidden bg-[#f2f4f8]">
         <div
-          className="relative h-[56vh] min-h-[420px] sm:h-[62vh] sm:min-h-[500px] lg:h-[calc(100vh-4rem)] lg:max-h-[680px]"
+          className="relative h-[56vh] min-h-[420px] sm:h-[62vh] sm:min-h-[500px] lg:h-[calc(100vh-4rem)] lg:max-h-[590px]"
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
           onTouchStart={handleTouchStart}
@@ -110,43 +112,44 @@ export function HeroSection() {
                   style={{ backgroundImage: `url('${slide.imageUrl}')` }}
                   aria-hidden
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#0b2b5b]/83 via-[#0b2b5b]/52 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0b4fa3]/25 via-[#0b4fa3]/28 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/10 to-transparent" />
 
-                <Container className="relative z-10 flex h-full items-end pb-14 pt-16 sm:pb-20 sm:pt-20">
+                <div className="relative z-10 flex h-full items-start px-6 pt-20 sm:px-10 lg:px-16 lg:pt-24">
                   <div className="max-w-2xl text-white">
                     <p className="text-xs font-semibold uppercase tracking-[0.1em] text-white/80 sm:text-sm">
                       {slide.eyebrow}
                     </p>
-                    <h1 className="mt-2.5 text-2xl font-semibold leading-tight text-white sm:text-[30px] lg:text-[38px]">
+                    <h1 className="mt-2.5 text-2xl font-semibold leading-[1.4] text-white sm:text-[30px] lg:text-[38px]">
                       {slide.title}
                     </h1>
-                    <p className="mt-3.5 max-w-xl text-[11px] text-white/85 sm:text-xs lg:text-sm">
-                      {slide.location}
+                    <p className="mt-3.5 max-w-xl text-[15px] font-medium text-white/90 sm:text-[16px] lg:text-[18px]">
+                        {slide.location}
                     </p>
 
-                    <div className="mt-6 flex flex-wrap items-center gap-3">
+                    <div className="mt-17 flex flex-wrap items-center gap-3">
                       <SiteButtonLink
-                        href={slide.projectHref}
-                        size="md"
-                        variant="light"
-                        className="h-10 rounded-none border border-white/80 px-4 text-[9px] font-semibold uppercase tracking-[0.08em]"
-                        onClick={(event) => event.stopPropagation()}
+                      href={slide.projectHref}
+                      size="md"
+                      className="h-10 rounded-none border border-white bg-transparent px-6 text-[11px] font-bold uppercase tracking-[0.08em] text-white transition-colors hover:bg-white hover:text-[#1c3767]"
+                      onClick={(event) => event.stopPropagation()}
                       >
                         View Our Projects
-                        <ArrowRight className="size-4" />
                       </SiteButtonLink>
 
                       <Link
-                        href={slide.projectHref}
-                        onClick={(event) => event.stopPropagation()}
-                        className="inline-flex h-10 items-center gap-2 rounded-none border border-[#f3b246] bg-white px-4 text-[9px] font-semibold uppercase tracking-[0.08em] text-[#1c3767] transition-colors hover:bg-[#fff5df]"
+                      href={slide.projectHref}
+                      onClick={(event) => event.stopPropagation()}
+                      className="inline-flex h-10 items-center gap-2 rounded-none border border-[#f3b246] bg-white px-4 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#1c3767] transition-colors hover:bg-[#fff5df]"
                       >
-                        Watch Project Walkthrough
+                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#d39a2c]">
+                          <Play className="ml-[1px] size-2.5 fill-white text-white" />
+                        </span>
+                          Watch Project Walkthrough
                       </Link>
                     </div>
                   </div>
-                </Container>
+                </div>
               </button>
             </div>
           ))}
@@ -192,6 +195,15 @@ export function HeroSection() {
             </Container>
           </div>
         </div>
+        {/* Floating Contact Button */}
+<div className="absolute right-0 top-1/2 z-30 -translate-y-1/2">
+  <button
+    type="button"
+    className="group flex h-[52px] w-[74px] items-center justify-center rounded-l-full bg-gradient-to-r from-[#0d5fa8] via-[#117ab2] to-[#1593d1] shadow-[0_8px_24px_rgba(17,122,178,0.45)] transition-all duration-300 hover:w-[82px]"
+  >
+    <Phone className="size-6 fill-white text-white" />
+  </button>
+</div>
       </section>
 
       <Dialog open={isVideoOpen} onOpenChange={setIsVideoOpen}>

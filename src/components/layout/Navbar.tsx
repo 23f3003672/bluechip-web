@@ -92,7 +92,7 @@ export function Navbar() {
   return (
     <header
       ref={headerRef}
-      className="relative sticky top-0 z-50 w-full border-b border-[#d8d9dd] bg-[#f1f2f4]"
+      className="relative sticky top-0 z-50 w-full border-b border-[#d8d9dd] bg-white"
     >
         <div className="mx-auto flex min-h-[84px] w-full items-center justify-between px-8 py-3 xl:px-14 2xl:px-20">
           {/* Logo */}
@@ -104,16 +104,16 @@ export function Navbar() {
             <Image
               src="/Bluechip-Logo.webp"
               alt="Bluechip Engineering Logo"
-              width={58}
-              height={58}
-              className="h-[58px] w-[58px] rounded-sm object-cover"
+              width={90}
+              height={90}
+              className="h-[90px] w-[90px] rounded-sm object-cover"
               priority
             />
             <span className="hidden sm:block">
-              <span className="block text-[15px] font-bold uppercase leading-none tracking-tight text-[#1d2537] md:text-[16px]">
+              <span className="block text-[15px] font-bold uppercase leading-none tracking-tight bg-gradient-to-r from-[#0d5f8c] via-[#117ab2] to-[#0d5f8c] bg-clip-text text-transparent md:text-[18px]">
                 CIVIL | MECHANICAL | FACADE | EPC
               </span>
-              <span className="mt-1 block text-[12px] italic leading-none text-[#62656b] md:text-[13px]">
+              <span className="mt-1 block text-[12px] italic leading-none text-[#62656b] md:text-[12px]">
                 Driven by Innovation, Powered by Technology
               </span>
             </span>
@@ -127,7 +127,7 @@ export function Navbar() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="text-[13px] font-medium uppercase tracking-[0.02em] text-[#16181d] transition-colors hover:text-[#1d2537] lg:text-[14px]"
+                  className="text-[15px] font-medium uppercase tracking-wide text-[#1d2537] transition-all duration-300 hover:text-[#117ab2]"
                 >
                   {item.label}
                 </Link>
@@ -139,9 +139,9 @@ export function Navbar() {
               type="button"
               aria-label="Open search"
               onClick={() => setSearchOpen(true)}
-              className="hidden h-7 w-7 items-center justify-center rounded-[5px] border border-[#c9ccd2] text-[#7f838b] transition-colors hover:border-[#1d2537] hover:text-[#1d2537] md:inline-flex"
+              className="hidden h-7 w-7 items-center justify-center rounded-[5px] border border-[#c9ccd2] bg-[#f1f2f4] text-[#7f838b] transition-colors hover:border-[#1d2537] hover:text-[#1d2537] md:inline-flex"
             >
-              <Search className="size-3.5" />
+              <Search className="size-5" />
             </button>
 
             {/* Separator */}

@@ -1,63 +1,89 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Phone, MapPin } from "lucide-react";
-import { Container } from "./Container";
 import { Separator } from "@/components/ui/separator";
-import { PUBLIC_NAV_LINKS } from "@/lib/constants";
-import { getSiteSettings } from "@/lib/site-settings";
 
-const SERVICES_LINKS = [
-  { label: "Civil Engineering", href: "/services" },
-  { label: "Structural Works", href: "/services" },
-  { label: "Industrial Projects", href: "/services" },
-  { label: "Infrastructure", href: "/services" },
+const COMPANY_LINKS = [
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
+  { label: "News & Media", href: "/media" },
+  { label: "Careers", href: "/careers" },
+  { label: "Recognitions", href: "/recognitions" },
+  { label: "Inquiries", href: "/contact" },
 ];
 
-/**
- * Site-wide footer.
- * Pure Server Component — no interactivity needed.
- *
- * Layout (desktop): 4 columns
- *   1. Brand + tagline
- *   2. Quick links (navigation)
- *   3. Services
- *   4. Contact details
- */
+const BUSINESS_LINKS = [
+  { label: "EPC", href: "/projects/subcategory/epc" },
+  { label: "Civil Construction", href: "/projects/subcategory/civil-construction" },
+  { label: "Mechanical Works", href: "/projects/subcategory/mechanical-works" },
+  { label: "Facade Engineering", href: "/projects/subcategory/facade-engineering" },
+  { label: "Industrial Construction", href: "/projects/subcategory/industrial-construction" },
+  { label: "Piling & Foundations", href: "/projects/subcategory/piling-foundations" },
+
+  { label: "Control Buildings", href: "/projects/subcategory/control-buildings" },
+  { label: "ETP/STP", href: "/projects/subcategory/etp-stp" },
+  { label: "PEB Structures & Shades", href: "/projects/subcategory/peb-structures-shades" },
+  { label: "RCC Flooring", href: "/projects/subcategory/rcc-flooring" },
+
+  { label: "Roads", href: "/projects/subcategory/roads" },
+  { label: "Rigid Pavement (DLC, PQC)", href: "/projects/subcategory/rigid-pavement-dlc-pqc" },
+  { label: "Flexible Pavement (Bitumen)", href: "/projects/subcategory/flexible-pavement-bitumen" },
+  { label: "Drainage Systems", href: "/projects/subcategory/drainage-systems" },
+  { label: "Sewage Networks", href: "/projects/subcategory/sewage-networks" },
+  { label: "Water Supply Networks", href: "/projects/subcategory/water-supply-networks" },
+  { label: "Cable Trenches", href: "/projects/subcategory/cable-trenches" },
+];
+
+const PROJECT_LINKS = [
+  { label: "Airports", href: "/projects/subcategory/airports" },
+  { label: "Power Plants", href: "/projects/subcategory/power-plants" },
+  { label: "Oil & Gas", href: "/projects/subcategory/oil-gas" },
+  { label: "Steel Plants", href: "/projects/subcategory/steel-plants" },
+  { label: "SEZ Infrastructure", href: "/projects/subcategory/sez-infrastructure" },
+
+  { label: "Commercial Buildings", href: "/projects/subcategory/commercial-buildings" },
+  { label: "Residential Buildings", href: "/projects/subcategory/residential-buildings" },
+  { label: "IT Campuses & Buildings", href: "/projects/subcategory/it-campuses-buildings" },
+  { label: "Hospitality", href: "/projects/subcategory/hospitality" },
+  { label: "Schools", href: "/projects/subcategory/schools" },
+  { label: "Auditoriums", href: "/projects/subcategory/auditoriums" },
+  { label: "Statutory Buildings", href: "/projects/subcategory/statutory-buildings" },
+];
+
+const INNOVATION_LINKS = [
+  { label: "Composite Structures", href: "/projects/subcategory/composite-structures" },
+  { label: "Light Gauge Steel Frames", href: "/projects/subcategory/light-guage-steel-frames" },
+  { label: "Precast Wall & Slab Systems", href: "/projects/subcategory/precast-wall-slab-systems" },
+  { label: "Self Supporting Roofing", href: "/projects/subcategory/self-supporting-roofing" },
+  { label: "Suspended Slab Systems", href: "/projects/subcategory/suspended-slab-systems" },
+
+  { label: "Hybrid Structural Solutions", href: "/projects/subcategory/hybrid-structural-solutions" },
+  { label: "Multi-Technology Configurations", href: "/projects/subcategory/multiple-technology-configurations" },
+
+  { label: "Optimized Execution Methodologies", href: "/projects/subcategory/optimized-execution-methodologies" },
+  { label: "Speed, Safety, and Cost Efficiencies", href: "/projects/subcategory/speed-safety-cost-efficiencies" },
+];
+
 export async function Footer() {
-  const settings = await getSiteSettings();
-  const siteEmail = settings.contact.email;
-  const sitePhone = settings.contact.phone;
-  const siteAddress = settings.contact.address;
-
   return (
-    <footer className="bg-[#11151c] text-white">
-      <div className="mx-auto max-w-[1440px] px-6 pt-10 md:px-10 lg:px-14 lg:pt-12">
-        <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr_0.95fr_1fr] lg:gap-16">
-          
+    <footer className="bg-[#050b16] text-white">
+      <div className="mx-auto max-w-[1500px] px-6 pt-14 md:px-10 xl:px-16">
 
+        {/* Main Footer Grid */}
+        <div className="grid gap-12 md:grid-cols-2 xl:grid-cols-4 xl:gap-20">
+
+          {/* Company */}
           <div>
-            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-white/35">
+            <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/35">
               Company
             </p>
-            <ul className="space-y-4 text-sm text-white/80 md:text-base">
-              {PUBLIC_NAV_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="transition-colors hover:text-white">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
 
-          <div>
-            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-white/35">
-              Services
-            </p>
-            <ul className="space-y-4 text-sm text-white/80 md:text-base">
-              {SERVICES_LINKS.map((link) => (
+            <ul className="space-y-4 text-[13px] text-white/82">
+              {COMPANY_LINKS.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="transition-colors hover:text-white">
+                  <Link
+                    href={link.href}
+                    className="transition-colors duration-200 hover:text-white"
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -65,58 +91,107 @@ export async function Footer() {
             </ul>
           </div>
 
+          {/* Business */}
           <div>
-            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-white/35">
-              Contact
+            <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/35">
+              Business
             </p>
-            <ul className="space-y-4 text-sm text-white/80 md:text-base">
-              <li>
-                <a href={`mailto:${siteEmail}`} className="flex items-start gap-3 transition-colors hover:text-white">
-                  <Mail className="mt-0.5 size-4 shrink-0 text-[#1d2537]" />
-                  <span>{siteEmail}</span>
-                </a>
-              </li>
-              <li>
-                <a href={`tel:${sitePhone.replace(/\s/g, "")}`} className="flex items-start gap-3 transition-colors hover:text-white">
-                  <Phone className="mt-0.5 size-4 shrink-0 text-[#1d2537]" />
-                  <span>{sitePhone}</span>
-                </a>
-              </li>
-              <li className="flex items-start gap-3">
-                <MapPin className="mt-0.5 size-4 shrink-0 text-[#1d2537]" />
-                <span className="max-w-sm">{siteAddress}</span>
-              </li>
+
+            <ul className="space-y-4 text-[13px] text-white/82">
+              {BUSINESS_LINKS.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="transition-colors duration-200 hover:text-white"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Projects */}
+          <div>
+            <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/35">
+              Projects
+            </p>
+
+            <ul className="space-y-4 text-[13px] text-white/82">
+              {PROJECT_LINKS.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="transition-colors duration-200 hover:text-white"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Innovations */}
+          <div>
+            <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/35">
+              Innovations
+            </p>
+
+            <ul className="space-y-4 text-[13px] text-white/82">
+              {INNOVATION_LINKS.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="transition-colors duration-200 hover:text-white"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
-        <div className="h-40 md:h-56 lg:h-64" aria-hidden="true" />
+        {/* Spacer */}
+        <div className="h-16 md:h-20 lg:h-24" aria-hidden="true" />
 
-        <Separator className="bg-white/12" />
+        <Separator className="bg-white/10" />
 
-        <div className="grid gap-8 py-6 lg:grid-cols-[1.25fr_0.75fr] lg:items-end lg:py-8">
+        {/* Bottom Footer */}
+        <div className="grid gap-10 py-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-end">
+
+          {/* Company Description */}
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/55 md:text-sm">
-              &copy; 2026 BLUECHIP TECHNOLOGIES AND ENGINEERING PVT. LTD. All Rights Reserved.
+            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/50 md:text-xs">
+              © 2026 BLUECHIP TECHNOLOGIES AND ENGINEERING PVT. LTD. ALL RIGHTS RESERVED.
             </p>
-            <p className="mt-6 max-w-5xl text-sm leading-relaxed text-white/72 md:text-[15px]">
-              Established in 1998, Bluechip Engineering &amp; Technologies is an integrated engineering and construction company delivering Civil, Mechanical, Facade, and EPC solutions across industrial and infrastructure sectors. Driven by a sustainable vision and a mission to engineer responsible, future-ready infrastructure, we combine technical expertise with innovation, quality, and safety. Our commitment to precision, performance, and long-term value creation enables us to build resilient environments that contribute to sustainable growth and development.
+
+            <p className="mt-6 max-w-5xl text-sm leading-[1.9] text-white/72 md:text-[14px]">
+              Established in 1998, Bluechip Engineering &amp; Technologies is an
+              integrated engineering and construction company delivering Civil,
+              Mechanical, Facade, and EPC solutions across industrial and
+              infrastructure sectors. Driven by a sustainable vision and a mission
+              to engineer responsible, future-ready infrastructure, we combine
+              technical expertise with innovation, quality, and safety.
             </p>
           </div>
 
+          {/* Branding */}
           <div className="flex flex-col items-start gap-3 lg:items-end lg:text-right">
             <Image
-            src="/home/footer/footer-logo.webp"
-            alt="Bluechip Technologies and Engineering Pvt. Ltd."
-            width={170}
-            height={170}
-            className="h-auto w-[120px] md:w-[150px] lg:translate-x-[-58px]"
-            priority={false}
+              src="/home/footer/footer-logo.webp"
+              alt="Bluechip Technologies and Engineering Pvt. Ltd."
+              width={160}
+              height={160}
+              className="h-auto w-[85px] md:w-[100px] lg:translate-x-[-36px]"
+              priority={false}
             />
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/75 md:text-sm">
+
+            <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/78 md:text-xs">
               Civil | Mechanical | Facade | EPC
             </p>
-            <p className="text-xs italic text-white/70 md:text-sm">
+
+            <p className="text-[10px] italic text-white/68 md:text-xs">
               Driven by Innovation, Powered by Technology
             </p>
           </div>

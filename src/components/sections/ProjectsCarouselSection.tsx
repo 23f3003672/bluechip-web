@@ -16,49 +16,49 @@ const ITEMS = [
     href: "/projects/subcategory/airports",
   },
   {
-    src: "/home/projects/home-project-oil.webp",
+    src: "/home/projects/oil.webp",
     sector: "SECTORS",
     title: "Oil & Gas",
     subtitle: "Industrial Energy Infrastructure",
     href: "/projects/subcategory/oil-gas",
   },
   {
-    src: "/home/projects/home-projects-school.webp",
+    src: "/home/projects/school.webp",
     sector: "URBAN & INSTITUTIONAL",
     title: "Schools",
     subtitle: "Educational Campus Development",
     href: "/projects/subcategory/schools",
   },
   {
-    src: "/home/projects/home-project-hospital.webp",
-    sector: "HEALTHCARE",
-    title: "Hospitals",
-    subtitle: "Advanced Healthcare Infrastructure",
-    href: "/projects/subcategory/hospitals",
+    src: "/home/projects/power-plant.webp",
+    sector: "SECTORS",
+    title: "Power Plants",
+    subtitle: "Power Plant Infrastructure",
+    href: "/projects/subcategory/power-plants",
   },
   {
-    src: "/home/projects/home-project-metro.webp",
-    sector: "INFRASTRUCTURE",
-    title: "Metro Rail",
-    subtitle: "Urban Transit Development",
+    src: "/home/projects/facade.webp",
+    sector: "SERVICES",
+    title: "Facade Engineering",
+    subtitle: "Facade Design & Engineering Solutions",
     href: "/projects/subcategory/metro-rail",
   },
   {
-    src: "/home/projects/home-project-commercial.webp",
+    src: "/home/projects/commercialbuilding_sgcci.webp",
     sector: "COMMERCIAL",
     title: "Commercial",
     subtitle: "Corporate & Mixed-use Developments",
     href: "/projects/subcategory/commercial",
   },
   {
-    src: "/home/projects/home-project-residential.webp",
+    src: "/home/projects/residential.webp",
     sector: "RESIDENTIAL",
     title: "Residential",
     subtitle: "Luxury Residential Infrastructure",
     href: "/projects/subcategory/residential",
   },
   {
-    src: "/home/projects/home-project-industrial.webp",
+    src: "/home/projects/PEB_kaviish_m1.webp",
     sector: "INDUSTRIAL",
     title: "Industrial",
     subtitle: "Manufacturing & Industrial Facilities",
@@ -88,23 +88,25 @@ export function ProjectsCarouselSection() {
   return (
     <SectionWrapper>
       <Container>
-        <div className="mb-8 text-center">
-          <Heading variant="h2">Our Projects</Heading>
+        <div className="mb-12 text-center">
+          <h2 className="text-[32px] font-normal tracking-[-0.04em] text-[#1f2740] md:text-[40px]">
+            Our Projects
+          </h2>
         </div>
 
         <div className="relative">
           <div
             ref={scrollerRef}
-            className="-mx-4 flex gap-6 overflow-x-auto px-4 pb-6 scroll-smooth no-scrollbar"
+            className="flex gap-8 overflow-hidden pb-6"
             style={{ scrollSnapType: "x mandatory" }}
           >
             {ITEMS.map((item) => (
               <article
                 key={item.href}
-                className="min-w-[320px] max-w-[360px] shrink-0 rounded-sm border border-border bg-white"
+                className="w-[32%] min-w-[32%] shrink-0 overflow-hidden rounded-sm border border-border bg-white"
                 style={{ scrollSnapAlign: "start" }}
               >
-                <div className="relative h-[240px] w-full overflow-hidden">
+                <div className="relative h-[400px] w-full overflow-hidden">
                   <Image
                     src={item.src}
                     alt={item.title}

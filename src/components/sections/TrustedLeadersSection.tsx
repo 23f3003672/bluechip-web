@@ -1,45 +1,86 @@
-import { Container } from "@/components/layout/Container";
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { TRUSTED_BRANDS } from "@/lib/mock-data";
 
 export function TrustedLeadersSection() {
-  return (
-    <section className="bg-white py-8 md:py-10" aria-labelledby="trusted-leaders-title">
-      <Container>
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-6 flex items-center gap-4 md:mb-7 md:gap-6">
-            <div className="h-px flex-1 bg-border" aria-hidden="true" />
-            <h2
-              id="trusted-leaders-title"
-              className="text-center text-2xl font-medium tracking-tight text-primary"
-            >
-              Trusted by Industry Leaders
-            </h2>
-            <div className="h-px flex-1 bg-border" aria-hidden="true" />
-          </div>
+  const [startIndex, setStartIndex] = useState(0);
 
-          <ul className="grid grid-cols-2 border border-border bg-white sm:grid-cols-3 lg:grid-cols-5">
-            {TRUSTED_BRANDS.map((brand) => (
-              <li
-                key={brand.id}
-                className="flex min-h-32 items-center justify-center border-b border-r border-border px-5 py-6 text-center text-sm font-semibold text-foreground/85 sm:text-base lg:border-b-0"
-              >
-                {brand.imageUrl ? (
+  // Rotate logos every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStartIndex((prev) =>
+        prev + 1 >= TRUSTED_BRANDS.length ? 0 : prev + 1
+      );
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Show only 5 logos at a time
+  const visibleBrands = Array.from({ length: 5 }, (_, i) => {
+    return TRUSTED_BRANDS[(startIndex + i) % TRUSTED_BRANDS.length];
+  });
+
+  return (
+    <section
+      className="w-full overflow-hidden bg-white py-10 md:py-14"
+      aria-labelledby="trusted-leaders-title"
+    >
+      {/* Full Width */}
+      <div className="w-full px-6 lg:px-12">
+        {/* Heading */}
+        <div className="mb-10 flex items-center gap-6">
+          <div
+  className="h-[2px] flex-1 bg-[#b4b4b4]"
+  aria-hidden="true"
+/>
+
+          <h2
+            id="trusted-leaders-title"
+            className="whitespace-nowrap text-center text-[28px] font-medium tracking-tight text-[#117ab2] md:text-[28px]"
+          >
+            Trusted by Industry Leaders
+          </h2>
+
+          <div
+  className="h-[2px] flex-1 bg-[#b4b4b4]"
+  aria-hidden="true"
+/>
+        </div>
+
+        {/* Logos */}
+        <div className="grid grid-cols-2 items-center sm:grid-cols-3 lg:grid-cols-5">
+          {visibleBrands.map((brand, index) => (
+            <div
+              key={`${brand.id}-${index}`}
+              className="relative flex h-[170px] items-center justify-center px-8 transition-all duration-700"
+            >
+              {/* Vertical Divider */}
+              {index !== 0 && (
+                <div className="absolute left-0 top-1/2 hidden h-[52px] w-[2px] -translate-y-1/2 rounded-full bg-gradient-to-b from-[#dcdcdc] via-[#9d9d9d] to-[#6f6f6f] lg:block" />
+              )}
+
+              {brand.imageUrl ? (
+                <div className="flex h-[120px] w-full items-center justify-center overflow-hidden">
                   <Image
                     src={brand.imageUrl}
                     alt={brand.name}
-                    width={240}
-                    height={96}
-                    className="h-16 w-auto max-w-[82%] object-contain sm:h-18 lg:h-20"
+                    width={420}
+                    height={200}
+                    className="h-auto max-h-[70px] w-auto max-w-[200px] object-contain transition-transform duration-500 hover:scale-105"
                   />
-                ) : (
-                  brand.name
-                )}
-              </li>
-            ))}
-          </ul>
+                </div>
+              ) : (
+                <span className="text-lg font-semibold text-[#1d2537]">
+                  {brand.name}
+                </span>
+              )}
+            </div>
+          ))}
         </div>
-      </Container>
+      </div>
     </section>
   );
 }

@@ -1,37 +1,50 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Container } from "@/components/layout/Container";
 import { HOME_SERVICES, type HomeService } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
+
+/* ─── Service Links ──────────────────────────────────────────────── */
+const serviceLinks: Record<string, string> = {
+  EPC: "/projects/subcategory/epc",
+  "Civil Construction": "/projects/subcategory/civil-construction",
+  "Mechanical Works": "/projects/subcategory/mechanical-works",
+  "Facade Engineering": "/projects/subcategory/facade-engineering",
+};
 
 /* ─── Service Card ──────────────────────────────────────────────── */
 function ServiceCard({ service }: { service: HomeService }) {
   return (
     <Link
-      href="/services"
+      href={serviceLinks[service.title] || "/services"}
       className={cn(
-        "group flex h-full min-h-[360px] flex-col overflow-hidden border border-[#cfd4dc] bg-white text-center shadow-sm",
-        "transition-transform duration-200 hover:-translate-y-1 hover:shadow-md",
+        "group flex h-[240px] w-full max-w-[240px] flex-col items-center justify-center",
+        "border-3 border-[#c8ced8] bg-[#f5f8ff]",
+        "px-8 py-8 text-center",
+        "transition-all duration-300",
+        "hover:-translate-y-1 hover:border-[#aeb6c4]",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       )}
     >
-      <div className="relative h-[165px] w-full bg-[#e8edf4] p-4">
+      {/* Icon */}
+      <div className="relative mb-7 h-[82px] w-[82px]">
         {service.imageUrl ? (
           <Image
             src={service.imageUrl}
             alt={service.title}
             fill
-            className="object-contain p-2 transition-transform duration-300 group-hover:scale-[1.03]"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            className="object-contain transition-transform duration-300 group-hover:scale-[1.04]"
+            sizes="82px"
           />
         ) : null}
       </div>
 
-      <div className="flex flex-1 flex-col items-center justify-start gap-2.5 px-5 py-6">
-        <h3 className="text-[22px] font-semibold leading-tight tracking-tight text-primary">
+      {/* Content */}
+      <div className="flex flex-col items-center">
+        <h3 className="max-w-[240px] text-[18px] font-semibold leading-[1.25] tracking-[-0.02em] text-[#0b5db3]">
           {service.title}
         </h3>
-        <p className="mx-auto max-w-[200px] text-[14px] leading-snug text-foreground/70">
+
+        <p className="mt-3 max-w-[220px] text-[14px] leading-[1.7] text-[#5f6673]">
           {service.description}
         </p>
       </div>
@@ -45,23 +58,30 @@ export function ServicesSection({
   initialServices?: HomeService[];
 }) {
   return (
-    <section className="bg-[#eff2f7] py-16 md:py-20" aria-labelledby="home-services-title">
-      <Container>
-        <div className="mb-12 text-center md:mb-14">
+    <section
+      className="bg-[#f5f8ff] py-14 md:py-16"
+      aria-labelledby="home-services-title"
+    >
+      {/* Full Width Container */}
+      <div className="mx-auto w-full max-w-[1700px] px-8 md:px-14">
+        
+        {/* Heading */}
+        <div className="mb-10 text-center md:mb-12">
           <h2
             id="home-services-title"
-            className="text-3xl font-medium tracking-tight text-foreground md:text-4xl"
+            className="text-[30px] font-normal tracking-[-0.04em] text-[#1f2740] md:text-[42px]"
           >
             What We Do
           </h2>
         </div>
 
-        <div className="mx-auto grid max-w-6xl gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {initialServices.map((service) => (
-            <ServiceCard key={service.id} service={service} />
-          ))}
-        </div>
-      </Container>
+        {/* Cards */}
+<div className="mx-auto grid max-w-[1150px] gap-2 sm:grid-cols-2 lg:grid-cols-4">
+  {initialServices.map((service) => (
+    <ServiceCard key={service.id} service={service} />
+  ))}
+</div>
+      </div>
     </section>
   );
 }
