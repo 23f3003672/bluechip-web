@@ -131,7 +131,7 @@ export function HeroSection() {
                       <SiteButtonLink
                       href={slide.projectHref}
                       size="md"
-                      className="h-10 rounded-none border border-white bg-transparent px-6 text-[11px] font-bold uppercase tracking-[0.08em] text-white transition-colors hover:bg-white hover:text-[#1c3767]"
+                      className="h-10 rounded-none border border-white bg-transparent px-6 text-[11px] font-bold uppercase tracking-[0.08em] text-white transition-colors hover:border-[#496a9c] hover:bg-[#496a9c] hover:text-white"
                       onClick={(event) => event.stopPropagation()}
                       >
                         View Our Projects
@@ -140,7 +140,7 @@ export function HeroSection() {
                       <Link
                       href={slide.projectHref}
                       onClick={(event) => event.stopPropagation()}
-                      className="inline-flex h-10 items-center gap-2 rounded-none border border-[#f3b246] bg-white px-4 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#1c3767] transition-colors hover:bg-[#fff5df]"
+                      className="inline-flex h-10 items-center gap-2 rounded-none border border-[#f3b246] bg-white px-4 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#1c3767] transition-colors hover:border-[#496a9c] hover:bg-[#496a9c] hover:text-white"
                       >
                         <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#d39a2c]">
                           <Play className="ml-[1px] size-2.5 fill-white text-white" />
@@ -157,21 +157,22 @@ export function HeroSection() {
           <div className="pointer-events-none absolute inset-x-0 bottom-5 z-20">
             <Container className="flex items-center justify-end gap-2">
               <button
-                type="button"
-                onClick={goToPrevious}
-                className="pointer-events-auto inline-flex size-8 items-center justify-center rounded-full border border-white/35 bg-black/35 text-white transition-colors hover:bg-black/55"
-                aria-label="Previous slide"
-              >
-                <ChevronLeft className="size-3.5" />
-              </button>
-              <button
-                type="button"
-                onClick={goToNext}
-                className="pointer-events-auto inline-flex size-8 items-center justify-center rounded-full border border-white/35 bg-black/35 text-white transition-colors hover:bg-black/55"
-                aria-label="Next slide"
-              >
-                <ChevronRight className="size-3.5" />
-              </button>
+  type="button"
+  onClick={goToPrevious}
+  className="pointer-events-auto inline-flex size-8 items-center justify-center rounded-full border border-white/60 bg-white/10 text-white transition-all duration-300 hover:bg-white hover:text-[#1c3767]"
+  aria-label="Previous slide"
+>
+  <ChevronLeft className="size-3.5" />
+</button>
+
+<button
+  type="button"
+  onClick={goToNext}
+  className="pointer-events-auto inline-flex size-8 items-center justify-center rounded-full border border-white/60 bg-white/10 text-white transition-all duration-300 hover:bg-white hover:text-[#1c3767]"
+  aria-label="Next slide"
+>
+  <ChevronRight className="size-3.5" />
+</button>
             </Container>
           </div>
 

@@ -21,7 +21,7 @@ function ServiceCard({ service }: { service: HomeService }) {
         "border-3 border-[#c8ced8] bg-[#f5f8ff]",
         "px-8 py-8 text-center",
         "transition-all duration-300",
-        "hover:-translate-y-1 hover:border-[#aeb6c4]",
+        "hover:-translate-y-1 hover:border-[#aeb6c4] hover:bg-[#f4f7fe]",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       )}
     >
@@ -40,9 +40,9 @@ function ServiceCard({ service }: { service: HomeService }) {
 
       {/* Content */}
       <div className="flex flex-col items-center">
-        <h3 className="max-w-[240px] text-[18px] font-semibold leading-[1.25] tracking-[-0.02em] text-[#0b5db3]">
-          {service.title}
-        </h3>
+        <h3 className="max-w-[240px] bg-gradient-to-r from-[#023d9f] via-[#117ab2] to-[#023d9f] bg-clip-text text-[18px] font-bold leading-[1.25] tracking-[-0.02em] text-transparent">
+  {service.title}
+</h3>
 
         <p className="mt-3 max-w-[220px] text-[14px] leading-[1.7] text-[#5f6673]">
           {service.description}

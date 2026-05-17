@@ -37,7 +37,7 @@ export function NavLinks({ links, mobile = false, onNavigate }: NavLinksProps) {
                 : "py-1",
               isActive
                 ? "text-primary"
-                : "text-foreground/70 hover:text-foreground"
+                : "text-foreground/70 hover:text-[#8f8f8f]"
             )}
           >
             {link.label}

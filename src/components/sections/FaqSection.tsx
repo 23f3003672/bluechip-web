@@ -18,12 +18,12 @@ export function FaqSection({
   return (
     <section className="bg-white py-12 md:py-16" aria-labelledby="home-faq-title">
       <div className="bg-white px-6 py-8 md:px-12 md:py-12 lg:px-20">
-        <div className="grid items-start gap-10 lg:grid-cols-[0.38fr_0.62fr] lg:gap-16">
+        <div className="grid items-start gap-10 lg:grid-cols-[0.42fr_0.58fr] lg:gap-16">
           <div className="pt-2">
             <p className="text-lg font-medium text-[#bf8b2a] md:text-xl">FAQ</p>
             <h2
               id="home-faq-title"
-              className="mt-4 max-w-sm text-2xl font-semibold leading-tight tracking-tight text-[#1f2a44] md:text-3xl lg:text-[38px]"
+              className="mt-4 max-w-[480px] text-2xl font-bold leading-tight tracking-tight text-[#1f2a44] md:text-3xl lg:text-[48px]"
             >
               We are here to help you!
             </h2>

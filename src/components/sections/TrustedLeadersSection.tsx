@@ -38,11 +38,11 @@ export function TrustedLeadersSection() {
 />
 
           <h2
-            id="trusted-leaders-title"
-            className="whitespace-nowrap text-center text-[28px] font-medium tracking-tight text-[#117ab2] md:text-[28px]"
-          >
-            Trusted by Industry Leaders
-          </h2>
+  id="trusted-leaders-title"
+  className="whitespace-nowrap bg-gradient-to-r from-[#023d9f] via-[#117ab2] to-[#023d9f] bg-clip-text text-center text-[28px] font-medium tracking-tight text-transparent md:text-[28px]"
+>
+  Trusted by Industry Leaders
+</h2>
 
           <div
   className="h-[2px] flex-1 bg-[#b4b4b4]"

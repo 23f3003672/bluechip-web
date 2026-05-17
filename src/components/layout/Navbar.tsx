@@ -127,7 +127,7 @@ export function Navbar() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="text-[15px] font-medium uppercase tracking-wide text-[#1d2537] transition-all duration-300 hover:text-[#117ab2]"
+                  className="text-[15px] font-medium uppercase tracking-wide text-[#1d2537] transition-all duration-300 hover:text-[#8f8f8f]"
                 >
                   {item.label}
                 </Link>
@@ -193,9 +193,9 @@ export function Navbar() {
                       onClick={() => handleCategoryClick(category.megaKey)}
                       aria-expanded={isActive}
                       className={cn(
-                        "inline-flex items-center gap-1.5 transition-colors hover:text-[#0e57a0]",
-                        isActive && "text-[#111318]"
-                      )}
+                          "inline-flex items-center gap-1.5 transition-colors hover:text-[#8f8f8f]",
+                          isActive && "text-[#111318]"
+                        )}
                     >
                       {category.label}
                       {isActive ? (
@@ -212,8 +212,8 @@ export function Navbar() {
                     key={category.label}
                     href={category.href}
                     onClick={() => setExpanded(false)}
-                    className={cn(
-                      "inline-flex items-center gap-1.5 transition-colors hover:text-[#0e57a0]",
+                      className={cn(
+                      "inline-flex items-center gap-1.5 transition-colors hover:text-[#8f8f8f]",
                       isActive && "text-[#111318]"
                     )}
                   >
@@ -233,7 +233,7 @@ export function Navbar() {
                         <Link
                           href={`/projects/subcategory/${item.slug}`}
                           onClick={() => setExpanded(false)}
-                          className="text-[14px] leading-tight text-[#6d727b] transition-colors hover:text-[#0e57a0]"
+                          className="text-[14px] leading-tight text-[#6d727b] transition-colors hover:text-[#8f8f8f]"
                         >
                           {item.label}
                         </Link>
@@ -279,7 +279,7 @@ export function Navbar() {
                 <button
                   type="button"
                   onClick={() => setSearchOpen(false)}
-                  className="inline-flex h-8 w-8 items-center justify-center text-[#7f838b] transition-colors hover:text-[#0e57a0]"
+                  className="inline-flex h-8 w-8 items-center justify-center text-[#7f838b] transition-colors hover:text-[#8f8f8f]"
                   aria-label="Close search"
                 >
                   <X className="size-5" />

@@ -32,7 +32,7 @@ export function JourneyMilestonesSection() {
             </div>
 
             <div className="mt-20">
-              <a className="inline-block bg-[#4a6fa5] px-6 py-3 font-semibold uppercase tracking-wider text-white shadow-sm" href="/projects">
+              <a className="inline-block bg-[#4a6fa5] px-6 py-[14px] text-[10px] font-semibold uppercase tracking-[0.12em] text-white shadow-sm" href="/projects">
                 View our growth story
               </a>
             </div>
@@ -100,6 +100,18 @@ export function JourneyMilestonesSection() {
       <Image
         src="/home/about/home-about-4.webp"
         alt="Project 4"
+        fill
+        sizes="128px"
+        className="object-cover"
+      />
+    </div>
+  </div>
+  {/* FIFTH IMAGE */}
+  <div className="relative">
+    <div className="relative h-32 w-32 overflow-hidden">
+      <Image
+        src="/home/about/home-about-5.webp"
+        alt="Project 5"
         fill
         sizes="128px"
         className="object-cover"

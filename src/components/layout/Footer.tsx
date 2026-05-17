@@ -65,7 +65,7 @@ const INNOVATION_LINKS = [
 
 export async function Footer() {
   return (
-    <footer className="bg-[#050b16] text-white">
+    <footer className="bg-[#222b3d] text-white">
       <div className="mx-auto max-w-[1500px] px-6 pt-14 md:px-10 xl:px-16">
 
         {/* Main Footer Grid */}
@@ -73,7 +73,7 @@ export async function Footer() {
 
           {/* Company */}
           <div>
-            <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/35">
+            <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#c1902f]">
               Company
             </p>
 
@@ -93,7 +93,7 @@ export async function Footer() {
 
           {/* Business */}
           <div>
-            <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/35">
+            <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#c1902f]">
               Business
             </p>
 
@@ -113,7 +113,7 @@ export async function Footer() {
 
           {/* Projects */}
           <div>
-            <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/35">
+            <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#c1902f]">
               Projects
             </p>
 
@@ -133,7 +133,7 @@ export async function Footer() {
 
           {/* Innovations */}
           <div>
-            <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/35">
+            <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#c1902f]">
               Innovations
             </p>
 
@@ -162,11 +162,11 @@ export async function Footer() {
 
           {/* Company Description */}
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/50 md:text-xs">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.28em] text-white/70 md:text-xs">
               © 2026 BLUECHIP TECHNOLOGIES AND ENGINEERING PVT. LTD. ALL RIGHTS RESERVED.
             </p>
 
-            <p className="mt-6 max-w-5xl text-sm leading-[1.9] text-white/72 md:text-[14px]">
+            <p className="mt-6 max-w-5xl text-sm leading-[1.9] text-white/72 md:text-[11px]">
               Established in 1998, Bluechip Engineering &amp; Technologies is an
               integrated engineering and construction company delivering Civil,
               Mechanical, Facade, and EPC solutions across industrial and
@@ -183,17 +183,19 @@ export async function Footer() {
               alt="Bluechip Technologies and Engineering Pvt. Ltd."
               width={160}
               height={160}
-              className="h-auto w-[85px] md:w-[100px] lg:translate-x-[-36px]"
+              className="h-auto w-[75px] md:w-[80px] lg:translate-x-[-76px]"
               priority={false}
             />
 
-            <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/78 md:text-xs">
-              Civil | Mechanical | Facade | EPC
-            </p>
+            <div className="flex flex-col gap-[2px]">
+  <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-white/78 md:text-xs">
+    Civil | Mechanical | Facade | EPC
+  </p>
 
-            <p className="text-[10px] italic text-white/68 md:text-xs">
-              Driven by Innovation, Powered by Technology
-            </p>
+  <p className="text-[9px] italic text-white/68 md:text-[10px]">
+    Driven by Innovation, Powered by Technology
+  </p>
+</div>
           </div>
         </div>
       </div>
