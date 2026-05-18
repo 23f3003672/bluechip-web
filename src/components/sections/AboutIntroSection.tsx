@@ -33,6 +33,8 @@ export function AboutIntroSection() {
                 src="/about/about-main.webp"
                 alt="About Bluechip"
                 fill
+                priority
+                sizes="(max-width: 768px) 100vw, 440px"
                 className="object-cover object-center"
               />
 

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
+import { PageTransitionWrapper } from "@/components/ui/page-transition-wrapper";
 import "./globals.css";
 
 /* ─── Font ───────────────────────────────────────────────────────── */
@@ -73,7 +74,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={poppins.variable} suppressHydrationWarning data-scroll-behavior="smooth">
       <body className="min-h-screen bg-background font-sans antialiased">
-        {children}
+        <PageTransitionWrapper>
+          {children}
+        </PageTransitionWrapper>
         <Toaster richColors position="top-right" />
       </body>
     </html>
