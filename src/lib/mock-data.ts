@@ -780,103 +780,192 @@ export const RECOGNITIONS: RecognitionItem[] = [
 ];
 
 /* ─── Media Page ─────────────────────────────────────────────────── */
+
+export type MediaCompositionType = "image" | "text";
+
 export interface MediaGalleryItem {
   id: string;
   slug: string;
-  title: string;
-  excerpt: string;
-  recordedYear: number;
-  imageUrl: string;
-  imageAlt: string;
+  type: MediaCompositionType;
+
+  title?: string;
+  excerpt?: string;
+  recordedYear?: number;
+
+  imageUrl?: string;
+  imageAlt?: string;
 }
 
+/* -------------------------------------------------------------------------- */
+/*                             MEDIA COMPOSITION                              */
+/* -------------------------------------------------------------------------- */
+
 export const MEDIA_GALLERY_ITEMS: MediaGalleryItem[] = [
+  /* ======================================================================== */
+  /*                              IMAGE BLOCKS                                */
+  /* ======================================================================== */
+
+  /* 1 — TOP CENTER MEDIUM */
+
   {
-    id: "m-1",
-    slug: "germany-visit-2022",
+    id: "img-1",
+    slug: "germany-visit-top",
+    type: "image",
+    imageUrl: "/about/about-values-2.webp",
+    imageAlt: "Germany delegation meeting",
+  },
+
+  /* 2 — CENTER LEFT LARGE */
+
+  {
+    id: "img-2",
+    slug: "germany-visit-left-main",
+    type: "image",
+    imageUrl: "/about/about-vision-2.webp",
+    imageAlt: "Germany architecture collaboration",
+  },
+
+  /* 3 — CENTER RIGHT LARGE */
+
+  {
+    id: "img-3",
+    slug: "germany-visit-right-main",
+    type: "image",
+    imageUrl: "/about/about-mission-1.webp",
+    imageAlt: "Official Germany certification ceremony",
+  },
+
+  /* 4 — LEFT TOP SMALL */
+
+  {
+    id: "img-4",
+    slug: "germany-visit-left-small",
+    type: "image",
+    imageUrl: "/about/about-mission-2.webp",
+    imageAlt: "Delegation discussion session",
+  },
+
+  /* 5 — LEFT BOTTOM LARGE */
+
+  {
+    id: "img-5",
+    slug: "germany-visit-award",
+    type: "image",
+    imageUrl: "/about/about-values-1.webp",
+    imageAlt: "Award ceremony recognition",
+  },
+
+  /* 6 — RIGHT TOP MEDIUM */
+
+  {
+    id: "img-6",
+    slug: "germany-visit-right-medium",
+    type: "image",
+    imageUrl: "/about/about-values-2.webp",
+    imageAlt: "Germany infrastructure visit",
+  },
+
+  /* 7 — RIGHT BOTTOM SMALL */
+
+  {
+    id: "img-7",
+    slug: "germany-visit-office",
+    type: "image",
+    imageUrl: "/about/about-vision-2.webp",
+    imageAlt: "Office collaboration session",
+  },
+
+  /* 8 — BOTTOM CENTER MEDIUM */
+
+  {
+    id: "img-8",
+    slug: "germany-visit-bottom",
+    type: "image",
+    imageUrl: "/about/about-vision-2.webp",
+    imageAlt: "Business partnership meeting",
+  },
+
+  /* ======================================================================== */
+  /*                               TEXT BLOCKS                                */
+  /* ======================================================================== */
+
+  {
+    id: "text-1",
+    slug: "germany-visit-top",
+    type: "text",
     title: "Germany Visit",
     excerpt:
       "To provide precision-driven and sustainable solutions that empower our clients to grow with confidence.",
-    recordedYear: 2022,
-    imageUrl:
-      "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1000&q=80",
-    imageAlt: "Germany visit meeting delegates",
+    recordedYear: 2002,
   },
+
   {
-    id: "m-2",
-    slug: "global-innovation-conclave",
+    id: "text-2",
+    slug: "germany-visit-left-main",
+    type: "text",
     title: "Germany Visit",
     excerpt:
-      "Delegation moments highlighting global partnerships and engineering innovation exchange.",
-    recordedYear: 2022,
-    imageUrl:
-      "https://images.unsplash.com/photo-1431540015161-0bf868a2d407?auto=format&fit=crop&w=1000&q=80",
-    imageAlt: "International conference session",
+      "Global engineering partnerships enabling scalable innovation and infrastructure excellence.",
+    recordedYear: 2002,
   },
+
   {
-    id: "m-3",
-    slug: "federal-delegation-award",
+    id: "text-3",
+    slug: "germany-visit-right-main",
+    type: "text",
     title: "Germany Visit",
     excerpt:
-      "Recognition for collaborative technology transfer and leadership in project execution.",
-    recordedYear: 2022,
-    imageUrl:
-      "https://images.unsplash.com/photo-1568992687947-868a62a9f521?auto=format&fit=crop&w=1000&q=80",
-    imageAlt: "Award and delegation photograph",
+      "Collaborative international engagements focused on certification and operational leadership.",
+    recordedYear: 2002,
   },
+
   {
-    id: "m-4",
-    slug: "delegate-roundtable-session",
+    id: "text-4",
+    slug: "germany-visit-left-small",
+    type: "text",
     title: "Germany Visit",
     excerpt:
-      "Key delegates discussing scalable infrastructure and sustainability strategies.",
-    recordedYear: 2022,
-    imageUrl:
-      "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1000&q=80",
-    imageAlt: "Roundtable discussion",
+      "Strategic delegation meetings discussing sustainable engineering solutions and execution.",
+    recordedYear: 2002,
   },
+
   {
-    id: "m-5",
-    slug: "innovation-gallery-highlight",
+    id: "text-5",
+    slug: "germany-visit-award",
+    type: "text",
     title: "Germany Visit",
     excerpt:
-      "Site and innovation walkthrough featuring engineering-first operational systems.",
-    recordedYear: 2022,
-    imageUrl:
-      "https://images.unsplash.com/photo-1522098543979-ffc7f79d93c6?auto=format&fit=crop&w=1000&q=80",
-    imageAlt: "Engineering walkthrough image",
+      "Recognition moments celebrating project excellence and long-term international collaboration.",
+    recordedYear: 2002,
   },
+
   {
-    id: "m-6",
-    slug: "engineering-office-visit",
+    id: "text-6",
+    slug: "germany-visit-right-medium",
+    type: "text",
     title: "Germany Visit",
     excerpt:
-      "Knowledge exchange session on advanced project management systems and controls.",
-    recordedYear: 2022,
-    imageUrl:
-      "https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&w=1000&q=80",
-    imageAlt: "Office session with delegates",
+      "Infrastructure walkthroughs and global exchange sessions focused on innovation systems.",
+    recordedYear: 2002,
   },
+
   {
-    id: "m-7",
-    slug: "strategic-partnership-moment",
+    id: "text-7",
+    slug: "germany-visit-office",
+    type: "text",
     title: "Germany Visit",
     excerpt:
-      "Strategic partnerships advancing resilient and future-ready infrastructure delivery.",
-    recordedYear: 2022,
-    imageUrl:
-      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1000&q=80",
-    imageAlt: "Delegates collaborating",
+      "Collaborative office interactions strengthening strategic partnerships and technology exchange.",
+    recordedYear: 2002,
   },
+
   {
-    id: "m-8",
-    slug: "infrastructure-exchange-session",
+    id: "text-8",
+    slug: "germany-visit-bottom",
+    type: "text",
     title: "Germany Visit",
     excerpt:
-      "Experience-sharing session focused on precision execution and innovation pipelines.",
-    recordedYear: 2022,
-    imageUrl:
-      "https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=1000&q=80",
-    imageAlt: "Infrastructure exchange event",
+      "Business partnership engagements supporting resilient and future-ready engineering growth.",
+    recordedYear: 2002,
   },
 ];

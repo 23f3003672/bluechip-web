@@ -21,7 +21,7 @@ function ServiceCard({ service }: { service: HomeService }) {
         "border-3 border-[#c8ced8] bg-[#f5f8ff]",
         "px-8 py-8 text-center",
         "transition-all duration-300",
-        "hover:-translate-y-1 hover:border-[#aeb6c4] hover:bg-[#f4f7fe]",
+        "hover:-translate-y-1 hover:border-[#aeb6c4] hover:bg-[#e3f2fd]",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       )}
     >
