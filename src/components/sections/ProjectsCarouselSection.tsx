@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { SectionWrapper } from "@/components/layout/SectionWrapper";
@@ -82,6 +82,48 @@ export function ProjectsCarouselSection() {
       behavior: "smooth",
     });
   };
+
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+
+    let interval: NodeJS.Timeout;
+
+    const startAutoplay = () => {
+      interval = setInterval(() => {
+        const card = el.querySelector("article");
+        if (!card) return;
+
+        const cardWidth = card.clientWidth + 20; // 20 is the gap
+        
+        // Check if we are near the end of the scroll container
+        // Added small threshold of 10px to account for rounding errors
+        if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 10) {
+          el.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          el.scrollBy({ left: cardWidth, behavior: "smooth" });
+        }
+      }, 3000);
+    };
+
+    startAutoplay();
+
+    const handleMouseEnter = () => clearInterval(interval);
+    const handleMouseLeave = () => startAutoplay();
+
+    el.addEventListener("mouseenter", handleMouseEnter);
+    el.addEventListener("mouseleave", handleMouseLeave);
+    el.addEventListener("touchstart", handleMouseEnter, { passive: true });
+    el.addEventListener("touchend", handleMouseLeave, { passive: true });
+
+    return () => {
+      clearInterval(interval);
+      el.removeEventListener("mouseenter", handleMouseEnter);
+      el.removeEventListener("mouseleave", handleMouseLeave);
+      el.removeEventListener("touchstart", handleMouseEnter);
+      el.removeEventListener("touchend", handleMouseLeave);
+    };
+  }, []);
 
   return (
     <SectionWrapper>
