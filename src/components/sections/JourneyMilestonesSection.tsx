@@ -1,4 +1,15 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
+
+const IMAGES = [
+  "/home/about/home-about-1.webp",
+  "/home/about/home-about-2.webp",
+  "/home/about/home-about-3.webp",
+  "/home/about/home-about-4.webp",
+  "/home/about/home-about-5.webp",
+];
 
 export function JourneyMilestonesSection() {
   return (
@@ -54,71 +65,45 @@ export function JourneyMilestonesSection() {
             </div>
 
             {/* thumbnails */}
-<div className="mt-4 flex items-end gap-8 pl-2">  
-  {/* FIRST IMAGE */}
-<div className="relative z-30 lg:-ml-20 lg:-mb-3">
-    <div className="relative h-36 w-36 overflow-hidden border-[6px] border-[#eef2f6] shadow-[0_14px_30px_rgba(15,23,42,0.14)]">
-    <Image
-      src="/home/about/home-about-1.webp"
-      alt="Project 1"
-      fill
-      sizes="185px"
-      className="object-cover"
-    />
-  </div>
-</div>
-
-  {/* SECOND IMAGE */}
-  <div className="relative">
-    <div className="relative h-32 w-32 overflow-hidden">
-      <Image
-        src="/home/about/home-about-2.webp"
-        alt="Project 2"
-        fill
-        sizes="128px"
-        className="object-cover"
-      />
-    </div>
-  </div>
-
-  {/* THIRD IMAGE */}
-  <div className="relative">
-    <div className="relative h-32 w-32 overflow-hidden">
-      <Image
-        src="/home/about/home-about-3.webp"
-        alt="Project 3"
-        fill
-        sizes="128px"
-        className="object-cover"
-      />
-    </div>
-  </div>
-
-  {/* FOURTH IMAGE */}
-  <div className="relative">
-    <div className="relative h-32 w-32 overflow-hidden">
-      <Image
-        src="/home/about/home-about-4.webp"
-        alt="Project 4"
-        fill
-        sizes="128px"
-        className="object-cover"
-      />
-    </div>
-  </div>
-  {/* FIFTH IMAGE */}
-  <div className="relative">
-    <div className="relative h-32 w-32 overflow-hidden">
-      <Image
-        src="/home/about/home-about-5.webp"
-        alt="Project 5"
-        fill
-        sizes="128px"
-        className="object-cover"
-      />
-    </div>
-  </div>
-</div>
+            <div className="mt-4 flex overflow-hidden relative z-30 lg:-ml-20 lg:-mb-3 py-4" style={{ maskImage: "linear-gradient(to right, transparent, black 5%, black 95%, transparent)" }}>
+              <motion.div
+                className="flex items-end w-max"
+                animate={{ x: ["0%", "-50%"] }}
+                transition={{ ease: "linear", duration: 20, repeat: Infinity }}
+              >
+                {/* We render the block twice to create an infinite seamless loop */}
+                {[...Array(2)].map((_, blockIdx) => (
+                  <div key={blockIdx} className="flex items-end gap-8 pr-8">
+                    {IMAGES.map((src, i) => {
+                      if (i === 0) {
+                        return (
+                          <div key={i} className="relative h-36 w-36 shrink-0 overflow-hidden border-[6px] border-[#eef2f6] shadow-[0_14px_30px_rgba(15,23,42,0.14)]">
+                            <Image
+                              src={src}
+                              alt={`Project ${i + 1}`}
+                              fill
+                              sizes="185px"
+                              className="object-cover"
+                            />
+                          </div>
+                        );
+                      }
+                      return (
+                        <div key={i} className="relative h-32 w-32 shrink-0 overflow-hidden">
+                          <Image
+                            src={src}
+                            alt={`Project ${i + 1}`}
+                            fill
+                            sizes="128px"
+                            className="object-cover"
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                ))}
+              </motion.div>
+            </div>
           </div>
         </div>
       </div>
