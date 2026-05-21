@@ -1,4 +1,5 @@
 "use client";
+/*     /projects page              */
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
@@ -51,31 +52,33 @@ export function ProjectsTimelineSection({
   }, [activeFilter, initialProjects]);
 
   const tiles = useMemo(
-    () => buildTiles(filteredProjects, 50),
+    () => buildTiles(filteredProjects, 120),
     [filteredProjects]
   );
 
   return (
     <section
-      className="bg-[#edf0f6] py-10 md:py-14"
+      className="bg-[#f5f8ff] py-10 md:py-14"
       aria-labelledby="journey-timeline-title"
     >
-      <Container>
-        <div className="mb-6 flex flex-col gap-6 md:mb-8 md:flex-row md:items-end md:justify-between">
+      <div className="mx-auto w-full max-w-[1850px] px-6 md:px-10 lg:px-16">
+        {/* Top Section */}
+        <div className="mb-8 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-4xl text-[#6c7689] md:text-[40px]">
+            <p className="text-xl text-[#78868e] md:text-[24px]">
               Our Journey &amp; Milestones
             </p>
 
             <h1
               id="journey-timeline-title"
-              className="mt-3 text-5xl font-medium tracking-tight text-[#212a3f] md:text-6xl"
+              className="mt-2 text-3xl font-medium tracking-tight text-[#212a3f] md:text-4xl"
             >
               Built steadily since 1998.
             </h1>
           </div>
 
-          <div className="inline-flex w-full max-w-[540px] overflow-hidden rounded-full border border-[#d4d9e2] bg-[#f6f8fb]">
+          {/* Filter Buttons */}
+          <div className="inline-flex w-full max-w-[460px] overflow-hidden rounded-full border border-[#d4d9e2] bg-[#f6f8fb] shadow-sm">
             {filterTabs.map((tab) => {
               const isActive = tab.key === activeFilter;
 
@@ -86,8 +89,8 @@ export function ProjectsTimelineSection({
                   onClick={() => setActiveFilter(tab.key)}
                   className={
                     isActive
-                      ? "flex-1 bg-primary px-4 py-3 text-xs font-semibold uppercase tracking-wide text-white"
-                      : "flex-1 border-l border-[#d4d9e2] px-4 py-3 text-xs font-semibold uppercase tracking-wide text-[#677083] first:border-l-0 hover:bg-[#eef2f8]"
+                      ? "flex-1 bg-gradient-to-r from-[#023d9f] via-[#117ab2] to-[#023d9f] px-4 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-white"
+                      : "flex-1 border-l border-[#d4d9e2] px-4 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#677083] first:border-l-0 hover:bg-[#eef2f8]"
                   }
                 >
                   {tab.label}
@@ -97,14 +100,17 @@ export function ProjectsTimelineSection({
           </div>
         </div>
 
-        <div className="grid grid-cols-4 gap-1 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10">
+        {/* Project Grid */}
+        <div className="grid grid-cols-6 gap-[1px] sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-14 xl:grid-cols-18">
           {tiles.map((project, index) => (
-            <article
+            <Link
               key={`${project.id}-${index}`}
-              className="group relative overflow-visible"
+              href={`/projects/${project.slug}`}
+              className="group relative block overflow-visible"
             >
+              {/* Smaller Image Tiles */}
               <div
-                className="aspect-square w-full bg-cover bg-center"
+                className="aspect-square w-full overflow-hidden bg-cover bg-center transition-all duration-300 group-hover:scale-[1.04] group-hover:z-10"
                 style={{
                   backgroundImage: `url(${project.thumbnailUrl})`,
                 }}
@@ -112,36 +118,30 @@ export function ProjectsTimelineSection({
                 aria-label={project.title}
               />
 
-              <div className="pointer-events-none absolute left-1/2 top-1/2 z-20 w-[220px] -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
-                <div className="bg-white p-3 shadow-xl ring-1 ring-black/8">
-                  <p className="text-base font-semibold text-[#252f46]">
+              {/* Hover Description Box */}
+              <div className="pointer-events-none absolute left-1/2 top-0 z-30 hidden -translate-x-1/2 -translate-y-[115%] group-hover:block">
+                <div className="relative min-w-[220px] bg-[#efefef] px-4 py-4 shadow-lg">
+                  {/* Bottom Triangle */}
+                  <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-l-[8px] border-r-[8px] border-t-[8px] border-l-transparent border-r-transparent border-t-[#efefef]" />
+
+                  <p className="text-center text-[14px] font-semibold leading-snug text-[#4b4b4b]">
                     {project.title}
                   </p>
-
-                  <p className="mt-0.5 text-xs text-[#727b8b]">
-                    {project.locationYear}
-                  </p>
-
-                  <Link
-                    href={`/projects/${project.slug}`}
-                    className="mt-2 inline-flex items-center text-xs font-semibold uppercase tracking-wide text-primary hover:underline"
-                  >
-                    Show More
-                  </Link>
                 </div>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
 
-        <div className="mt-6 flex items-center justify-between text-3xl font-semibold text-[#cc962f] md:mt-8">
+        {/* Timeline Footer */}
+        <div className="mt-8 flex items-center justify-between text-2xl font-semibold text-[#cc962f] md:text-3xl">
           <span>Present</span>
 
           <div className="mx-3 h-px flex-1 border-t border-dashed border-[#adb4c4]" />
 
           <span>1998</span>
         </div>
-      </Container>
+      </div>
     </section>
   );
 }

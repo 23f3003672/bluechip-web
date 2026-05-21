@@ -3,7 +3,7 @@ import Image from "next/image";
 export function AboutIntroSection() {
   return (
     <section
-      className="overflow-x-hidden bg-white py-12 md:py-16 lg:py-20"
+      className="overflow-x-hidden bg-white pt-4 pb-0 md:pt-6 md:pb-0 lg:pt-8 lg:pb-0"
       aria-labelledby="about-us-title"
     >
       <div className="grid w-full grid-cols-1 items-start gap-0 lg:grid-cols-2">
@@ -26,38 +26,41 @@ export function AboutIntroSection() {
           </div>
 
           {/* RIGHT: RECTANGULAR GRAPHICS */}
-          <div className="relative flex justify-center px-6 py-16 md:px-12 md:py-20 lg:px-20 lg:py-0">
-            <div className="relative h-[500px] w-[350px] overflow-visible">
+          <div className="relative flex justify-center px-6 py-16 md:px-12 md:py-20 lg:px-20 lg:py-0 -translate-y-[45px]">
+            <div className="relative left-[-60px] h-[550px] w-[400px] overflow-visible">
 
-              <Image
-                src="/about/about-main.webp"
-                alt="About Bluechip"
-                fill
-                priority
-                sizes="(max-width: 768px) 100vw, 440px"
-                className="object-cover object-center"
-              />
+              <div className="absolute inset-0 overflow-hidden">
+                <Image
+                 src="/about/about-main.webp"
+                 alt="About Bluechip"
+                 fill
+                 priority
+                 sizes="(max-width: 768px) 80vw, 440px"
+                 className="object-cover scale-x-[0.94] scale-y-[0.81] -translate-x-[50px] translate-y-[0px]"
+                />
+             </div>
 
               {/* Dark Overlay - Strict Rectangle extending slightly past the image */}
-              <div className="absolute left-[34%] top-[-5%] z-10 h-[115%] w-[75px] bg-[#5A6372]/90" />
+              <div className="absolute left-[25%] top-[-5%] z-10 h-[113%] w-[76px] bg-[#1d2537]/75" />
 
               {/* Light Overlay - Strict Rectangle */}
-              <div className="absolute left-[51%] top-[-5%] z-10 h-[115%] w-[140px] bg-[#8B96A8]/70" />
+              <div className="absolute left-[46%] top-[-5%] z-10 h-[113%] w-[155px] bg-[#687289]/75" />
 
               {/* Thin Divider Line */}
-              <div className="absolute left-[51%] top-[-5%] z-20 h-[110%] w-[6px] bg-white" />
+              {/* <div className="absolute left-[51%] top-[-5%] z-20 h-[110%] w-[6px] bg-white" /> */}
+              
 
               {/* "about" text */}
-              <div className="absolute right-[-120px] top-[48%] z-30 -translate-y-1/2">
+              <div className="absolute right-[-80px] top-[51%] z-30 -translate-y-1/2">
                 <span className="font-serif text-[40px] font-semibold tracking-wide text-black">
                   about
                 </span>
               </div>
 
               {/* "LUECHIP" in white box overlapping the rectangles */}
-              <div className="absolute right-[-160px] top-[55%] z-30">
-                <div className="bg-white/55 px-6 py-3 shadow-sm">
-                  <span className="font-serif text-[42px] font-light tracking-[0.2em] text-[#4B668D]">
+              <div className="absolute right-[-120px] top-[55%] z-30">
+                <div className="bg-white/80 w-[336px] h-[60px] flex items-center justify-center">
+                  <span className="translate-x-[20px] font-serif text-[40px] font-light tracking-[0.2em] text-[#496a9c]">
                     LUECHIP
                   </span>
                 </div>

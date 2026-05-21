@@ -172,7 +172,7 @@ export function ProjectsCarouselSection() {
                   <div className="mt-auto pt-6">
                     <Link
                       href={item.href}
-                      className="inline-flex items-center gap-2 bg-[#1d2537] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#2a3650]"
+                      className="inline-flex items-center gap-2 bg-[#1d2537] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#c9962d]"
                     >
                       View Projects
                     </Link>

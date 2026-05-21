@@ -42,8 +42,9 @@ export function JourneyMilestonesSection() {
               </a>
             </div>
 
-            <div className="mt-20">
-              <a className="inline-block bg-[#4a6fa5] px-6 py-[14px] text-[10px] font-semibold uppercase tracking-[0.12em] text-white shadow-sm" href="/projects">
+            <div className="mt-20" >
+              <a className="inline-block bg-[#496a9c] px-6 py-[14px] text-[10px] font-semibold uppercase tracking-[0.12em] text-white shadow-sm transition-colors duration-300 hover:bg-[#c9962d]"
+    href="/projects">
                 View our growth story
               </a>
             </div>

@@ -218,7 +218,7 @@ export function MediaGallerySection({
         {/* ------------------------------------------------------------------ */}
 
         <div
-          className="relative mx-auto mt-24 h-[1380px] w-full max-w-[1600px]"
+          className="relative mx-auto mt-24 h-[700px] w-full max-w-[1600px]"
           style={{
             perspective: "2200px",
           }}

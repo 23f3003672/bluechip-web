@@ -45,37 +45,55 @@ export function AboutVisionariesSection({
           <div>
             <h2
               id="about-visionaries-title"
-              className="max-w-[320px] text-[42px] font-semibold leading-[1.05] tracking-[-0.04em] text-[#1c2438] md:text-[56px]"
+              className="max-w-[320px] text-[22px] font-bold leading-[1.] tracking-[-0.02em] text-[#1c2438] md:text-[36px]"
             >
               Meet our
               <br />
               visionaries.
             </h2>
 
-            {/* GOLD CURVE / LINE */}
+            {/* GOLD CURVE / LINE  
             <div className="mt-5 h-[7px] w-[140px] rounded-full bg-[#c69222]" />
+          */}
           </div>
+          <svg
+className="-ml-325 mt-22"
+  width="180"
+  height="100"
+  viewBox="5 2 300 110"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M20 85 C 120 10, 240 20, 340 35"
+    stroke="#c69222"
+    strokeWidth="13"
+    strokeLinecap="round"
+    fill="transparent"
+  />
+</svg>
+            
 
           {/* SLIDER BUTTONS */}
-          <div className="mt-3 flex items-center gap-3">
-            <button
-              type="button"
-              onClick={goPrev}
-              aria-label="Previous visionaries"
-              className="flex size-12 items-center justify-center rounded-full bg-[#0f63bc] text-white transition-all duration-300 hover:scale-105"
-            >
-              <ArrowLeft className="size-5" />
-            </button>
+        <div className="mt-3 flex items-center gap-3">
+  <button
+    type="button"
+    onClick={goPrev}
+    aria-label="Previous visionaries"
+    className="flex size-12 items-center justify-center rounded-full bg-[#0f63bc] text-white transition-all duration-300 hover:bg-[#c9962d] hover:scale-105"
+  >
+    <ArrowLeft className="size-5" />
+  </button>
 
-            <button
-              type="button"
-              onClick={goNext}
-              aria-label="Next visionaries"
-              className="flex size-12 items-center justify-center rounded-full bg-[#0f63bc] text-white transition-all duration-300 hover:scale-105"
-            >
-              <ArrowRight className="size-5" />
-            </button>
-          </div>
+  <button
+    type="button"
+    onClick={goNext}
+    aria-label="Next visionaries"
+    className="flex size-12 items-center justify-center rounded-full bg-[#0f63bc] text-white transition-all duration-300 hover:bg-[#c9962d] hover:scale-105"
+  >
+    <ArrowRight className="size-5" />
+  </button>
+</div>
         </div>
 
         {/* CARDS */}
@@ -86,7 +104,7 @@ export function AboutVisionariesSection({
               key={person.id}
               className="group [perspective:1400px]"
             >
-              <div className="relative h-[560px] w-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+              <div className="relative h-[400px] w-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
 
                 {/* FRONT SIDE */}
                 <div className="absolute inset-0 overflow-hidden [backface-visibility:hidden]">

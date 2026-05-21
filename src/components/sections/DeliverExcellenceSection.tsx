@@ -29,7 +29,7 @@ export function DeliverExcellenceSection() {
         
         {/* LEFT */}
         <div className="px-8 md:px-14 lg:px-24">
-          <h2 className="max-w-[520px] text-[38px] font-semibold leading-[1.12] tracking-[-0.04em] text-[#121a30] md:text-[48px] lg:text-[56px]">
+          <h2 className="max-w-[520px] text-[23.4px] font-bold leading-[1.2] tracking-[-0.02em] text-[#1d2537] md:text-[28px] lg:text-[36px]">
             Delivering Excellence
             <br />
             in every project
@@ -38,7 +38,7 @@ export function DeliverExcellenceSection() {
 
         {/* RIGHT */}
         <div className="flex items-start px-8 pt-6 md:px-14 lg:px-24 lg:pt-4">
-          <p className="max-w-[620px] text-[15px] leading-[1.75] text-[#374151] md:text-[17px]">
+          <p className="max-w-[620px] text-[15px] leading-[1.75] text-[#000000] md:text-[17px]">
             A trusted name in EPC, industrial, and infrastructure construction
             with a proven track record of excellence and reliability.
           </p>
@@ -52,7 +52,7 @@ export function DeliverExcellenceSection() {
             <div key={stat.id}>
               
               {/* LABEL */}
-              <p className="text-[13px] font-medium uppercase tracking-[0.12em] text-[#6b7280]">
+              <p className="text-[13px] font-medium uppercase tracking-[0.12em] text-[#545454]">
                 {stat.label}
               </p>
 
@@ -60,16 +60,14 @@ export function DeliverExcellenceSection() {
               <p
                 className="
                   mt-4
-                  text-[52px]
-                  font-semibold
+                  text-[22px]
+                  font-normal
                   leading-none
                   tracking-[-0.04em]
                   text-transparent
                   bg-clip-text
-                  bg-gradient-to-r
-                  from-[#117ab2]
-                  to-[#023d9f]
-                  md:text-[62px]
+                  bg-gradient-to-r from-[#023d9f] via-[#117ab2] to-[#023d9f]
+                  md:text-[42px]
                 "
               >
                 {stat.value}

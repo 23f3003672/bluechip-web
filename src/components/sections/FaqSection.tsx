@@ -41,7 +41,7 @@ export function FaqSection({
           <p className="text-base text-foreground/80 md:text-lg">Still have questions?</p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 bg-[#4e74aa] px-8 py-3 text-xs font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#42679b]"
+            className="inline-flex items-center gap-2 bg-[#4e74aa] px-8 py-3 text-xs font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#c9962d]"
           >
             Contact Us
             <ArrowRight className="size-3.5" />

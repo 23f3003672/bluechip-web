@@ -50,7 +50,7 @@ export async function ContactMapSection() {
         <a
           href="#"
           aria-label="Back to top"
-          className="absolute bottom-5 right-5 inline-flex size-10 items-center justify-center rounded-full bg-[#15233f] text-white shadow-lg md:size-11"
+          className="absolute bottom-5 right-5 inline-flex size-10 items-center justify-center rounded-full bg-[#15233f] text-white shadow-lg md:size-11" 
         >
           <ArrowUp className="size-4" />
         </a>

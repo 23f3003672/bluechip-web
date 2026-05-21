@@ -86,7 +86,7 @@ export function HeroSection() {
     <>
       <section className="relative isolate overflow-hidden bg-[#f2f4f8]">
         <div
-          className="relative h-[56vh] min-h-[420px] sm:h-[62vh] sm:min-h-[500px] lg:h-[calc(100vh-4rem)] lg:max-h-[590px]"
+          className="relative h-[56vh] min-h-[450px] sm:h-[62vh] sm:min-h-[450px] lg:h-[calc(100vh-4rem)] lg:max-h-[590px]"
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
           onTouchStart={handleTouchStart}
@@ -131,22 +131,27 @@ export function HeroSection() {
                       <SiteButtonLink
                       href={slide.projectHref}
                       size="md"
-                      className="h-10 rounded-none border border-white bg-transparent px-6 text-[11px] font-bold uppercase tracking-[0.08em] text-white transition-colors hover:border-[#496a9c] hover:bg-[#496a9c] hover:text-white"
+                      className="h-10 rounded-none border border-white bg-transparent px-6 text-[11px] font-bold uppercase tracking-[0.08em] text-white transition-colors hover:border-[#496a9c] hover:bg-[#c9962d] hover:text-white"
                       onClick={(event) => event.stopPropagation()}
                       >
                         View Our Projects
                       </SiteButtonLink>
 
                       <Link
-                      href={slide.projectHref}
-                      onClick={(event) => event.stopPropagation()}
-                      className="inline-flex h-10 items-center gap-2 rounded-none border border-[#f3b246] bg-white px-4 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#1c3767] transition-colors hover:border-[#496a9c] hover:bg-[#496a9c] hover:text-white"
-                      >
-                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#d39a2c]">
-                          <Play className="ml-[1px] size-2.5 fill-white text-white" />
-                        </span>
-                          Watch Project Walkthrough
-                      </Link>
+  href={slide.projectHref}
+  onClick={(event) => event.stopPropagation()}
+  className="group inline-flex h-10 items-center gap-2 rounded-none border border-[#f3b246] bg-white px-4 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#1c3767] transition-all duration-300 hover:border-[#c9962d]"
+>
+  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#d39a2c]">
+    <Play className="ml-[1px] size-2.5 fill-white text-white" />
+  </span>
+
+  <span className="relative">
+    Watch Project Walkthrough
+
+    <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-[#c9962d] transition-all duration-300 group-hover:w-full" />
+  </span>
+</Link>
                     </div>
                   </div>
                 </div>
