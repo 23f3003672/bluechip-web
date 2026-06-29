@@ -7,17 +7,35 @@ import { MediaUploadForm } from "./MediaUploadForm";
 import { MediaGrid } from "./MediaGrid";
 import { AdminPageHeading } from "@/components/admin/layout/AdminUx";
 import type { ActionResult, Media } from "@/types";
+import { MediaArticlesSection } from "./MediaArticlesSection";
+import type { MediaArticle } from "@/types";
+import type { MediaArticleFormValues } from "@/lib/validations/admin-crud";
 
 interface MediaAdminModuleProps {
   initialMedia: Media[];
-  uploadMediaAction: (formData: FormData) => Promise<ActionResult<{ id: string; url: string }>>;
-  deleteMediaAction: (mediaId: string) => Promise<ActionResult>;
+
+  mediaArticles: MediaArticle[];
+
+  uploadMediaAction: (
+    formData: FormData
+  ) => Promise<ActionResult<{ id: string; url: string }>>;
+
+  deleteMediaAction: (
+    mediaId: string
+  ) => Promise<ActionResult>;
+
+  updateMediaArticleAction: (
+    id: string,
+    payload: MediaArticleFormValues
+  ) => Promise<ActionResult>;
 }
 
 export function MediaAdminModule({
   initialMedia,
+  mediaArticles,
   uploadMediaAction,
   deleteMediaAction,
+  updateMediaArticleAction,
 }: MediaAdminModuleProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -54,9 +72,19 @@ export function MediaAdminModule({
           onUploaded={() => router.refresh()}
         />
 
-        <div>
-          <MediaGrid rows={initialMedia} onDelete={handleDelete} isBusy={isPending} />
-        </div>
+        <div className="space-y-8">
+  <MediaGrid
+    rows={initialMedia}
+    onDelete={handleDelete}
+    isBusy={isPending}
+  />
+
+  <MediaArticlesSection
+    rows={mediaArticles}
+    media={initialMedia}
+    updateMediaArticleAction={updateMediaArticleAction}
+  />
+</div>
       </div>
     </section>
   );

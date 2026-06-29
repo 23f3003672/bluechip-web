@@ -36,7 +36,45 @@ export const faqFormSchema = z.object({
   answer: z.string().min(5, "Answer is required"),
 });
 
+export const mediaArticleFormSchema = z.object({
+  title: z.string().min(2, "Title is required"),
+
+  slug: z
+    .string()
+    .min(2, "Slug is required")
+    .regex(slugRegex, "Use lowercase letters, numbers, and hyphens only"),
+
+  short_description: z
+    .string()
+    .min(10, "Short description must be at least 10 characters")
+    .max(300, "Short description cannot exceed 300 characters"),
+
+  content: z
+    .string()
+    .min(20, "Article content must be at least 20 characters"),
+
+  featured_image_id: z.string().uuid("Please select a valid image"),
+
+  display_order: z.coerce
+    .number()
+    .int()
+    .min(1, "Display order must be between 1 and 8")
+    .max(8, "Display order must be between 1 and 8"),
+
+  published_at: z.string().min(1, "Publish date is required"),
+
+  meta_title: z.string().max(60, "Meta title should not exceed 60 characters").default(""),
+
+  meta_description: z
+    .string()
+    .max(160, "Meta description should not exceed 160 characters")
+    .default(""),
+
+  meta_keywords: z.string().default(""),
+});
+
 export type RecognitionFormValues = z.output<typeof recognitionFormSchema>;
 export type VisionaryFormValues = z.output<typeof visionaryFormSchema>;
 export type ServiceFormValues = z.output<typeof serviceFormSchema>;
 export type FaqFormValues = z.output<typeof faqFormSchema>;
+export type MediaArticleFormValues = z.output<typeof mediaArticleFormSchema>;

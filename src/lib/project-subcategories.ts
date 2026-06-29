@@ -7,6 +7,7 @@ export interface MegaMenuItem {
 
 export interface MegaMenuColumn {
   title: string;
+  href: string;
   items: MegaMenuItem[];
 }
 
@@ -21,6 +22,7 @@ export const NAVBAR_MEGA_MENU: Record<MegaMenuKey, MegaMenuColumn[]> = {
   business: [
     {
       title: "Services",
+      href: "/business/services",
       items: [
         { label: "EPC", slug: "epc" },
         { label: "Civil Construction", slug: "civil-construction" },
@@ -32,6 +34,7 @@ export const NAVBAR_MEGA_MENU: Record<MegaMenuKey, MegaMenuColumn[]> = {
     },
     {
       title: "Industrial Structures",
+      href: "/business/industrial-structures",
       items: [
         { label: "Control Buildings", slug: "control-buildings" },
         { label: "ETP/STP", slug: "etp-stp" },
@@ -41,6 +44,7 @@ export const NAVBAR_MEGA_MENU: Record<MegaMenuKey, MegaMenuColumn[]> = {
     },
     {
       title: "Infrastructure",
+      href: "/business/infrastructure",
       items: [
         { label: "Roads", slug: "roads" },
         { label: "Rigid Pavement (DLC, PQC)", slug: "rigid-pavement-dlc-pqc" },
@@ -55,6 +59,7 @@ export const NAVBAR_MEGA_MENU: Record<MegaMenuKey, MegaMenuColumn[]> = {
   projects: [
     {
       title: "Sectors",
+      href: "/projects/sectors",
       items: [
         { label: "Airports", slug: "airports" },
         { label: "Power Plants", slug: "power-plants" },
@@ -65,6 +70,7 @@ export const NAVBAR_MEGA_MENU: Record<MegaMenuKey, MegaMenuColumn[]> = {
     },
     {
       title: "Urban & Institutional",
+      href: "/projects/urban-institutional",
       items: [
         { label: "Commercial Buildings", slug: "commercial-buildings" },
         { label: "Residential Buildings", slug: "residential-buildings" },
@@ -79,6 +85,7 @@ export const NAVBAR_MEGA_MENU: Record<MegaMenuKey, MegaMenuColumn[]> = {
   innovations: [
     {
       title: "Construction Technologies",
+      href: "/innovation/construction-technologies",
       items: [
         { label: "Composite Structures", slug: "composite-structures" },
         { label: "Light Gauge Steel Frames", slug: "light-gauge-steel-frames" },
@@ -89,6 +96,7 @@ export const NAVBAR_MEGA_MENU: Record<MegaMenuKey, MegaMenuColumn[]> = {
     },
     {
       title: "Integrated Systems",
+      href: "/innovation/integrated-systems",
       items: [
         { label: "Hybrid Structural Solutions", slug: "hybrid-structural-solutions" },
         { label: "Multi-Technology Configurations", slug: "multi-technology-configurations" },
@@ -96,6 +104,7 @@ export const NAVBAR_MEGA_MENU: Record<MegaMenuKey, MegaMenuColumn[]> = {
     },
     {
       title: "Engineering Excellence",
+      href: "/innovation/engineering-excellence",
       items: [
         { label: "Optimized Execution Methodologies", slug: "optimized-execution-methodologies" },
         { label: "Speed, Safety, and Cost Efficiencies", slug: "speed-safety-and-cost-efficiencies" },

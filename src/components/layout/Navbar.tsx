@@ -226,17 +226,19 @@ export function Navbar() {
             <div className="mx-auto mt-8 grid max-w-[860px] gap-10 md:grid-cols-2 lg:grid-cols-3">
               {NAVBAR_MEGA_MENU[activeMegaKey].map((column) => (
                 <div key={column.title}>
-                  <p className="text-[20px] font-medium text-[#135da9]">{column.title}</p>
+                  <Link
+  href={column.href}
+  onClick={() => setExpanded(false)}
+  className="text-[20px] font-medium text-[#135da9] transition-colors hover:text-[#0f4d8c]"
+>
+  {column.title}
+</Link>
                   <ul className="mt-3 space-y-2.5">
                     {column.items.map((item) => (
                       <li key={item.slug}>
-                        <Link
-                          href={`/projects/subcategory/${item.slug}`}
-                          onClick={() => setExpanded(false)}
-                          className="text-[14px] leading-tight text-[#6d727b] transition-colors hover:text-[#8f8f8f]"
-                        >
+                          <span className="text-[14px] leading-tight text-[#6d727b]">
                           {item.label}
-                        </Link>
+                        </span>
                       </li>
                     ))}
                   </ul>

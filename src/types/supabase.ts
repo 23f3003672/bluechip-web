@@ -60,6 +60,12 @@ export interface Database {
         Update: Partial<MediaInsert>;
         Relationships: [];
       };
+      media_articles: {
+  Row: MediaArticle;
+  Insert: MediaArticleInsert;
+  Update: Partial<MediaArticleInsert>;
+  Relationships: [];
+};
       settings: {
         Row: Setting;
         Insert: SettingInsert;
@@ -171,7 +177,48 @@ export interface Media {
   uploaded_at: string;
 }
 
+
+
 export type MediaInsert = Omit<Media, "id" | "uploaded_at">;
+
+export interface MediaArticle {
+  id: string;
+
+  title: string;
+
+  slug: string;
+
+  short_description: string;
+
+  content: string;
+
+  featured_image_id: string | null;
+
+  display_order: number;
+
+  published_at: string;
+
+  meta_title: string | null;
+
+  meta_description: string | null;
+
+  meta_keywords: string | null;
+
+  created_at: string;
+
+  updated_at: string;
+
+  featured_image?: {
+    id: string;
+    url: string;
+    alt_text: string | null;
+  } | null;
+}
+
+export type MediaArticleInsert = Omit<
+  MediaArticle,
+  "id" | "created_at" | "updated_at" | "featured_image"
+>;
 
 export interface Setting {
   key: string;

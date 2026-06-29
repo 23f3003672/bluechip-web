@@ -69,16 +69,22 @@ export async function uploadMediaAction(
 
   const bytes = Buffer.from(await file.arrayBuffer());
 
-  const { error: uploadError } = await supabase.storage
-    .from(STORAGE_BUCKETS.media)
-    .upload(storagePath, bytes, {
-      contentType: file.type,
-      upsert: false,
-    });
+  const { data: uploadData, error: uploadError } = await supabase.storage
+  .from(STORAGE_BUCKETS.media)
+  .upload(storagePath, bytes, {
+    contentType: file.type,
+    upsert: false,
+  });
 
-  if (uploadError) {
-    return { success: false, error: uploadError.message };
-  }
+console.log("UPLOAD DATA:", uploadData);
+console.log("UPLOAD ERROR:", uploadError);
+
+if (uploadError) {
+  return {
+    success: false,
+    error: JSON.stringify(uploadError, null, 2),
+  };
+}
 
   const {
     data: { publicUrl },
@@ -96,7 +102,7 @@ export async function uploadMediaAction(
     })
     .select("id, url")
     .single();
-
+console.log("INSERT ERROR:", insertError);
   if (insertError || !data) {
     await supabase.storage.from(STORAGE_BUCKETS.media).remove([storagePath]);
     return {
