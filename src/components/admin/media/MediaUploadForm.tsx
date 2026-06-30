@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { ActionResult } from "@/types";
+import { convertImageToWebP } from "@/lib/image-utils";
 
 interface MediaUploadFormProps {
   uploadMediaAction: (formData: FormData) => Promise<ActionResult<{ id: string; url: string }>>;
@@ -17,10 +18,18 @@ export function MediaUploadForm({ uploadMediaAction, onUploaded }: MediaUploadFo
   const [isPending, startTransition] = useTransition();
   const [altText, setAltText] = useState("");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
+    const file = formData.get("file");
+
+    if (file instanceof File) {
+      toast.loading("Compressing image...", { id: "media-compress" });
+      const webpFile = await convertImageToWebP(file);
+      formData.set("file", webpFile);
+      toast.dismiss("media-compress");
+    }
 
     startTransition(async () => {
       const result = await uploadMediaAction(formData);
@@ -35,6 +44,9 @@ export function MediaUploadForm({ uploadMediaAction, onUploaded }: MediaUploadFo
       onUploaded();
     });
   };
+
+
+
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="rounded-lg border border-border bg-white p-5">
