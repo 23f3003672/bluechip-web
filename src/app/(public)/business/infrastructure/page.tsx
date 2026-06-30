@@ -1,9 +1,9 @@
 import { ProjectsGallerySection } from "@/components/sections/ProjectGallerySection";
 
-import { getProjectsByColumnTitle } from "@/lib/project-subcategory-utils";
+import { getProjectsByColumnTitle } from "@/lib/project-subcategory-server-utils";
 
-export default function InfrastructurePage() {
-  const projects = getProjectsByColumnTitle("Infrastructure");
+export default async function InfrastructurePage() {
+  const projects = await getProjectsByColumnTitle("Infrastructure");
 
   return (
     <ProjectsGallerySection

@@ -15,6 +15,8 @@ export const metadata: Metadata = {
     "Learn about Bluechip Engineering & Technologies, our journey since 1998, leadership vision, mission, values, and core strengths in EPC and infrastructure delivery.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function AboutPage() {
   const supabase = await createClient();
   const { data } = await supabase

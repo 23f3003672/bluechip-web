@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { useForm, type Resolver } from "react-hook-form";
+import { useForm, useWatch, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -26,10 +26,11 @@ import {
 } from "@/components/ui/table";
 import { AdminEmptyState, AdminPageHeading } from "@/components/admin/layout/AdminUx";
 import { visionaryFormSchema, type VisionaryFormValues } from "@/lib/validations/admin-crud";
-import type { ActionResult, Visionary } from "@/types";
+import type { ActionResult, Visionary, Media } from "@/types";
 
 interface VisionariesAdminModuleProps {
   rows: Visionary[];
+  mediaItems: Media[];
   createVisionaryAction: (
     payload: VisionaryFormValues
   ) => Promise<ActionResult<{ id: string }>>;
@@ -42,11 +43,13 @@ interface VisionariesAdminModuleProps {
 
 function VisionaryForm({
   initialValues,
+  mediaItems,
   submitLabel,
   isSubmitting,
   onSubmit,
 }: {
   initialValues?: VisionaryFormValues;
+  mediaItems: Media[];
   submitLabel: string;
   isSubmitting: boolean;
   onSubmit: (values: VisionaryFormValues) => Promise<void>;
@@ -54,6 +57,8 @@ function VisionaryForm({
   const {
     register,
     handleSubmit,
+    control,
+    setValue,
     formState: { errors },
   } = useForm<VisionaryFormValues>({
     resolver: zodResolver(visionaryFormSchema) as Resolver<VisionaryFormValues>,
@@ -64,6 +69,8 @@ function VisionaryForm({
       bio: "",
     },
   });
+
+  const imageUrlValue = useWatch({ control, name: "image_url" });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -84,6 +91,27 @@ function VisionaryForm({
         <Label>Image URL</Label>
         <Input {...register("image_url")} />
         {errors.image_url && <p className="text-xs text-destructive">{errors.image_url.message}</p>}
+        
+        <div className="rounded-md border border-border bg-muted/20 p-2">
+          <p className="mb-1 text-xs font-medium text-muted-foreground">Pick from uploaded media</p>
+          <select
+            value={imageUrlValue ?? ""}
+            onChange={(event) =>
+              setValue("image_url", event.target.value, {
+                shouldDirty: true,
+                shouldTouch: true,
+              })
+            }
+            className="h-8 w-full rounded-md border border-input bg-background px-2 text-sm"
+          >
+            <option value="">Select image URL</option>
+            {mediaItems.map((item) => (
+              <option key={item.id} value={item.url}>
+                {item.filename}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <div className="space-y-1.5">
@@ -100,6 +128,7 @@ function VisionaryForm({
 
 export function VisionariesAdminModule({
   rows,
+  mediaItems,
   createVisionaryAction,
   updateVisionaryAction,
   deleteVisionaryAction,
@@ -178,12 +207,13 @@ export function VisionariesAdminModule({
       )}
 
       <Dialog open={createOpen} onOpenChange={setCreateOpen}>
-        <DialogContent className="sm:max-w-2xl">
+        <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Create Visionary</DialogTitle>
             <DialogDescription>Add a new visionary profile.</DialogDescription>
           </DialogHeader>
           <VisionaryForm
+            mediaItems={mediaItems}
             submitLabel="Create"
             isSubmitting={isPending}
             onSubmit={async (values) => {
@@ -203,13 +233,14 @@ export function VisionariesAdminModule({
       </Dialog>
 
       <Dialog open={Boolean(editing)} onOpenChange={(open) => !open && setEditing(null)}>
-        <DialogContent className="sm:max-w-2xl">
+        <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Edit Visionary</DialogTitle>
             <DialogDescription>Update visionary details.</DialogDescription>
           </DialogHeader>
           {editing && (
             <VisionaryForm
+              mediaItems={mediaItems}
               submitLabel="Save Changes"
               isSubmitting={isPending}
               initialValues={{

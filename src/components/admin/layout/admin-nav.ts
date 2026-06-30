@@ -46,6 +46,11 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     description: "Job postings and hiring",
   },
   {
+    label: "Inquiries",
+    href: "/admin/inquiries",
+    description: "Client contact form submissions",
+  },
+  {
     label: "Settings",
     href: "/admin/settings",
     description: "Footer and contact settings",

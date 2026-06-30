@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AdminEmptyState } from "@/components/admin/layout/AdminUx";
+import { PROJECT_SUBCATEGORIES } from "@/lib/project-subcategories";
 import {
   Table,
   TableBody,
@@ -36,35 +37,42 @@ export function ProjectsTable({ rows, onEdit, onDelete, isBusy = false }: Projec
         <TableHeader>
           <TableRow>
             <TableHead>Title</TableHead>
-            <TableHead>Category ID</TableHead>
+            <TableHead>Category</TableHead>
             <TableHead>Year</TableHead>
             <TableHead>Featured</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell className="max-w-[280px] truncate font-medium text-foreground">
-                {row.title}
-              </TableCell>
-              <TableCell className="text-muted-foreground">{row.category_id ?? "-"}</TableCell>
-              <TableCell className="text-muted-foreground">{row.year ?? "-"}</TableCell>
-              <TableCell>
-                {row.featured ? <Badge>Yes</Badge> : <Badge variant="outline">No</Badge>}
-              </TableCell>
-              <TableCell>
-                <div className="flex justify-end gap-2">
-                  <Button variant="outline" size="sm" onClick={() => onEdit(row)} disabled={isBusy}>
-                    Edit
-                  </Button>
+          {rows.map((row) => {
+            const sub = PROJECT_SUBCATEGORIES.find((s) => s.slug === row.client);
+            const resolvedCategory = sub
+              ? sub.megaKey.charAt(0).toUpperCase() + sub.megaKey.slice(1)
+              : "General";
+
+            return (
+              <TableRow key={row.id}>
+                <TableCell className="max-w-[280px] truncate font-medium text-foreground">
+                  {row.title}
+                </TableCell>
+                <TableCell className="text-muted-foreground">{resolvedCategory}</TableCell>
+                <TableCell className="text-muted-foreground">{row.year ?? "-"}</TableCell>
+                <TableCell>
+                  {row.featured ? <Badge>Yes</Badge> : <Badge variant="outline">No</Badge>}
+                </TableCell>
+                <TableCell>
+                  <div className="flex justify-end gap-2">
+                    <Button variant="outline" size="sm" onClick={() => onEdit(row)} disabled={isBusy}>
+                      Edit
+                    </Button>
                   <Button variant="destructive" size="sm" onClick={() => onDelete(row)} disabled={isBusy}>
                     Delete
                   </Button>
                 </div>
               </TableCell>
             </TableRow>
-          ))}
+            );
+          })}
         </TableBody>
       </Table>
     </div>

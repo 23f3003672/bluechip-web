@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { FolderSearch } from "lucide-react";
 
 interface AdminPageHeadingProps {
   title: string;
@@ -15,13 +16,18 @@ export function AdminPageHeading({
   action,
 }: AdminPageHeadingProps) {
   return (
-    <div className="flex flex-wrap items-start justify-between gap-3">
+    <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/80 pb-5 mb-8">
       <div>
-        <h1 className="text-2xl font-semibold text-foreground">{title}</h1>
-        <p className="mt-1 text-sm text-muted-foreground">{description}</p>
-        {pending && <p className="mt-2 text-xs text-muted-foreground">Saving changes...</p>}
+        <h1 className="text-2xl font-bold tracking-tight text-slate-900">{title}</h1>
+        <p className="mt-1 text-xs text-muted-foreground">{description}</p>
+        {pending && (
+          <div className="mt-2 flex items-center gap-1.5 text-xs text-[#1a56a8] font-medium">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#1a56a8] animate-pulse" />
+            <span>Updating content...</span>
+          </div>
+        )}
       </div>
-      {action}
+      {action && <div className="shrink-0">{action}</div>}
     </div>
   );
 }
@@ -42,13 +48,16 @@ export function AdminEmptyState({
   return (
     <div
       className={cn(
-        "rounded-lg border border-dashed border-border bg-white p-8 text-center",
+        "rounded-xl border border-dashed border-slate-200 bg-white p-10 text-center flex flex-col items-center justify-center max-w-md mx-auto my-6 shadow-xs",
         className
       )}
     >
-      <p className="text-sm font-medium text-foreground">{title}</p>
-      <p className="mt-1 text-sm text-muted-foreground">{description}</p>
-      {action && <div className="mt-4">{action}</div>}
+      <div className="rounded-full bg-slate-50 p-4 border border-slate-100 text-slate-400 mb-4 shadow-2xs">
+        <FolderSearch className="h-6 w-6" />
+      </div>
+      <p className="text-sm font-semibold text-slate-800">{title}</p>
+      <p className="mt-1.5 text-xs text-muted-foreground max-w-xs leading-relaxed">{description}</p>
+      {action && <div className="mt-5">{action}</div>}
     </div>
   );
 }

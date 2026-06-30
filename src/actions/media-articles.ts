@@ -48,7 +48,54 @@ export async function getMediaArticles(): Promise<MediaArticle[]> {
     return [];
   }
 
-  return (data ?? []) as MediaArticle[];
+  const articles = (data ?? []) as MediaArticle[];
+
+  // Ensure exactly 8 items exist (display_order 1 to 8)
+  const existingOrders = new Set(articles.map((a) => a.display_order));
+  const missingSlots: number[] = [];
+  for (let i = 1; i <= 8; i++) {
+    if (!existingOrders.has(i)) {
+      missingSlots.push(i);
+    }
+  }
+
+  if (missingSlots.length > 0) {
+    const newArticles = missingSlots.map((slot) => ({
+      title: `Media Article ${slot}`,
+      slug: `media-article-${slot}`,
+      short_description: `Short description for Media Article ${slot}`,
+      content: `Full content for Media Article ${slot}`,
+      display_order: slot,
+      published_at: new Date().toISOString(),
+    }));
+
+    const { error: insertError } = await supabase
+      .from("media_articles")
+      .insert(newArticles);
+
+    if (insertError) {
+      console.error("Error auto-seeding missing media articles:", insertError);
+    } else {
+      // Re-fetch the complete seeded set
+      const { data: refreshedData, error: refreshError } = await supabase
+        .from("media_articles")
+        .select(`
+          *,
+          featured_image:media (
+            id,
+            url,
+            alt_text
+          )
+        `)
+        .order("display_order", { ascending: true });
+
+      if (!refreshError && refreshedData) {
+        return refreshedData as MediaArticle[];
+      }
+    }
+  }
+
+  return articles;
 }
 
 export async function updateMediaArticleAction(

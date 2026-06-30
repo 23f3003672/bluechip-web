@@ -122,7 +122,7 @@ export function ProjectsAdminModule({
       </div>
 
       <Dialog open={createOpen} onOpenChange={setCreateOpen}>
-        <DialogContent className="sm:max-w-3xl">
+        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-3xl">
           <DialogHeader>
             <DialogTitle>Create Project</DialogTitle>
             <DialogDescription>Add a new project record.</DialogDescription>
@@ -138,7 +138,7 @@ export function ProjectsAdminModule({
       </Dialog>
 
       <Dialog open={Boolean(editingProject)} onOpenChange={(open) => !open && setEditingProject(null)}>
-        <DialogContent className="sm:max-w-3xl">
+        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-3xl">
           <DialogHeader>
             <DialogTitle>Edit Project</DialogTitle>
             <DialogDescription>Update selected project details.</DialogDescription>

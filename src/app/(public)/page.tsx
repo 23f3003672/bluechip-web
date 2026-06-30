@@ -26,6 +26,8 @@ export const metadata: Metadata = {
  * The alternating light/dark pattern creates visual sectioning
  * without needing decorative dividers.
  */
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const supabase = await createClient();
 

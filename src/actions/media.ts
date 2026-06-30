@@ -12,6 +12,9 @@ const ALLOWED_MIME_TYPES = new Set([
   "image/webp",
   "image/gif",
   "image/svg+xml",
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 ]);
 const MAX_UPLOAD_SIZE_BYTES = 10 * 1024 * 1024;
 
@@ -47,7 +50,7 @@ export async function uploadMediaAction(
   if (!ALLOWED_MIME_TYPES.has(file.type)) {
     return {
       success: false,
-      error: "Unsupported file type. Upload JPG, PNG, WEBP, GIF, or SVG.",
+      error: "Unsupported file type. Upload JPG, PNG, WEBP, GIF, SVG, PDF, or Word Document.",
     };
   }
 
@@ -135,6 +138,16 @@ export async function deleteMediaAction(mediaId: string): Promise<ActionResult> 
 
   if (fetchError || !mediaItem) {
     return { success: false, error: fetchError?.message ?? "Media not found." };
+  }
+
+  // Set featured_image_id to NULL in referencing media articles to prevent cascade delete
+  const { error: updateError } = await supabase
+    .from("media_articles")
+    .update({ featured_image_id: null })
+    .eq("featured_image_id", mediaId);
+
+  if (updateError) {
+    console.error("Failed to update media_articles referencing deleted image:", updateError);
   }
 
   const { error: storageError } = await supabase.storage

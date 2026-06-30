@@ -14,16 +14,25 @@ function getMediaBySlug(slug: string) {
 
 async function getMediaBySlugFromDb(slug: string) {
   const supabase = await createClient();
-  const { data } = await supabase
-    .from("media")
-    .select("id, filename, url, storage_path, mime_type, size_bytes, alt_text, uploaded_at")
-    .order("uploaded_at", { ascending: false });
+  const parts = slug.split("-");
+  const idPrefix = parts[parts.length - 1];
 
-  if (!data?.length) {
+  if (!idPrefix || idPrefix.length !== 6) {
     return null;
   }
 
-  return mapMediaListToGalleryItems(data).find((item) => item.slug === slug) ?? null;
+  const { data } = await supabase
+    .from("media")
+    .select("id, filename, url, storage_path, mime_type, size_bytes, alt_text, uploaded_at")
+    .like("id", `${idPrefix}%`)
+    .maybeSingle();
+
+  if (!data) {
+    return null;
+  }
+
+  const mapped = mapMediaListToGalleryItems([data]);
+  return mapped.find((item) => item.slug === slug) ?? null;
 }
 
 export async function generateMetadata(

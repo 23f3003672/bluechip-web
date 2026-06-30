@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
+import { getSiteSettings } from "@/lib/site-settings";
 
 const COMPANY_LINKS = [
   { label: "Home", href: "/" },
@@ -51,19 +52,21 @@ const PROJECT_LINKS = [
 
 const INNOVATION_LINKS = [
   { label: "Composite Structures", href: "/projects/subcategory/composite-structures" },
-  { label: "Light Gauge Steel Frames", href: "/projects/subcategory/light-guage-steel-frames" },
+  { label: "Light Gauge Steel Frames", href: "/projects/subcategory/light-gauge-steel-frames" },
   { label: "Precast Wall & Slab Systems", href: "/projects/subcategory/precast-wall-slab-systems" },
   { label: "Self Supporting Roofing", href: "/projects/subcategory/self-supporting-roofing" },
   { label: "Suspended Slab Systems", href: "/projects/subcategory/suspended-slab-systems" },
 
   { label: "Hybrid Structural Solutions", href: "/projects/subcategory/hybrid-structural-solutions" },
-  { label: "Multi-Technology Configurations", href: "/projects/subcategory/multiple-technology-configurations" },
+  { label: "Multi-Technology Configurations", href: "/projects/subcategory/multi-technology-configurations" },
 
   { label: "Optimized Execution Methodologies", href: "/projects/subcategory/optimized-execution-methodologies" },
-  { label: "Speed, Safety, and Cost Efficiencies", href: "/projects/subcategory/speed-safety-cost-efficiencies" },
+  { label: "Speed, Safety, and Cost Efficiencies", href: "/projects/subcategory/speed-safety-and-cost-efficiencies" },
 ];
 
 export async function Footer() {
+  const settings = await getSiteSettings();
+
   return (
     <footer className="bg-[#222b3d] text-white">
       <div className="mx-auto max-w-[1500px] px-6 pt-14 md:px-10 xl:px-16">
@@ -163,16 +166,11 @@ export async function Footer() {
           {/* Company Description */}
           <div>
             <p className="text-[12px] font-semibold uppercase tracking-[0.28em] text-white/70 md:text-xs">
-              © 2026 BLUECHIP TECHNOLOGIES AND ENGINEERING PVT. LTD. ALL RIGHTS RESERVED.
+              © {new Date().getFullYear()} {settings.footer.company_name.toUpperCase()}. {settings.footer.copyright_text.toUpperCase()}
             </p>
 
             <p className="mt-6 max-w-5xl text-sm leading-[1.9] text-white/72 md:text-[11px]">
-              Established in 1998, Bluechip Engineering &amp; Technologies is an
-              integrated engineering and construction company delivering Civil,
-              Mechanical, Facade, and EPC solutions across industrial and
-              infrastructure sectors. Driven by a sustainable vision and a mission
-              to engineer responsible, future-ready infrastructure, we combine
-              technical expertise with innovation, quality, and safety.
+              {settings.footer.footer_note || "Established in 1998, Bluechip Engineering & Technologies is an integrated engineering and construction company delivering Civil, Mechanical, Facade, and EPC solutions across industrial and infrastructure sectors."}
             </p>
           </div>
 
@@ -180,7 +178,7 @@ export async function Footer() {
           <div className="flex flex-col items-start gap-3 lg:items-end lg:text-right">
             <Image
               src="/home/footer/footer-logo.webp"
-              alt="Bluechip Technologies and Engineering Pvt. Ltd."
+              alt={settings.footer.company_name}
               width={160}
               height={160}
               className="h-auto w-[75px] md:w-[80px] lg:translate-x-[-76px]"
@@ -188,14 +186,16 @@ export async function Footer() {
             />
 
             <div className="flex flex-col gap-[2px]">
-  <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-white/78 md:text-xs">
-    Civil | Mechanical | Facade | EPC
-  </p>
+              <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-white/78 md:text-xs">
+                Civil | Mechanical | Facade | EPC
+              </p>
 
-  <p className="text-[9px] italic text-white/68 md:text-[10px]">
-    Driven by Innovation, Powered by Technology
-  </p>
-</div>
+              {settings.footer.tagline ? (
+                <p className="text-[9px] italic text-white/68 md:text-[10px]">
+                  {settings.footer.tagline}
+                </p>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>

@@ -25,6 +25,7 @@ export function MediaForm({ onCreate }: MediaFormProps) {
     onCreate({
       id: `m-${Date.now()}`,
       slug: `${slugify(title)}-${Date.now().toString().slice(-4)}`,
+      type: "image",
       title,
       excerpt,
       recordedYear: Number(year),

@@ -11,7 +11,7 @@ export default async function CareersPage() {
   const supabase = await createClient();
   const { data } = await supabase
     .from("careers")
-    .select("id, title, slug, description, location, employment_type, department, posted_at, closing_date, published, created_at")
+    .select("*")
     .eq("published", true)
     .order("created_at", { ascending: false });
 

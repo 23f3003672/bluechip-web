@@ -14,6 +14,8 @@ export const careerFormSchema = z.object({
   department: z.string().default(""),
   responsibilities: z.string().default(""),
   qualifications: z.string().default(""),
+  responsibilities_file_url: z.string().default(""),
+  qualifications_file_url: z.string().default(""),
   posted_at: z.string().optional(),
   closing_date: z.string().optional(),
   published: z.boolean().default(true),
@@ -28,6 +30,8 @@ export const careerMutationSchema = z.object({
   department: z.string().default(""),
   responsibilities: z.string().default(""),
   qualifications: z.string().default(""),
+  responsibilities_file_url: z.string().default(""),
+  qualifications_file_url: z.string().default(""),
   posted_at: z.string().nullable().optional(),
   closing_date: z.string().nullable().optional(),
   published: z.boolean().default(true),
@@ -36,3 +40,15 @@ export const careerMutationSchema = z.object({
 export type CareerFormInput = z.input<typeof careerFormSchema>;
 export type CareerFormValues = z.output<typeof careerFormSchema>;
 export type CareerMutationInput = z.infer<typeof careerMutationSchema>;
+
+export const jobApplicationSchema = z.object({
+  name: z.string().min(2, "Name is required"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().min(6, "Valid phone number is required"),
+  resume_url: z.string().min(1, "Resume file is required"),
+  cover_letter: z.string().optional().default(""),
+  job_id: z.string().uuid().nullable().optional(),
+});
+
+export type JobApplicationInput = z.infer<typeof jobApplicationSchema>;
+

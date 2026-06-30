@@ -31,9 +31,23 @@ export const serviceFormSchema = z.object({
   icon: z.string().default(""),
 });
 
+function countWords(str: string): number {
+  return str.trim().split(/\s+/).filter(Boolean).length;
+}
+
 export const faqFormSchema = z.object({
-  question: z.string().min(5, "Question is required"),
-  answer: z.string().min(5, "Answer is required"),
+  question: z
+    .string()
+    .min(5, "Question is required")
+    .refine((val) => countWords(val) <= 30, {
+      message: "Question cannot exceed 30 words.",
+    }),
+  answer: z
+    .string()
+    .min(5, "Answer is required")
+    .refine((val) => countWords(val) <= 100, {
+      message: "Answer cannot exceed 100 words.",
+    }),
 });
 
 export const mediaArticleFormSchema = z.object({

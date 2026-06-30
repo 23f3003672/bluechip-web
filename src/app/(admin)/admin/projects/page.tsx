@@ -2,6 +2,8 @@ import { createProjectAction, deleteProjectAction, updateProjectAction } from "@
 import { ProjectsAdminModule } from "@/components/admin/projects/ProjectsAdminModule";
 import { createClient } from "@/lib/supabase/server";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminProjectsPage() {
   const supabase = await createClient();
 
@@ -17,10 +19,31 @@ export default async function AdminProjectsPage() {
       .order("uploaded_at", { ascending: false }),
   ]);
 
+  let categories = categoriesData ?? [];
+
+  if (categories.length === 0) {
+    const defaultCategories = [
+      { name: "Business", slug: "business", description: "Business services and industrial structures" },
+      { name: "Projects", slug: "projects", description: "Key projects and urban/institutional sectors" },
+      { name: "Innovations", slug: "innovations", description: "Construction technologies and engineering excellence" },
+    ];
+
+    const { data: seededData, error: seedError } = await supabase
+      .from("categories")
+      .insert(defaultCategories)
+      .select();
+
+    if (!seedError && seededData) {
+      categories = seededData;
+    } else if (seedError) {
+      console.error("Failed to seed categories:", seedError);
+    }
+  }
+
   return (
     <ProjectsAdminModule
       initialProjects={projectsData ?? []}
-      categories={categoriesData ?? []}
+      categories={categories}
       mediaItems={mediaData ?? []}
       createProjectAction={createProjectAction}
       updateProjectAction={updateProjectAction}

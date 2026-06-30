@@ -8,6 +8,7 @@ import type {
   RecognitionItem,
 } from "@/lib/mock-data";
 import type { FAQ, Media, Project, Recognition, Service, Visionary } from "@/types";
+import { PROJECT_SUBCATEGORIES } from "@/lib/project-subcategories";
 import { slugify, truncate } from "@/lib/utils";
 
 function resolvePhase(year: number | null): JourneyPhase {
@@ -30,6 +31,12 @@ export function mapProjectToJourneyProject(project: Project): JourneyProject {
   const year = project.year ?? new Date().getFullYear();
   const location = project.location ?? "India";
 
+  const sub = PROJECT_SUBCATEGORIES.find((s) => s.slug === project.client);
+  const categoryName = sub
+    ? sub.megaKey.charAt(0).toUpperCase() + sub.megaKey.slice(1)
+    : "General";
+  const projectTypeName = sub ? sub.label : (project.client || "Project Delivery");
+
   return {
     id: project.id,
     slug: project.slug,
@@ -39,8 +46,8 @@ export function mapProjectToJourneyProject(project: Project): JourneyProject {
       project.excerpt?.trim() ||
       truncate(project.description, 150) ||
       "Precision-led project delivery across infrastructure and EPC domains.",
-    category: project.category_id || "General",
-    projectType: project.client || "Project Delivery",
+    category: categoryName,
+    projectType: projectTypeName,
     phase: resolvePhase(project.year),
     thumbnailUrl:
       project.thumbnail_url ||
@@ -72,6 +79,7 @@ export function mapMediaToGalleryItem(row: Media): MediaGalleryItem {
   return {
     id: row.id,
     slug: computedSlug,
+    type: "image",
     title: baseTitle,
     excerpt:
       row.alt_text?.trim() ||
