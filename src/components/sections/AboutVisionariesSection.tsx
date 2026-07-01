@@ -33,13 +33,13 @@ export function AboutVisionariesSection({
 
   return (
     <section
-      className="overflow-hidden bg-white py-20 lg:py-24"
+      className="overflow-hidden bg-white py-12 lg:py-16"
       aria-labelledby="about-visionaries-title"
     >
       <div className="px-6 md:px-12 lg:px-20">
 
         {/* TOP SECTION */}
-        <div className="mb-16 flex items-start justify-between">
+        <div className="mb-8 flex items-start justify-between">
 
           {/* HEADING */}
           <div>
@@ -104,7 +104,7 @@ className="-ml-325 mt-22"
               key={person.id}
               className="group [perspective:1400px]"
             >
-              <div className="relative h-[400px] w-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+              <div className="relative h-[300px] w-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
 
                 {/* FRONT SIDE */}
                 <div className="absolute inset-0 overflow-hidden [backface-visibility:hidden]">
@@ -121,21 +121,21 @@ className="-ml-325 mt-22"
                 </div>
 
                 {/* BACK SIDE */}
-                <div className="absolute inset-0 flex rotate-y-180 flex-col justify-between bg-gradient-to-b from-[#0f76be] to-[#0a49a5] p-8 text-white [backface-visibility:hidden] [transform:rotateY(180deg)]">
+                <div className="absolute inset-0 flex rotate-y-180 flex-col justify-between bg-gradient-to-b from-[#0f76be] to-[#0a49a5] p-6 text-white [backface-visibility:hidden] [transform:rotateY(180deg)]">
 
                   {/* TOP CONTENT */}
                   <div>
-                    <h3 className="max-w-[220px] text-[28px] font-semibold leading-[1.08] tracking-[-0.03em]">
+                    <h3 className="max-w-[220px] text-[20px] font-semibold leading-[1.08] tracking-[-0.03em]">
                       {person.name}
                     </h3>
 
-                    <p className="mt-3 text-[18px] text-white/90">
+                    <p className="mt-2 text-[14px] text-white/90">
                       {person.role}
                     </p>
                   </div>
 
                   {/* DESCRIPTION */}
-                  <p className="max-w-[260px] text-[18px] leading-[1.6] text-white/95">
+                  <p className="max-w-[260px] text-[13.5px] leading-relaxed text-white/95">
                     {person.bio}
                   </p>
                 </div>

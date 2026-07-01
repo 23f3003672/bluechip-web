@@ -61,8 +61,8 @@ function RecognitionForm({
       title: "",
       organization: "",
       description: "",
-      image_url: "",
       year: new Date().getFullYear(),
+      category: "industry-awards",
     },
   });
 
@@ -88,9 +88,18 @@ function RecognitionForm({
 
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-1.5">
-          <Label>Image URL</Label>
-          <Input {...register("image_url")} />
-          {errors.image_url && <p className="text-xs text-destructive">{errors.image_url.message}</p>}
+          <Label>Category</Label>
+          <select
+            {...register("category")}
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <option value="international">International</option>
+            <option value="industry-awards">Industry Awards</option>
+            <option value="infrastructure">Infrastructure</option>
+            <option value="manufacturing">Manufacturing</option>
+            <option value="media">Media</option>
+          </select>
+          {errors.category && <p className="text-xs text-destructive">{errors.category.message}</p>}
         </div>
         <div className="space-y-1.5">
           <Label>Year</Label>
@@ -99,7 +108,7 @@ function RecognitionForm({
         </div>
       </div>
 
-      <div className="flex justify-end">
+      <div className="flex justify-end pt-2">
         <Button type="submit" disabled={isSubmitting}>{isSubmitting ? "Saving..." : submitLabel}</Button>
       </div>
     </form>
@@ -224,8 +233,8 @@ export function RecognitionsAdminModule({
                 title: editing.title,
                 organization: editing.issuer,
                 description: editing.description ?? "",
-                image_url: editing.image_url ?? "",
                 year: editing.year,
+                category: (editing.category as any) ?? "industry-awards",
               }}
               onSubmit={async (values) => {
                 startTransition(async () => {

@@ -6,7 +6,9 @@ import type {
   MediaGalleryItem,
   MockFaq,
   RecognitionItem,
+  RecognitionCategory,
 } from "@/lib/mock-data";
+import { RECOGNITION_CATEGORY_LABELS } from "@/lib/mock-data";
 import type { FAQ, Media, Project, Recognition, Service, Visionary } from "@/types";
 import { PROJECT_SUBCATEGORIES } from "@/lib/project-subcategories";
 import { slugify, truncate } from "@/lib/utils";
@@ -59,12 +61,15 @@ export function mapProjectToJourneyProject(project: Project): JourneyProject {
 }
 
 export function mapRecognitionToPublicItem(row: Recognition): RecognitionItem {
+  const category = (row.category as RecognitionCategory) || "industry-awards";
+  const categoryLabel = RECOGNITION_CATEGORY_LABELS[category] || "Industry Recognition";
+
   return {
     id: row.id,
     title: row.title,
     subtitle: row.description?.trim() || `Recognition ${row.year}`,
-    categoryLabel: "Industry Recognition",
-    category: "industry-awards",
+    categoryLabel,
+    category,
     organisedBy: row.issuer,
     emblemImageUrl:
       row.image_url ||

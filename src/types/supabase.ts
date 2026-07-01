@@ -137,6 +137,7 @@ export interface Recognition {
   published: boolean;
   sort_order: number;
   created_at: string;
+  category: string;
 }
 
 export type RecognitionInsert = Omit<Recognition, "id" | "created_at">;

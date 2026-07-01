@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, useAnimationFrame } from "framer-motion";
 
 const IMAGES = [
   "/home/about/home-about-1.webp",
@@ -12,6 +13,16 @@ const IMAGES = [
 ];
 
 export function AboutJourneySection() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useAnimationFrame((time) => {
+    const durationPerImage = 4000; // 4 seconds
+    const totalDuration = durationPerImage * IMAGES.length; // 20 seconds
+    const progress = (time % totalDuration) / totalDuration;
+    const index = Math.floor(progress * IMAGES.length);
+    setActiveIndex((IMAGES.length - 1 - index) % IMAGES.length);
+  });
+
   return (
     <section
       className="overflow-hidden bg-white pb-0 pt-12 md:pt-16 lg:pt-20"
@@ -21,29 +32,29 @@ export function AboutJourneySection() {
 
         {/* LEFT: pale timeline panel */}
         <div className="relative z-20 order-2 lg:order-1">
-          <div className="flex min-h-[750px] flex-col justify-between bg-[#f3f7fb] p-8 md:p-10 lg:px-12 lg:pb-20 lg:pt-20">
+          <div className="flex min-h-[520px] lg:min-h-[660px] flex-col justify-between bg-[#f3f7fb] p-8 md:p-10 lg:px-12 lg:pb-16 lg:pt-10">
 
             {/* TOP CONTENT */}
-            <div className="relative lg:mt-13">
+            <div className="relative lg:mt-2">
 
   {/* SMALL HEADING */}
   <div className="relative top-0">
-    <span className="block text-[22px] font-medium tracking-[0.02em] text-[#78868e]">
+    <span className="block text-[18px] font-medium tracking-[0.02em] text-[#78868e]">
       Our Journey &amp; Milestones
     </span>
   </div>
 
   {/* MAIN HEADING */}
-  <div className="relative top-3">
-    <h3 className="mt-3 max-w-[520px] text-[20px] font-normal leading-[1.08] tracking-[-0.02em] text-[#222b40] md:text-[22px] lg:text-[32px]">
+  <div className="relative top-1">
+    <h3 className="mt-1 max-w-[520px] text-[20px] font-normal leading-[1.08] tracking-[-0.02em] text-[#222b40] md:text-[22px] lg:text-[32px]">
       Built steadily since 1998.
     </h3>
   </div>
 
   {/* BUTTON */}
-  <div className="relative top-20 mt-14">
+  <div className="relative top-6 mt-6">
     <a
-      className="inline-block bg-[#496a9c] px-8 py-[16px] text-[14px] font-bold uppercase tracking-[0.08em] text-white shadow-sm transition-colors duration-300 hover:bg-[#c9962d]"
+      className="inline-block bg-[#496a9c] px-6 py-[12px] text-[12px] font-bold uppercase tracking-[0.08em] text-white shadow-sm transition-colors duration-300 hover:bg-[#c9962d]"
       href="/projects"
     >
       View our growth story
@@ -92,33 +103,21 @@ export function AboutJourneySection() {
                       className="flex items-end gap-10 pr-10"
                     >
                       {IMAGES.map((src, i) => {
-                        if (i === 0) {
-                          return (
-                            <div
-                              key={i}
-                              className="relative h-44 w-44 shrink-0 overflow-hidden border-[6px] border-[#eef2f6] shadow-[0_14px_30px_rgba(15,23,42,0.14)]"
-                            >
-                              <Image
-                                src={src}
-                                alt={`Project ${i + 1}`}
-                                fill
-                                sizes="176px"
-                                className="object-cover"
-                              />
-                            </div>
-                          );
-                        }
-
+                        const isActive = activeIndex === i;
                         return (
                           <div
                             key={i}
-                            className="relative h-40 w-40 shrink-0 overflow-hidden"
+                            className={`relative shrink-0 overflow-hidden transition-all duration-500 ${
+                              isActive
+                                ? "h-36 w-36 border-[6px] border-[#eef2f6] shadow-[0_14px_30px_rgba(15,23,42,0.14)]"
+                                : "h-32 w-32"
+                            }`}
                           >
                             <Image
                               src={src}
                               alt={`Project ${i + 1}`}
                               fill
-                              sizes="160px"
+                              sizes={isActive ? "185px" : "128px"}
                               className="object-cover"
                             />
                           </div>
@@ -133,15 +132,24 @@ export function AboutJourneySection() {
         </div>
 
         {/* RIGHT: building image only */}
-        <div className="relative order-1 overflow-hidden bg-[#061224] lg:order-2 lg:min-h-[750px]">
-          <Image
-            src="/home/about/home-about-main.webp"
-            alt="BlueChip building"
-            fill
-            priority
-            sizes="(min-width:1024px) 60vw, 100vw"
-            className="object-cover object-center"
-          />
+        <div className="relative order-1 overflow-hidden bg-[#061224] lg:order-2 min-h-[520px] lg:min-h-[660px]">
+          {IMAGES.map((src, idx) => (
+            <div
+              key={src}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                activeIndex === idx ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <Image
+                src={src}
+                alt="BlueChip building"
+                fill
+                priority={idx === 0}
+                sizes="(min-width:1024px) 60vw, 100vw"
+                className="object-cover object-center"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>

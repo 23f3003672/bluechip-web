@@ -35,8 +35,9 @@ export async function createRecognitionAction(
       title: input.title,
       issuer: input.organization,
       description: input.description || null,
-      image_url: input.image_url || null,
+      image_url: "",
       year: input.year,
+      category: input.category,
       published: true,
       sort_order: 0,
     })
@@ -67,8 +68,9 @@ export async function updateRecognitionAction(
       title: input.title,
       issuer: input.organization,
       description: input.description || null,
-      image_url: input.image_url || null,
+      image_url: "",
       year: input.year,
+      category: input.category,
     })
     .eq("id", id);
 

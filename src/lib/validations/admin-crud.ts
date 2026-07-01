@@ -6,12 +6,12 @@ export const recognitionFormSchema = z.object({
   title: z.string().min(2, "Title is required"),
   organization: z.string().min(2, "Organization is required"),
   description: z.string().default(""),
-  image_url: z.union([z.literal(""), z.string().url("Image URL must be valid")]),
   year: z.coerce
     .number()
     .int("Year must be a whole number")
     .min(1900, "Year must be 1900 or later")
     .max(2100, "Year must be 2100 or earlier"),
+  category: z.enum(["international", "industry-awards", "infrastructure", "manufacturing", "media"]),
 });
 
 export const visionaryFormSchema = z.object({

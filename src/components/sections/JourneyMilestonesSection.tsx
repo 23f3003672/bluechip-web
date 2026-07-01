@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, useAnimationFrame } from "framer-motion";
 
 const IMAGES = [
   "/home/about/home-about-1.webp",
@@ -12,15 +13,41 @@ const IMAGES = [
 ];
 
 export function JourneyMilestonesSection() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useAnimationFrame((time) => {
+    const durationPerImage = 4000; // 4 seconds
+    const totalDuration = durationPerImage * IMAGES.length; // 20 seconds
+    const progress = (time % totalDuration) / totalDuration;
+    const index = Math.floor(progress * IMAGES.length);
+    setActiveIndex(index);
+  });
+
   return (
     <section className="overflow-hidden bg-white pb-0 pt-12 md:pt-16 lg:pt-20" aria-labelledby="home-about-title">
       <div className="grid w-full grid-cols-1 items-stretch gap-0 lg:grid-cols-2">
 
         {/* LEFT: dark hero with background image */}
-        <div className="relative overflow-hidden bg-[#061224] lg:min-h-[860px]">
-          <Image src="/home/about/home-about-main.webp" alt="BlueChip building" fill priority sizes="(min-width:1024px) 60vw, 100vw" className="object-cover object-center" />
+        <div className="relative overflow-hidden bg-[#061224] min-h-[520px] lg:min-h-[660px]">
+          {IMAGES.map((src, idx) => (
+            <div
+              key={src}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                activeIndex === idx ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <Image
+                src={src}
+                alt="BlueChip building"
+                fill
+                priority={idx === 0}
+                sizes="(min-width:1024px) 60vw, 100vw"
+                className="object-cover object-center"
+              />
+            </div>
+          ))}
           <div className="absolute inset-0 bg-[#1d2537]/90" />
-          <div className="relative z-10 max-w-[720px] px-6 pt-40 pb-16 md:pt-48 md:pb-24 lg:px-16 lg:pt-[280px]">
+          <div className="relative z-10 max-w-[720px] px-6 pt-20 pb-10 md:pt-24 md:pb-12 lg:px-16 lg:pt-[160px]">
             <span className="block text-[#d49a2a] font-medium text-[18px]">About BlueChip</span>
 
             <h2 id="home-about-title" className="mt-6 text-white text-[34px] font-semibold leading-[1.25] tracking-[-0.02em] md:text-[42px] lg:text-[48px] xl:text-[52px]">
@@ -29,22 +56,22 @@ export function JourneyMilestonesSection() {
               we build trust.
             </h2>
 
-            <p className="mt-14 max-w-[620px] text-[15px] leading-[1.7] text-[rgba(255,255,255,0.9)] md:text-[18px] lg:text-[20px]">
+            <p className="mt-8 max-w-[620px] text-[15px] leading-[1.7] text-[rgba(255,255,255,0.9)] md:text-[18px] lg:text-[20px]">
               What began as a commitment to honest craftsmanship has grown into a company shaped by responsibility and trust.
             </p>
 
-            <div className="mt-10">
+            <div className="mt-8">
               <a
-  className="inline-block text-[18px] font-normal text-white underline underline-offset-[6px] decoration-[#d49a2a] transition-opacity hover:opacity-80"
-  href="/about"
->
+                className="inline-block text-[18px] font-normal text-white underline underline-offset-[6px] decoration-[#d49a2a] transition-opacity hover:opacity-80"
+                href="/about"
+              >
                 Read our story →
               </a>
             </div>
 
-            <div className="mt-20" >
+            <div className="mt-10" >
               <a className="inline-block bg-[#496a9c] px-6 py-[14px] text-[10px] font-semibold uppercase tracking-[0.12em] text-white shadow-sm transition-colors duration-300 hover:bg-[#c9962d]"
-    href="/projects">
+                href="/projects">
                 View our growth story
               </a>
             </div>
@@ -53,7 +80,7 @@ export function JourneyMilestonesSection() {
 
         {/* RIGHT: pale timeline panel */}
         <div className="relative z-20">
-          <div className="flex min-h-[860px] flex-col justify-end bg-[#f3f7fb] p-8 md:p-10 lg:px-12 lg:pb-20 lg:pt-10">
+          <div className="flex min-h-[520px] lg:min-h-[660px] flex-col justify-end bg-[#f3f7fb] p-8 md:p-10 lg:px-12 lg:pb-16 lg:pt-10">
             <span className="block text-[#9aa3a9] text-[18px]">Our Journey &amp; Milestones</span>
 
             <h3 className="mt-4 text-[#1f2933] text-[26px] md:text-[34px] lg:text-[36px] font-normal">Built steadily since 1998.</h3>
@@ -76,26 +103,21 @@ export function JourneyMilestonesSection() {
                 {[...Array(2)].map((_, blockIdx) => (
                   <div key={blockIdx} className="flex items-end gap-8 pr-8">
                     {IMAGES.map((src, i) => {
-                      if (i === 0) {
-                        return (
-                          <div key={i} className="relative h-36 w-36 shrink-0 overflow-hidden border-[6px] border-[#eef2f6] shadow-[0_14px_30px_rgba(15,23,42,0.14)]">
-                            <Image
-                              src={src}
-                              alt={`Project ${i + 1}`}
-                              fill
-                              sizes="185px"
-                              className="object-cover"
-                            />
-                          </div>
-                        );
-                      }
+                      const isActive = activeIndex === i;
                       return (
-                        <div key={i} className="relative h-32 w-32 shrink-0 overflow-hidden">
+                        <div
+                          key={i}
+                          className={`relative shrink-0 overflow-hidden transition-all duration-500 ${
+                            isActive
+                              ? "h-36 w-36 border-[6px] border-[#eef2f6] shadow-[0_14px_30px_rgba(15,23,42,0.14)]"
+                              : "h-32 w-32"
+                          }`}
+                        >
                           <Image
                             src={src}
                             alt={`Project ${i + 1}`}
                             fill
-                            sizes="128px"
+                            sizes={isActive ? "185px" : "128px"}
                             className="object-cover"
                           />
                         </div>

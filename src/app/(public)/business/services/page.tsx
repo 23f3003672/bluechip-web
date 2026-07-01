@@ -2,6 +2,8 @@ import { ProjectsGallerySection } from "@/components/sections/ProjectGallerySect
 
 import { getProjectsByColumnTitle } from "@/lib/project-subcategory-server-utils";
 
+export const dynamic = "force-dynamic";
+
 export default async function ServicesPage() {
   const projects = await getProjectsByColumnTitle("Services");
 

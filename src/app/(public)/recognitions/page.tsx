@@ -14,7 +14,7 @@ export default async function RecognitionsPage() {
   const supabase = await createClient();
   const { data } = await supabase
     .from("recognitions")
-    .select("id, title, issuer, year, description, image_url, published, sort_order, created_at")
+    .select("id, title, issuer, year, description, image_url, published, sort_order, created_at, category")
     .order("year", { ascending: false });
 
   const records = data?.length ? data.map(mapRecognitionToPublicItem) : RECOGNITIONS;

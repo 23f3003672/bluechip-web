@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useMemo, useState } from "react";
 import {
   RECOGNITIONS,
@@ -7,7 +8,6 @@ import {
   type RecognitionItem,
   type RecognitionCategory,
 } from "@/lib/mock-data";
-import { Container } from "@/components/layout/Container";
 
 type FilterType = "all" | RecognitionCategory;
 
@@ -31,12 +31,55 @@ const GROUP_ORDER: RecognitionCategory[] = [
 const INITIAL_ITEMS = 5;
 const LOAD_STEP = 3;
 
+function LaurelBranch() {
+  return (
+    <div className="relative h-32 w-12 select-none">
+      <Image
+        src="/laurel-wreath.svg"
+        alt="Laurel Branch"
+        fill
+        className="object-contain"
+        priority
+      />
+    </div>
+  );
+}
+
+function LaurelWreath({ text }: { text: string }) {
+  return (
+    <div className="flex items-center justify-center gap-2">
+      <div className="shrink-0">
+        <LaurelBranch />
+      </div>
+
+      <div
+        className="
+          w-[220px]
+          px-2
+          text-center
+          text-[10.7px]
+          font-normal
+          uppercase
+          tracking-[0.08em]
+          leading-[1.7]
+          text-[#222b3d]
+        "
+      >
+        {text}
+      </div>
+
+      <div className="shrink-0 scale-x-[-1]">
+        <LaurelBranch />
+      </div>
+    </div>
+  );
+}
+
 function RecognitionRow({
   title,
   subtitle,
   categoryLabel,
   organisedBy,
-  emblemImageUrl,
 }: {
   title: string;
   subtitle: string;
@@ -44,40 +87,48 @@ function RecognitionRow({
   organisedBy: string;
   emblemImageUrl: string;
 }) {
+  const lines = subtitle.split("\n").map((l) => l.trim()).filter(Boolean);
+  const mainText = lines[0] || "";
+  const subText = lines.slice(1).join("\n");
+
   return (
-    <article className="grid items-center gap-8 py-8 md:grid-cols-[240px_1fr_1.15fr] md:gap-10 md:py-10">
-      <div className="flex justify-center md:justify-start">
-        <div className="relative size-[170px] overflow-hidden rounded-full border-4 border-[#818ca3]/65 bg-[#eff2f8]">
-          <div
-            className="absolute inset-0 bg-cover bg-center opacity-55 grayscale"
-            style={{ backgroundImage: `url(${emblemImageUrl})` }}
-            role="img"
-            aria-label={title}
-          />
-          <div className="absolute inset-0 rounded-full ring-8 ring-[#f1f3f7]" />
-        </div>
+    <article className="grid items-center gap-10 py-10 md:grid-cols-[340px_1.3fr_1fr]">
+      <div className="flex justify-center">
+        <LaurelWreath text={title} />
       </div>
 
-      <div>
-        <h3 className="text-4xl font-medium tracking-tight text-[#1f273b] md:text-5xl">
-          {title}
+      <div className="flex flex-col gap-1">
+        <h3 className="text-[16.5px] font-semibold text-black leading-tight">
+          {mainText}
         </h3>
-        <p className="mt-2 text-3xl text-[#738096] md:text-4xl">{subtitle}</p>
+        {subText && (
+          <p className="text-[14px] font-normal text-[#78868e] leading-normal whitespace-pre-line">
+            {subText}
+          </p>
+        )}
       </div>
 
-      <dl className="grid gap-3 text-3xl md:text-4xl">
+      <dl className="grid gap-2 text-[12.5px]">
         <div className="flex items-baseline gap-3">
-          <dt className="text-[#8a95aa]">Category</dt>
-          <dd className="text-[#2d374d]">{categoryLabel}</dd>
+          <dt className="text-[#78868e]">Category</dt>
+          <dd className="font-normal text-[#222b3d]">{categoryLabel}</dd>
         </div>
         <div className="flex items-baseline gap-3">
-          <dt className="text-[#8a95aa]">Organised by</dt>
-          <dd className="text-[#2d374d]">{organisedBy}</dd>
+          <dt className="text-[#78868e]">Organised by</dt>
+          <dd className="font-normal text-[#222b3d]">{organisedBy}</dd>
         </div>
       </dl>
     </article>
   );
 }
+
+const GROUP_HEADING_LABELS: Record<RecognitionCategory, string> = {
+  international: "International Delegations",
+  "industry-awards": "Industry Awards",
+  infrastructure: "National Infrastructure Projects",
+  manufacturing: "Manufacturing",
+  media: "Media Awards",
+};
 
 export function RecognitionsSection({
   initialRecords = RECOGNITIONS,
@@ -113,11 +164,11 @@ export function RecognitionsSection({
   };
 
   return (
-    <section className="bg-[#f3f5f9] pb-14" aria-labelledby="recognitions-title">
+    <section className="bg-[#ffffff] pb-14" aria-labelledby="recognitions-title">
       <div className="border-b border-[#dde2ea]">
-        <Container>
+        <div className="mx-auto w-full max-w-[1300px] px-4 md:px-8">
           <div className="flex flex-col gap-4 py-4 md:flex-row md:items-center md:justify-between">
-            <p className="text-3xl font-medium text-[#2b3243]">Recognitions</p>
+            <p className="text-[12.5px] font-medium text-black">Recognitions</p>
             <div className="flex flex-wrap items-center gap-6">
               {FILTERS.map((filter) => {
                 const isActive = filter.key === activeFilter;
@@ -126,7 +177,8 @@ export function RecognitionsSection({
                     key={filter.key}
                     type="button"
                     onClick={() => onChangeFilter(filter.key)}
-                    className={isActive ? "text-base font-semibold uppercase tracking-wide text-primary" : "text-base font-medium uppercase tracking-wide text-[#3d4454] hover:text-primary"}
+                    className={`text-[11.5px] font-medium uppercase tracking-[0.08em] transition-colors ${isActive ? "text-[#78868e]" : "text-black hover:text-[#78868e]"
+                      }`}
                   >
                     {filter.label}
                   </button>
@@ -134,13 +186,13 @@ export function RecognitionsSection({
               })}
             </div>
           </div>
-        </Container>
+        </div>
       </div>
 
-      <Container>
+      <div className="mx-auto w-full max-w-[1300px] px-4 md:px-8">
         <h1
           id="recognitions-title"
-          className="pt-10 text-6xl font-semibold tracking-tight text-[#20293d] md:pt-14 md:text-7xl"
+          className="pt-10 text-[26.7px] font-semibold tracking-tight text-[#222b3d] md:pt-14"
         >
           Recognised for Excellence.
         </h1>
@@ -151,9 +203,9 @@ export function RecognitionsSection({
               <div className="mb-2 flex items-center gap-4 md:mb-3">
                 <h2
                   id={`recognitions-${group.category}`}
-                  className="text-5xl font-semibold tracking-tight text-[#262f44] md:text-6xl"
+                  className="text-[19.4px] font-semibold tracking-tight text-[#222b3d]"
                 >
-                  {RECOGNITION_CATEGORY_LABELS[group.category]}
+                  {GROUP_HEADING_LABELS[group.category]}
                 </h2>
                 <div className="h-px flex-1 bg-[#d6dbe5]" aria-hidden="true" />
               </div>
@@ -176,7 +228,7 @@ export function RecognitionsSection({
             </button>
           </div>
         ) : null}
-      </Container>
+      </div>
     </section>
   );
 }

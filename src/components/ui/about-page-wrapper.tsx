@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { AboutLoadingScreen } from "@/components/ui/about-loading-screen";
 
-const TOTAL_ANIM_MS = 2500 + 200 + 1000 + 800 + 100; // assemble + buffer + hold + exit + buffer ≈ 4.6s
+// assemble 1700 + buffer 200 + hold 1100 + exit 800 + 100 ≈ 3.9s
+const TOTAL_ANIM_MS = 1700 + 200 + 1100 + 800 + 100;
 
 export function AboutPageWrapper({ children }: { children: React.ReactNode }) {
   const [ready, setReady] = useState(false);

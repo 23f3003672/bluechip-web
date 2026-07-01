@@ -8,9 +8,10 @@ import { createClient } from "@/lib/supabase/server";
 
 export default async function AdminRecognitionsPage() {
   const supabase = await createClient();
+  
   const { data } = await supabase
     .from("recognitions")
-    .select("id, title, issuer, year, description, image_url, published, sort_order, created_at")
+    .select("id, title, issuer, year, description, image_url, published, sort_order, created_at, category")
     .order("created_at", { ascending: false });
 
   return (
