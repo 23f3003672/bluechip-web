@@ -17,8 +17,6 @@ export function AboutPageWrapper({ children }: { children: React.ReactNode }) {
   return (
     <>
       <AboutLoadingScreen />
-      {/* Children are mounted immediately (good for SEO / server data),
-          but invisible until the animation finishes */}
       <div
         style={{
           opacity: ready ? 1 : 0,

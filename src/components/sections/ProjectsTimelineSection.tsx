@@ -42,23 +42,26 @@ export function ProjectsTimelineSection({
     useState<FilterKey>("all");
 
   const filteredProjects = useMemo(() => {
-    if (activeFilter === "all") {
-      return initialProjects;
+    let list = initialProjects;
+    if (activeFilter !== "all") {
+      list = initialProjects.filter(
+        (project) => project.phase === activeFilter
+      );
     }
-
-    return initialProjects.filter(
-      (project) => project.phase === activeFilter
-    );
+    
+    // Use featured projects to only show the "best looking" ones
+    const featured = list.filter(p => p.featured);
+    return featured.length > 0 ? featured : list;
   }, [activeFilter, initialProjects]);
 
   const tiles = useMemo(
-    () => buildTiles(filteredProjects, 120),
+    () => buildTiles(filteredProjects, 90),
     [filteredProjects]
   );
 
   return (
     <section
-      className="bg-[#f5f8ff] py-10 md:py-14"
+      className="bg-[#f5f8ff] pt-2 pb-10 md:pt-4 md:pb-14"
       aria-labelledby="journey-timeline-title"
     >
       <div className="mx-auto w-full max-w-[1850px] px-6 md:px-10 lg:px-16">
@@ -78,7 +81,7 @@ export function ProjectsTimelineSection({
           </div>
 
           {/* Filter Buttons */}
-          <div className="inline-flex w-full max-w-[460px] overflow-hidden rounded-full border border-[#d4d9e2] bg-[#f6f8fb] shadow-sm">
+          <div className="inline-flex w-full max-w-fit overflow-hidden rounded-full border border-[#d4d9e2] bg-[#f6f8fb] shadow-sm">
             {filterTabs.map((tab) => {
               const isActive = tab.key === activeFilter;
 
@@ -89,8 +92,8 @@ export function ProjectsTimelineSection({
                   onClick={() => setActiveFilter(tab.key)}
                   className={
                     isActive
-                      ? "flex-1 bg-gradient-to-r from-[#023d9f] via-[#117ab2] to-[#023d9f] px-4 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-white"
-                      : "flex-1 border-l border-[#d4d9e2] px-4 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#677083] first:border-l-0 hover:bg-[#eef2f8]"
+                      ? "bg-gradient-to-r from-[#023d9f] via-[#117ab2] to-[#023d9f] px-3 md:px-4 py-2 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-white transition-all duration-300"
+                      : "border-l border-[#d4d9e2] px-3 md:px-4 py-2 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#677083] first:border-l-0 hover:bg-[#eef2f8] transition-all duration-300"
                   }
                 >
                   {tab.label}

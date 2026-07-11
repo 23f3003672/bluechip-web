@@ -542,6 +542,7 @@ export interface JourneyProject {
   phase: JourneyPhase;
   thumbnailUrl: string;
   heroImageUrl: string;
+  featured?: boolean;
 }
 
 export const JOURNEY_PROJECTS: JourneyProject[] = [

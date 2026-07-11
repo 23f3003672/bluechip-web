@@ -81,24 +81,29 @@ function TextBlock({
   excerpt?: string;
   recordedYear?: number;
   className: string;
-  direction?: "left" | "right" | "top";
+  direction?: "left" | "right" | "top" | "bottom";
 }) {
   const variants = {
     hidden:
       direction === "left"
         ? {
-            rotateY: 90,
-            opacity: 0,
-          }
+          rotateY: 90,
+          opacity: 0,
+        }
         : direction === "right"
-        ? {
+          ? {
             rotateY: -90,
             opacity: 0,
           }
-        : {
-            rotateX: -90,
-            opacity: 0,
-          },
+          : direction === "bottom"
+            ? {
+              rotateX: 90,
+              opacity: 0,
+            }
+            : {
+              rotateX: -90,
+              opacity: 0,
+            },
 
     visible: {
       rotateY: 0,
@@ -109,26 +114,33 @@ function TextBlock({
     exit:
       direction === "left"
         ? {
-            rotateY: 90,
-            opacity: 0,
-          }
+          rotateY: 90,
+          opacity: 0,
+        }
         : direction === "right"
-        ? {
+          ? {
             rotateY: -90,
             opacity: 0,
           }
-        : {
-            rotateX: -90,
-            opacity: 0,
-          },
+          : direction === "bottom"
+            ? {
+              rotateX: 90,
+              opacity: 0,
+            }
+            : {
+              rotateX: -90,
+              opacity: 0,
+            },
   };
 
   const transformOrigin =
     direction === "left"
       ? "right center"
       : direction === "right"
-      ? "left center"
-      : "bottom center";
+        ? "left center"
+        : direction === "bottom"
+          ? "top center"
+          : "bottom center";
 
   return (
     <motion.article
@@ -194,7 +206,7 @@ export function MediaGallerySection({
 
   return (
     <section
-      className="w-full overflow-hidden bg-white pb-40 pt-12"
+      className="w-full overflow-hidden bg-white pb-12 pt-12"
       aria-labelledby="media-gallery-title"
     >
       <Container>
@@ -218,7 +230,7 @@ export function MediaGallerySection({
         {/* ------------------------------------------------------------------ */}
 
         <div
-          className="relative mx-auto mt-24 h-[700px] w-full max-w-[1600px]"
+          className="relative mx-auto mt-24 h-[520px] w-full max-w-[1600px]"
           style={{
             perspective: "2200px",
           }}
@@ -235,9 +247,9 @@ export function MediaGallerySection({
             className="
               absolute
               left-[61%]
-              top-[-10px]
-              h-[180px]
-              w-[210px]
+              top-[-100px]
+              h-[150px]
+              w-[170px]
               -translate-x-1/2
               z-20
             "
@@ -253,9 +265,10 @@ export function MediaGallerySection({
                 recordedYear={texts[0]?.recordedYear}
                 className="
                   absolute
-                  left-[72%]
-                  top-[10px]
+                  left-[calc(61%+100px)]
+                  top-[-60px]
                   w-[170px]
+                  z-40
                 "
               />
             )}
@@ -272,10 +285,10 @@ export function MediaGallerySection({
             onClick={() => toggleCard(1)}
             className="
               absolute
-              left-[21.5%]
-              top-[180px]
-              h-[330px]
-              w-[300px]
+              left-[29%]
+              top-[60px]
+              h-[260px]
+              w-[240px]
               z-10
             "
           />
@@ -290,9 +303,10 @@ export function MediaGallerySection({
                 recordedYear={texts[1]?.recordedYear}
                 className="
                   absolute
-                  left-[33%]
-                  top-[60px]
+                  left-[35%]
+                  top-[2px]
                   w-[170px]
+                  z-40
                 "
               />
             )}
@@ -309,10 +323,10 @@ export function MediaGallerySection({
             onClick={() => toggleCard(2)}
             className="
               absolute
-              right-[20.5%]
-              top-[180px]
-              h-[330px]
-              w-[300px]
+              right-[24.5%]
+              top-[60px]
+              h-[260px]
+              w-[240px]
               z-20
             "
           />
@@ -320,16 +334,17 @@ export function MediaGallerySection({
           <AnimatePresence>
             {activeCard === 2 && (
               <TextBlock
-                direction="top"
+                direction="bottom"
                 slug={texts[2]?.slug ?? ""}
                 title={texts[2]?.title}
                 excerpt={texts[2]?.excerpt}
                 recordedYear={texts[2]?.recordedYear}
                 className="
                   absolute
-                  right-[32%]
-                  top-[520px]
+                  right-[25%]
+                  top-[320px]
                   w-[170px]
+                  z-40
                 "
               />
             )}
@@ -346,10 +361,10 @@ export function MediaGallerySection({
             onClick={() => toggleCard(3)}
             className="
               absolute
-              left-[7.5%]
-              top-[180px]
-              h-[120px]
-              w-[130px]
+              left-[17.6%]
+              top-[60px]
+              h-[100px]
+              w-[110px]
               z-30
             "
           />
@@ -364,9 +379,10 @@ export function MediaGallerySection({
                 recordedYear={texts[3]?.recordedYear}
                 className="
                   absolute
-                  left-[-10%]
-                  top-[170px]
+                  left-[calc(17.6%-190px)]
+                  top-[50px]
                   w-[170px]
+                  z-40
                 "
               />
             )}
@@ -383,10 +399,10 @@ export function MediaGallerySection({
             onClick={() => toggleCard(4)}
             className="
               absolute
-              left-[-1%]
-              top-[320px]
-              h-[190px]
-              w-[220px]
+              left-[12%]
+              top-[172px]
+              h-[150px]
+              w-[170px]
               z-20
             "
           />
@@ -401,9 +417,10 @@ export function MediaGallerySection({
                 recordedYear={texts[4]?.recordedYear}
                 className="
                   absolute
-                  left-[-18%]
-                  top-[380px]
+                  left-[calc(12%-190px)]
+                  top-[212px]
                   w-[170px]
+                  z-40
                 "
               />
             )}
@@ -420,10 +437,10 @@ export function MediaGallerySection({
             onClick={() => toggleCard(5)}
             className="
               absolute
-              right-[-2%]
-              top-[180px]
-              h-[190px]
-              w-[220px]
+              right-[7.5%]
+              top-[60px]
+              h-[150px]
+              w-[170px]
               z-20
             "
           />
@@ -438,9 +455,10 @@ export function MediaGallerySection({
                 recordedYear={texts[5]?.recordedYear}
                 className="
                   absolute
-                  right-[-19%]
-                  top-[180px]
+                  right-[calc(7.5%-190px)]
+                  top-[100px]
                   w-[170px]
+                  z-40
                 "
               />
             )}
@@ -457,10 +475,10 @@ export function MediaGallerySection({
             onClick={() => toggleCard(6)}
             className="
               absolute
-              right-[6.5%]
-              top-[390px]
-              h-[120px]
-              w-[130px]
+              right-[13%]
+              top-[220px]
+              h-[100px]
+              w-[110px]
               z-30
             "
           />
@@ -475,9 +493,10 @@ export function MediaGallerySection({
                 recordedYear={texts[6]?.recordedYear}
                 className="
                   absolute
-                  right-[-10%]
-                  top-[390px]
+                  right-[calc(13%-190px)]
+                  top-[210px]
                   w-[170px]
+                  z-40
                 "
               />
             )}
@@ -494,10 +513,10 @@ export function MediaGallerySection({
             onClick={() => toggleCard(7)}
             className="
               absolute
-              left-[39.5%]
-              top-[520px]
-              h-[190px]
-              w-[220px]
+              left-[43.5%]
+              top-[335px]
+              h-[150px]
+              w-[170px]
               -translate-x-1/2
               z-10
             "
@@ -506,16 +525,17 @@ export function MediaGallerySection({
           <AnimatePresence>
             {activeCard === 7 && (
               <TextBlock
-                direction="right"
+                direction="left"
                 slug={texts[7]?.slug ?? ""}
                 title={texts[7]?.title}
                 excerpt={texts[7]?.excerpt}
                 recordedYear={texts[7]?.recordedYear}
                 className="
                   absolute
-                  left-[12%]
-                  top-[600px]
+                  left-[calc(43.5%-270px)]
+                  top-[375px]
                   w-[170px]
+                  z-40
                 "
               />
             )}

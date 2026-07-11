@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/layout/Container";
-import { ContactMapSection } from "@/components/sections/ContactMapSection";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { getSiteSettings } from "@/lib/site-settings";
 import { Mail, Phone, MapPin, Clock, ShieldCheck, Award, ArrowRight } from "lucide-react";
@@ -22,7 +21,7 @@ export default async function ContactPage() {
         
         {/* Giant Background Watermark Text */}
         <div className="absolute -top-10 left-1/2 -translate-x-1/2 select-none pointer-events-none z-0 flex justify-center w-full">
-          <span className="text-[12rem] sm:text-[16rem] lg:text-[22rem] font-black tracking-tight uppercase leading-none bg-clip-text text-transparent bg-gradient-to-b from-slate-200/90 to-transparent">
+          <span className="text-[12rem] sm:text-[16rem] lg:text-[22rem] font-black tracking-tight uppercase leading-none bg-clip-text text-transparent bg-gradient-to-br from-[#1a56a8]/20 to-[#117ab2]/5">
             CONTACT
           </span>
         </div>
@@ -32,11 +31,6 @@ export default async function ContactPage() {
             
             {/* LEFT COLUMN */}
             <div className="flex flex-col relative z-10">
-              <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-slate-600 w-fit mb-8 shadow-sm">
-                <span className="h-2 w-2 rounded-full bg-[#1a56a8] animate-pulse" />
-                Contact
-              </span>
-
               <h1 className="text-4xl font-extrabold leading-[1.1] tracking-tight text-[#1f2a44] sm:text-5xl md:text-6xl">
                 Get in touch
               </h1>
@@ -50,7 +44,7 @@ export default async function ContactPage() {
                 
                 {/* Email Block */}
                 <a
-                  href={`mailto:${contact.email}`}
+                  href={`mailto:${contact.email.includes('@') ? contact.email : `info@${contact.email}`}`}
                   className="group flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:shadow-lg hover:border-[#1a56a8]/30"
                 >
                   <div className="flex items-center gap-5">
@@ -69,7 +63,7 @@ export default async function ContactPage() {
 
                 {/* Phone Block */}
                 <a
-                  href={`tel:${contact.phone.replace(/\s/g, "")}`}
+                  href={`tel:${contact.phone.replace(/[^0-9+]/g, "")}`}
                   className="group flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:shadow-lg hover:border-[#1a56a8]/30"
                 >
                   <div className="flex items-center gap-5">
@@ -87,7 +81,12 @@ export default async function ContactPage() {
                 </a>
 
                 {/* Location Block */}
-                <div className="group flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:shadow-lg hover:border-[#1a56a8]/30">
+                <a
+                  href={`https://maps.google.com/?q=${encodeURIComponent(contact.address)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:shadow-lg hover:border-[#1a56a8]/30"
+                >
                   <div className="flex items-center gap-5">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-slate-50 border border-slate-100 text-slate-600 transition-colors group-hover:bg-[#1a56a8]/10 group-hover:text-[#1a56a8]">
                       <MapPin className="h-5 w-5" />
@@ -100,7 +99,7 @@ export default async function ContactPage() {
                   <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-50 text-slate-400 group-hover:bg-[#1a56a8] group-hover:text-white transition-colors">
                     <ArrowRight className="h-4 w-4 -rotate-45" />
                   </div>
-                </div>
+                </a>
 
               </div>
             </div>
@@ -116,9 +115,6 @@ export default async function ContactPage() {
           </div>
         </Container>
       </section>
-
-      {/* MAP SECTION */}
-      <ContactMapSection />
     </>
   );
 }
