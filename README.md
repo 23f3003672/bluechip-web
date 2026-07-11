@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bluechip Technologies and Engineering Pvt. Ltd. Website
+
+A modern, responsive corporate website developed for **Bluechip Technologies & Engineering Pvt. Ltd.** The project focuses on delivering a clean user experience, dynamic content management, and a scalable architecture using modern web technologies.
+
+---
+
+## Overview
+
+This website is built using **Next.js**, **TypeScript**, **Tailwind CSS**, and **Supabase**. It features a responsive frontend alongside an admin dashboard that enables content management without requiring code changes.
+
+The project emphasizes performance, scalability, maintainability, and an intuitive user experience.
+
+---
+
+## Features
+
+### Public Website
+
+- Responsive and mobile-friendly design
+- Modern corporate landing page
+- About section
+- Leadership & Team
+- Services
+- Recognitions & Awards
+- Media Gallery
+- Contact page
+- Dynamic content rendering
+- SEO-friendly architecture
+
+### Admin Dashboard
+
+- Secure authentication
+- Dashboard overview
+- Content management
+- Homepage management
+- Team management
+- Recognition management
+- Media gallery management
+- Real-time content updates through Supabase
+
+---
+
+## Tech Stack
+
+### Frontend
+
+- Next.js (App Router)
+- React
+- TypeScript
+- Tailwind CSS
+
+### Backend
+
+- Supabase
+  - Authentication
+  - Storage
+
+### Deployment
+
+- Vercel
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Clone the repository
+
+```bash
+git clone https://github.com/23f3003672/bluechip-web.git
+```
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Build the application
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Environment Setup
 
-To learn more about Next.js, take a look at the following resources:
+This project requires environment variables for backend services. Configuration values have been intentionally omitted from the public repository for security reasons.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Design Principles
 
-## Deploy on Vercel
+- Responsive-first design
+- Component-based architecture
+- Reusable UI components
+- Type-safe development
+- Scalable folder structure
+- Clean and maintainable codebase
+- Performance-focused implementation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Copyright
+
+© Bluechip Technologies & Engineering Pvt. Ltd. All rights reserved.
+
+This project was developed for **Bluechip Technologies & Engineering Pvt. Ltd.** The source code is shared on GitHub solely for portfolio and demonstration purposes. All branding, content, trademarks, and other intellectual property remain the property of Bluechip Technologies & Engineering Pvt. Ltd.
