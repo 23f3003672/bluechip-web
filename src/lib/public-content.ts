@@ -104,6 +104,7 @@ export function mapMediaArticleToGalleryItems(row: MediaArticle): MediaGalleryIt
   const slug = row.slug || "media";
   const title = row.title;
   const excerpt = row.short_description;
+  const content = row.content;
   const recordedYear = new Date(row.published_at).getFullYear();
   const imageUrl = row.featured_image?.url || "https://images.unsplash.com/photo-1560523159-4a9692d222f9?auto=format&fit=crop&w=520&q=80";
   const imageAlt = row.featured_image?.alt_text || title;
@@ -115,6 +116,7 @@ export function mapMediaArticleToGalleryItems(row: MediaArticle): MediaGalleryIt
       type: "image",
       title,
       excerpt,
+      content,
       recordedYear,
       imageUrl,
       imageAlt,
@@ -125,6 +127,7 @@ export function mapMediaArticleToGalleryItems(row: MediaArticle): MediaGalleryIt
       type: "text",
       title,
       excerpt,
+      content,
       recordedYear,
       imageUrl,
       imageAlt,

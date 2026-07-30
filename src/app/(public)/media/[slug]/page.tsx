@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { MEDIA_GALLERY_ITEMS } from "@/lib/mock-data";
 import { MediaDetailResolverSection } from "@/components/sections/MediaDetailResolverSection";
 import { createClient } from "@/lib/supabase/server";
-import { mapMediaListToGalleryItems } from "@/lib/public-content";
+import { mapMediaArticlesToGalleryItems } from "@/lib/public-content";
 
 interface MediaDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -14,25 +14,20 @@ function getMediaBySlug(slug: string) {
 
 async function getMediaBySlugFromDb(slug: string) {
   const supabase = await createClient();
-  const parts = slug.split("-");
-  const idPrefix = parts[parts.length - 1];
-
-  if (!idPrefix || idPrefix.length !== 6) {
-    return null;
-  }
 
   const { data } = await supabase
-    .from("media")
-    .select("id, filename, url, storage_path, mime_type, size_bytes, alt_text, uploaded_at")
-    .like("id", `${idPrefix}%`)
+    .from("media_articles")
+    .select(`*, featured_image:media(id, url, alt_text)`)
+    .eq("slug", slug)
     .maybeSingle();
 
   if (!data) {
     return null;
   }
 
-  const mapped = mapMediaListToGalleryItems([data]);
-  return mapped.find((item) => item.slug === slug) ?? null;
+  // We can map it and just grab the 'image' type which has all the text properties we need anyway
+  const mapped = mapMediaArticlesToGalleryItems([data as any]);
+  return mapped[0] ?? null;
 }
 
 export async function generateMetadata(

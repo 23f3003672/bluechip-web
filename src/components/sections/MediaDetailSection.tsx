@@ -56,8 +56,8 @@ export function MediaDetailSection({
             <div className="mt-10 h-[1px] w-12 bg-[#b9bec9]" />
 
             {/* Description */}
-            <p className="mt-10 max-w-[560px] text-[20px] leading-[1.8] text-[#30384b]/90">
-              {item.excerpt}
+            <p className="mt-10 max-w-[560px] whitespace-pre-wrap text-[20px] leading-[1.8] text-[#30384b]/90">
+              {item.content || item.excerpt}
             </p>
           </div>
         </div>

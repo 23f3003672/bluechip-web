@@ -791,6 +791,7 @@ export interface MediaGalleryItem {
 
   title?: string;
   excerpt?: string;
+  content?: string;
   recordedYear?: number;
 
   imageUrl?: string;
