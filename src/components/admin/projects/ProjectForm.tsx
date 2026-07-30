@@ -14,6 +14,7 @@ import {
   type ProjectFormValues,
   type ProjectMutationInput,
 } from "@/lib/validations/project";
+import { slugify } from "@/lib/utils";
 import type { Category, Media } from "@/types";
 
 interface ProjectFormProps {
@@ -72,7 +73,7 @@ export function ProjectForm({
     handleSubmit,
     reset,
     setValue,
-    formState: { errors },
+    formState: { errors, dirtyFields },
   } = useForm<ProjectFormValues>({
     resolver: zodResolver(projectFormSchema) as Resolver<ProjectFormValues>,
     defaultValues: mergedDefaults,
@@ -86,6 +87,16 @@ export function ProjectForm({
   const subcategoryValue = useWatch({ control, name: "subcategory" });
   const thumbnailValue = useWatch({ control, name: "thumbnail_url" });
   const galleryValue = useWatch({ control, name: "gallery" });
+  const titleValue = useWatch({ control, name: "title" });
+
+  useEffect(() => {
+    // Only auto-generate the slug if the user hasn't manually modified it
+    // and if we're not editing an existing project with an existing slug
+    if (titleValue && !dirtyFields.slug && !initialValues?.slug) {
+      const words = titleValue.trim().split(/\s+/).slice(0, 3).join(" ");
+      setValue("slug", slugify(words), { shouldValidate: true });
+    }
+  }, [titleValue, dirtyFields.slug, initialValues?.slug, setValue]);
 
   const selectedCategorySlug = selectedCategoryId;
 
