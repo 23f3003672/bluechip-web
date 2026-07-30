@@ -28,6 +28,8 @@ function ImageBlock({
   onClick?: () => void;
   isActive?: boolean;
 }) {
+  if (!imageUrl) return null;
+
   return (
     <motion.div
       onClick={onClick}

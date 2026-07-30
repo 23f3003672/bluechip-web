@@ -9,7 +9,7 @@ import type {
   RecognitionCategory,
 } from "@/lib/mock-data";
 import { RECOGNITION_CATEGORY_LABELS } from "@/lib/mock-data";
-import type { FAQ, Media, Project, Recognition, Service, Visionary } from "@/types";
+import type { FAQ, Media, MediaArticle, Project, Recognition, Service, Visionary } from "@/types";
 import { PROJECT_SUBCATEGORIES } from "@/lib/project-subcategories";
 import { slugify, truncate } from "@/lib/utils";
 
@@ -98,6 +98,42 @@ export function mapMediaToGalleryItem(row: Media): MediaGalleryItem {
 
 export function mapMediaListToGalleryItems(rows: Media[]): MediaGalleryItem[] {
   return rows.map(mapMediaToGalleryItem);
+}
+
+export function mapMediaArticleToGalleryItems(row: MediaArticle): MediaGalleryItem[] {
+  const slug = row.slug || "media";
+  const title = row.title;
+  const excerpt = row.short_description;
+  const recordedYear = new Date(row.published_at).getFullYear();
+  const imageUrl = row.featured_image?.url || "https://images.unsplash.com/photo-1560523159-4a9692d222f9?auto=format&fit=crop&w=520&q=80";
+  const imageAlt = row.featured_image?.alt_text || title;
+
+  return [
+    {
+      id: `${row.id}-img`,
+      slug,
+      type: "image",
+      title,
+      excerpt,
+      recordedYear,
+      imageUrl,
+      imageAlt,
+    },
+    {
+      id: `${row.id}-txt`,
+      slug,
+      type: "text",
+      title,
+      excerpt,
+      recordedYear,
+      imageUrl,
+      imageAlt,
+    }
+  ];
+}
+
+export function mapMediaArticlesToGalleryItems(rows: MediaArticle[]): MediaGalleryItem[] {
+  return rows.flatMap(mapMediaArticleToGalleryItems);
 }
 
 export function mapServiceToHomeService(service: Service): HomeService {

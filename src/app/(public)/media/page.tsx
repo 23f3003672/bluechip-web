@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { MediaGallerySection } from "@/components/sections/MediaGallerySection";
 import { createClient } from "@/lib/supabase/server";
-import { mapMediaListToGalleryItems } from "@/lib/public-content";
+import { mapMediaArticlesToGalleryItems } from "@/lib/public-content";
 import { MEDIA_GALLERY_ITEMS } from "@/lib/mock-data";
 
 export const metadata: Metadata = {
@@ -13,11 +13,15 @@ export const metadata: Metadata = {
 export default async function MediaPage() {
   const supabase = await createClient();
   const { data } = await supabase
-    .from("media")
-    .select("id, filename, url, storage_path, mime_type, size_bytes, alt_text, uploaded_at")
-    .order("uploaded_at", { ascending: false });
+    .from("media_articles")
+    .select(`
+      *,
+      featured_image:media(id, url, alt_text)
+    `)
+    .order("display_order", { ascending: true })
+    .order("published_at", { ascending: false });
 
-  const items = data?.length ? mapMediaListToGalleryItems(data) : MEDIA_GALLERY_ITEMS;
+  const items = data?.length ? mapMediaArticlesToGalleryItems(data as any) : MEDIA_GALLERY_ITEMS;
 
   return <MediaGallerySection initialItems={items} />;
 }
