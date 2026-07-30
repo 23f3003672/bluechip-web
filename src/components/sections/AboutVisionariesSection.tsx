@@ -13,7 +13,8 @@ export function AboutVisionariesSection({
 }) {
   const [startIndex, setStartIndex] = useState(0);
 
-  const visibleCards = Array.from({ length: VISIBLE_COUNT }, (_, i) => {
+  const visibleCount = Math.min(VISIBLE_COUNT, initialVisionaries.length);
+  const visibleCards = Array.from({ length: visibleCount }, (_, i) => {
     const index = (startIndex + i) % initialVisionaries.length;
     return initialVisionaries[index];
   });
@@ -75,25 +76,27 @@ className="-ml-325 mt-22"
             
 
           {/* SLIDER BUTTONS */}
-        <div className="mt-3 flex items-center gap-3">
-  <button
-    type="button"
-    onClick={goPrev}
-    aria-label="Previous visionaries"
-    className="flex size-12 items-center justify-center rounded-full bg-[#0f63bc] text-white transition-all duration-300 hover:bg-[#c9962d] hover:scale-105"
-  >
-    <ArrowLeft className="size-5" />
-  </button>
-
-  <button
-    type="button"
-    onClick={goNext}
-    aria-label="Next visionaries"
-    className="flex size-12 items-center justify-center rounded-full bg-[#0f63bc] text-white transition-all duration-300 hover:bg-[#c9962d] hover:scale-105"
-  >
-    <ArrowRight className="size-5" />
-  </button>
-</div>
+        {initialVisionaries.length > VISIBLE_COUNT && (
+          <div className="mt-3 flex items-center gap-3">
+            <button
+              type="button"
+              onClick={goPrev}
+              aria-label="Previous visionaries"
+              className="flex size-12 items-center justify-center rounded-full bg-[#0f63bc] text-white transition-all duration-300 hover:bg-[#c9962d] hover:scale-105"
+            >
+              <ArrowLeft className="size-5" />
+            </button>
+          
+            <button
+              type="button"
+              onClick={goNext}
+              aria-label="Next visionaries"
+              className="flex size-12 items-center justify-center rounded-full bg-[#0f63bc] text-white transition-all duration-300 hover:bg-[#c9962d] hover:scale-105"
+            >
+              <ArrowRight className="size-5" />
+            </button>
+          </div>
+        )}
         </div>
 
         {/* CARDS */}
@@ -135,9 +138,11 @@ className="-ml-325 mt-22"
                   </div>
 
                   {/* DESCRIPTION */}
-                  <p className="max-w-[260px] text-[13.5px] leading-relaxed text-white/95">
-                    {person.bio}
-                  </p>
+                  <div className="mt-4 flex-1 overflow-y-auto pr-2 scrollbar-sleek">
+                    <p className="max-w-[260px] text-[13.5px] leading-relaxed text-white/95">
+                      {person.bio}
+                    </p>
+                  </div>
                 </div>
 
               </div>
