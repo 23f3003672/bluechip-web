@@ -40,7 +40,7 @@ export function AboutVisionariesSection({
       <div className="px-6 md:px-12 lg:px-20">
 
         {/* TOP SECTION */}
-        <div className="mb-8 flex items-start justify-between">
+        <div className="mb-20 flex items-start justify-between">
 
           {/* HEADING */}
           <div className="relative">
@@ -54,7 +54,7 @@ export function AboutVisionariesSection({
             </h2>
 
             <svg
-              className="absolute -bottom-8 left-12 pointer-events-none"
+              className="absolute -bottom-18 left-24 pointer-events-none"
               width="180"
               height="100"
               viewBox="5 2 300 110"
