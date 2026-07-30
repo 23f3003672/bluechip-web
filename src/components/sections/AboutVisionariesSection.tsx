@@ -110,7 +110,7 @@ className="-ml-325 mt-22"
                 <div className="absolute inset-0 overflow-hidden [backface-visibility:hidden]">
 
                   <div
-                    className="h-full w-full bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.03]"
+                    className="h-full w-full bg-cover bg-[center_top] transition-transform duration-500 group-hover:scale-[1.03]"
                     style={{
                       backgroundImage: `url(${person.imageUrl})`,
                     }}
