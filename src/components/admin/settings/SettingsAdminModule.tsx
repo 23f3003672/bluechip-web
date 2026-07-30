@@ -141,6 +141,9 @@ export function SettingsAdminModule({
           <div className="space-y-1.5">
             <Label>Map URL</Label>
             <Input {...registerContact("map_url")} />
+            <p className="text-xs text-muted-foreground">
+              Paste a Google Maps link, the &quot;Embed a map&quot; URL, or the full <code>&lt;iframe&gt;</code> code. We&apos;ll automatically convert it for you!
+            </p>
             {contactErrors.map_url && <p className="text-xs text-destructive">{contactErrors.map_url.message}</p>}
           </div>
 
