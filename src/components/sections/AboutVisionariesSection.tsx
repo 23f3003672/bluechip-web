@@ -43,7 +43,7 @@ export function AboutVisionariesSection({
         <div className="mb-8 flex items-start justify-between">
 
           {/* HEADING */}
-          <div>
+          <div className="relative">
             <h2
               id="about-visionaries-title"
               className="max-w-[320px] text-[22px] font-bold leading-[1.] tracking-[-0.02em] text-[#1c2438] md:text-[36px]"
@@ -53,27 +53,23 @@ export function AboutVisionariesSection({
               visionaries.
             </h2>
 
-            {/* GOLD CURVE / LINE  
-            <div className="mt-5 h-[7px] w-[140px] rounded-full bg-[#c69222]" />
-          */}
+            <svg
+              className="absolute -bottom-8 left-12 pointer-events-none"
+              width="180"
+              height="100"
+              viewBox="5 2 300 110"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 85 C 120 10, 240 20, 340 35"
+                stroke="#c69222"
+                strokeWidth="13"
+                strokeLinecap="round"
+                fill="transparent"
+              />
+            </svg>
           </div>
-          <svg
-className="-ml-325 mt-22"
-  width="180"
-  height="100"
-  viewBox="5 2 300 110"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    d="M20 85 C 120 10, 240 20, 340 35"
-    stroke="#c69222"
-    strokeWidth="13"
-    strokeLinecap="round"
-    fill="transparent"
-  />
-</svg>
-            
 
           {/* SLIDER BUTTONS */}
         {initialVisionaries.length > VISIBLE_COUNT && (
