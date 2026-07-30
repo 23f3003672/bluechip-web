@@ -93,7 +93,7 @@ export function ProjectForm({
     // Only auto-generate the slug if the user hasn't manually modified it
     // and if we're not editing an existing project with an existing slug
     if (titleValue && !dirtyFields.slug && !initialValues?.slug) {
-      const words = titleValue.trim().split(/\s+/).slice(0, 3).join(" ");
+      const words = titleValue.trim().split(/\s+/).slice(0, 6).join(" ");
       setValue("slug", slugify(words), { shouldValidate: true });
     }
   }, [titleValue, dirtyFields.slug, initialValues?.slug, setValue]);
