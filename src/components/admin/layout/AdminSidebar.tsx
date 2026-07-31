@@ -34,8 +34,8 @@ export function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="border-r border-border bg-white flex flex-col h-full">
-      <div className="border-b border-border px-6 py-5">
+    <aside className="border-r border-border bg-white flex flex-col h-full lg:h-screen lg:sticky lg:top-0 lg:overflow-y-auto">
+      <div className="border-b border-border px-6 py-5 shrink-0">
         <div className="flex items-center gap-2">
           <div className="h-2 w-2 rounded-full bg-[#1a56a8] animate-pulse" />
           <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#1a56a8]">
@@ -77,7 +77,7 @@ export function AdminSidebar() {
         })}
       </nav>
       
-      <div className="p-4 border-t border-border bg-slate-50/50">
+      <div className="p-4 border-t border-border bg-slate-50/50 shrink-0">
         <p className="text-[10px] text-muted-foreground text-center font-mono">
           v1.0.0 • Connected
         </p>
