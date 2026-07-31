@@ -52,8 +52,24 @@ export function ProjectsTable({ rows, onEdit, onDelete, isBusy = false }: Projec
 
             return (
               <TableRow key={row.id}>
-                <TableCell className="max-w-[280px] truncate font-medium text-foreground">
-                  {row.title}
+                <TableCell className="max-w-[320px] font-medium text-foreground">
+                  <div className="flex items-center gap-3">
+                    {row.thumbnail_url ? (
+                      <div className="h-10 w-14 shrink-0 overflow-hidden rounded-md border border-border bg-slate-100">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img 
+                          src={row.thumbnail_url} 
+                          alt={row.title} 
+                          className="h-full w-full object-cover" 
+                        />
+                      </div>
+                    ) : (
+                      <div className="flex h-10 w-14 shrink-0 items-center justify-center rounded-md border border-border bg-slate-50">
+                        <span className="text-[10px] text-muted-foreground">N/A</span>
+                      </div>
+                    )}
+                    <span className="truncate">{row.title}</span>
+                  </div>
                 </TableCell>
                 <TableCell className="text-muted-foreground">{resolvedCategory}</TableCell>
                 <TableCell className="text-muted-foreground">{row.year ?? "-"}</TableCell>
