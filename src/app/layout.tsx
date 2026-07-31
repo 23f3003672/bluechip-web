@@ -57,9 +57,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  icons: {
-    icon: "/Bluechip-Logo.webp",
-  },
 };
 
 export const viewport: Viewport = {
