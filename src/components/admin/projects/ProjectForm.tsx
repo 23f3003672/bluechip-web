@@ -197,6 +197,9 @@ export function ProjectForm({
         <div className="space-y-1.5">
           <Label htmlFor="year">Year</Label>
           <Input id="year" type="number" {...register("year", { valueAsNumber: true })} />
+          <p className="text-[11px] text-muted-foreground">
+            Sets timeline phase: Pre-2013 (Foundation), 2013-2020 (Expansion), 2021+ (Recent)
+          </p>
           {errors.year && <p className="text-xs text-destructive">{errors.year.message}</p>}
         </div>
       </div>

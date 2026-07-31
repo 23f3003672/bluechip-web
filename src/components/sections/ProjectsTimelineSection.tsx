@@ -68,13 +68,13 @@ export function ProjectsTimelineSection({
         {/* Top Section */}
         <div className="mb-8 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-xl text-[#78868e] md:text-[24px]">
+            <p className="text-xl text-[#78868e] md:text-[18px]">
               Our Journey &amp; Milestones
             </p>
 
             <h1
               id="journey-timeline-title"
-              className="mt-2 text-3xl font-medium tracking-tight text-[#212a3f] md:text-4xl"
+              className="mt-2 text-3xl font-medium tracking-tight text-[#212a3f] md:text-3xl"
             >
               Built steadily since 1998.
             </h1>
@@ -137,7 +137,7 @@ export function ProjectsTimelineSection({
         </div>
 
         {/* Timeline Footer */}
-        <div className="mt-8 flex items-center justify-between text-2xl font-semibold text-[#cc962f] md:text-3xl">
+        <div className="mt-8 flex items-center justify-between text-2xl font-semibold text-[#cc962f] md:text-2xl">
           <span>Present</span>
 
           <div className="mx-3 h-px flex-1 border-t border-dashed border-[#adb4c4]" />

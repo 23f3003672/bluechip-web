@@ -31,23 +31,23 @@ export function ProjectDetailHeroSection({
 
           {/* Content Wrapper */}
           <div className="relative z-10 flex w-full items-center">
-            <div className="max-w-[640px]">
+            <div className="max-w-[640px] -mt-16 md:-mt-28">
               
               {/* Year & Location */}
-              <p className="text-[15px] font-medium text-[#c9962d] md:text-[25px]">
+              <p className="text-[12px] font-medium text-[#c9962d] md:text-[18px]">
                 {project.locationYear}
               </p>
 
               {/* Main Heading */}
               <h1
                 id="project-detail-title"
-                className="mt-6 text-[52px] font-semibold leading-[1.2] tracking-[-0.01em] text-[#1d2740] md:text-[55px]"
+                className="mt-6 text-[30px] font-semibold leading-[1.2] tracking-[-0.01em] text-[#1d2740] md:text-[35px]"
               >
                 {project.title}
               </h1>
 
               {/* Description */}
-              <p className="mt-10 max-w-[580px] text-[18px] leading-[1.8] text-[#222b3d]/90 md:text-[17px]">
+              <p className="mt-10 max-w-[580px] text-[16px] leading-[1.8] text-[#222b3d]/90 md:text-[15px]">
                 {project.summary}
               </p>
 
@@ -56,13 +56,13 @@ export function ProjectDetailHeroSection({
                 
                 {/* Category */}
                 <div>
-                  <p className="text-lg uppercase tracking-[0.22em] text-[#545454]">
+                  <p className="text-sm uppercase tracking-[0.22em] text-[#545454]">
                     Category
                   </p>
 
                   <Link
   href="/services"
-  className="mt-5 inline-flex items-center gap-3 text-[22px] font-medium transition-all duration-300 hover:gap-5"
+  className="mt-5 inline-flex items-center gap-3 text-[20px] font-medium transition-all duration-300 hover:gap-5"
 >
   <span className="bg-gradient-to-r from-[#023d9f] via-[#117ab2] to-[#023d9f] bg-clip-text text-transparent">
     {project.category}
@@ -76,13 +76,13 @@ export function ProjectDetailHeroSection({
 
                 {/* Project Type */}
                 <div>
-                  <p className="text-lg uppercase tracking-[0.22em] text-[#545454]">
+                  <p className="text-sm uppercase tracking-[0.22em] text-[#545454]">
                     Project Type
                   </p>
 
                   <Link
   href="/projects"
-  className="mt-5 inline-flex items-center gap-3 text-[22px] font-medium transition-all duration-300 hover:gap-5"
+  className="mt-5 inline-flex items-center gap-3 text-[20px] font-medium transition-all duration-300 hover:gap-5"
 >
   <span className="bg-gradient-to-r from-[#023d9f] via-[#117ab2] to-[#023d9f] bg-clip-text text-transparent">
     {project.projectType}
