@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChevronDown, ChevronUp, Menu, Search, X } from "lucide-react";
+import { ChevronDown, ChevronUp, Menu, Download, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Container } from "./Container";
 import { cn } from "@/lib/utils";
@@ -37,14 +37,11 @@ export function Navbar() {
   const headerRef = useRef<HTMLElement | null>(null);
   const [expanded, setExpanded] = useState(false);
   const [activeMegaKey, setActiveMegaKey] = useState<MegaMenuKey>("business");
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setExpanded(false);
-        setSearchOpen(false);
       }
     };
 
@@ -74,19 +71,6 @@ export function Navbar() {
 
     setActiveMegaKey(megaKey);
     setExpanded(true);
-  };
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    const query = searchQuery.trim();
-    if (!query) {
-      return;
-    }
-
-    router.push(`/search?q=${encodeURIComponent(query)}`);
-
-    setSearchOpen(false);
-    setSearchQuery("");
   };
 
   return (
@@ -134,15 +118,16 @@ export function Navbar() {
               ))}
             </nav>
 
-            {/* Search Button */}
-            <button
-              type="button"
-              aria-label="Open search"
-              onClick={() => setSearchOpen(true)}
-              className="hidden h-7 w-7 items-center justify-center rounded-[5px] border border-[#c9ccd2] bg-[#f1f2f4] text-[#7f838b] transition-colors hover:border-[#1d2537] hover:text-[#1d2537] md:inline-flex"
+            {/* Download Brochure Button */}
+            <a
+              href="/brochure.pdf"
+              download="Bluechip_Brochure.pdf"
+              aria-label="Download Brochure"
+              className="hidden h-7 items-center justify-center gap-1.5 rounded-[5px] border border-[#c9ccd2] bg-[#f1f2f4] px-2.5 text-[11px] font-semibold uppercase tracking-wide text-[#7f838b] transition-colors hover:border-[#1d2537] hover:text-[#1d2537] md:inline-flex"
             >
-              <Search className="size-5" />
-            </button>
+              <Download className="size-4" />
+              <span>Brochure</span>
+            </a>
 
             {/* Separator */}
             <span className="hidden h-9 w-px bg-[#c6c8ce] md:block" aria-hidden="true" />
@@ -249,48 +234,6 @@ export function Navbar() {
         </div>
       )}
 
-      {/* Search Modal */}
-      {searchOpen && (
-        <>
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 z-[59] bg-black/50"
-            onClick={() => setSearchOpen(false)}
-            aria-hidden="true"
-          />
-
-          {/* Modal */}
-          <div className="fixed inset-0 z-[60] flex items-start justify-center pt-20">
-            <div className="w-full max-w-2xl rounded-lg bg-white shadow-2xl">
-              <form onSubmit={handleSearch} className="flex items-center gap-4 px-6 py-4">
-                <Search className="size-5 shrink-0 text-[#7f838b]" />
-                <input
-                  type="text"
-                  placeholder="Search projects, services, recognitions..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  autoFocus
-                  className="flex-1 bg-transparent text-base outline-none placeholder:text-[#c9ccd2]"
-                />
-                <button
-                  type="submit"
-                  className="inline-flex h-8 items-center justify-center rounded-md bg-[#0e57a0] px-3 text-xs font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#0b4681]"
-                >
-                  Search
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSearchOpen(false)}
-                  className="inline-flex h-8 w-8 items-center justify-center text-[#7f838b] transition-colors hover:text-[#8f8f8f]"
-                  aria-label="Close search"
-                >
-                  <X className="size-5" />
-                </button>
-              </form>
-            </div>
-          </div>
-        </>
-      )}
     </header>
   );
 }
