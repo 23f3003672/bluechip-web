@@ -24,31 +24,7 @@ export async function getProjectsForSubcategory(subcategorySlug: string) {
     console.error("Error fetching projects for subcategory:", error);
   }
 
-  // Fallback to mock data filter
-  const keywords = SUBCATEGORY_KEYWORDS[subcategorySlug] ?? [];
-  const matches = JOURNEY_PROJECTS.filter((project) => {
-    const haystack =
-      `${project.title} ${project.category} ${project.projectType} ${project.summary}`.toLowerCase();
-
-    return keywords.some((keyword) =>
-      haystack.includes(keyword.toLowerCase())
-    );
-  });
-
-  if (matches.length >= 6) {
-    return matches;
-  }
-
-  if (matches.length > 0) {
-    const fallback = rotateProjects(subcategorySlug).filter(
-      (project) =>
-        !matches.some((match) => match.id === project.id)
-    );
-
-    return [...matches, ...fallback].slice(0, 12);
-  }
-
-  return rotateProjects(subcategorySlug);
+  return [];
 }
 
 export async function getProjectsByColumnTitle(columnTitle: string) {
@@ -89,4 +65,23 @@ export async function getProjectsByColumnTitle(columnTitle: string) {
       );
     });
   });
+}
+
+export async function getGroupedProjectsByColumnTitle(columnTitle: string) {
+  const matchingSubcategories = PROJECT_SUBCATEGORIES.filter(
+    (subcategory) => subcategory.columnTitle === columnTitle
+  );
+
+  const groups = [];
+
+  for (const subcat of matchingSubcategories) {
+    const projects = await getProjectsForSubcategory(subcat.slug);
+    groups.push({
+      label: subcat.label,
+      slug: subcat.slug,
+      projects: projects || [],
+    });
+  }
+
+  return groups;
 }

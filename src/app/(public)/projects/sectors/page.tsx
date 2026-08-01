@@ -1,16 +1,16 @@
 import { ProjectsGallerySection } from "@/components/sections/ProjectGallerySection";
 
-import { getProjectsByColumnTitle } from "@/lib/project-subcategory-server-utils";
+import { getGroupedProjectsByColumnTitle } from "@/lib/project-subcategory-server-utils";
 
 export const dynamic = "force-dynamic";
 
 export default async function SectorsPage() {
-  const projects = await getProjectsByColumnTitle("Sectors");
+  const groups = await getGroupedProjectsByColumnTitle("Sectors");
 
   return (
     <ProjectsGallerySection
       title="Sectors"
-      projects={projects}
+      groups={groups}
     />
   );
 }
