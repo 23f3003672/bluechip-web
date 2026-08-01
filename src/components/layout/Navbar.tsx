@@ -17,10 +17,10 @@ interface PrimaryCategory {
 }
 
 const UTILITY_LINKS = [
-  { label: "CONTACT US", href: "/contact" },
+  { label: "CONTACT US", href: "/#contact" },
   { label: "NEWS & MEDIA", href: "/media" },
   { label: "CAREERS", href: "/careers" },
-  { label: "FAQs", href: "/#home-faq-title" },
+  { label: "FAQs", href: "/#faq" },
 ];
 
 const PRIMARY_CATEGORIES: PrimaryCategory[] = [

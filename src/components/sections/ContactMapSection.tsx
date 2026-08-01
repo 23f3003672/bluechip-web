@@ -5,7 +5,7 @@ export async function ContactMapSection() {
   const settings = await getSiteSettings();
 
   return (
-    <section className="relative" aria-labelledby="home-contact-title">
+    <section id="contact" className="relative scroll-mt-[84px]" aria-labelledby="home-contact-title">
       <h2 id="home-contact-title" className="sr-only">
         Contact Location
       </h2>

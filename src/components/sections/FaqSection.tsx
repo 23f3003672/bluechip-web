@@ -16,7 +16,7 @@ export function FaqSection({
   initialFaqs?: MockFaq[];
 }) {
   return (
-    <section className="bg-white py-12 md:py-16" aria-labelledby="home-faq-title">
+    <section id="faq" className="bg-white py-12 md:py-16 scroll-mt-[84px]" aria-labelledby="home-faq-title">
       <div className="bg-white px-6 py-8 md:px-12 md:py-12 lg:px-20">
         <div className="grid items-start gap-10 lg:grid-cols-[0.42fr_0.58fr] lg:gap-16">
           <div className="pt-2">
