@@ -306,6 +306,8 @@ export interface AboutMvmItem {
   cardTitle: string;
   cardCaption: string;
   cardImage: string;
+  secondaryCardTitle: string;
+  secondaryCardCaption: string;
   secondaryImage: string;
 }
 
@@ -321,6 +323,8 @@ export const ABOUT_MVM_ITEMS: AboutMvmItem[] = [
       "Driving excellence through proactive safety discussions and disciplined on-site leadership.",
     cardImage:
       "/about/about-mission-1.webp",
+    secondaryCardTitle: "Engineering Milestones",
+    secondaryCardCaption: "Transforming ambitious designs into structural realities with unparalleled expertise.",
     secondaryImage:
       "/about/about-mission-2.webp",
   },
@@ -334,6 +338,8 @@ export const ABOUT_MVM_ITEMS: AboutMvmItem[] = [
     cardCaption: "Building for a greener tomorrow.",
     cardImage:
       "/about/about-vision-1.webp",
+    secondaryCardTitle: "Future-Ready Infrastructure",
+    secondaryCardCaption: "Pioneering smart technologies for next-generation urban development.",
     secondaryImage:
       "/about/about-vision-2.webp",
   },
@@ -348,6 +354,8 @@ export const ABOUT_MVM_ITEMS: AboutMvmItem[] = [
       "Innovating with advanced steel solutions that reflect our adaptability, integrity, and commitment to precision.",
     cardImage:
       "/about/about-values-1.webp",
+    secondaryCardTitle: "Unwavering Integrity",
+    secondaryCardCaption: "Fostering trust and transparency at every stage of project delivery.",
     secondaryImage:
       "/about/about-values-2.webp",
   },

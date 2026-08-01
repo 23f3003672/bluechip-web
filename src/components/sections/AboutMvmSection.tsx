@@ -6,11 +6,17 @@ import { ABOUT_MVM_ITEMS } from "@/lib/mock-data";
 
 export function AboutMvmSection() {
   const [activeId, setActiveId] = useState<(typeof ABOUT_MVM_ITEMS)[number]["id"]>("mission");
+  const [isSwapped, setIsSwapped] = useState(false);
 
   const active = useMemo(
     () => ABOUT_MVM_ITEMS.find((item) => item.id === activeId) ?? ABOUT_MVM_ITEMS[0],
     [activeId]
   );
+
+  const handleSetActive = (id: (typeof ABOUT_MVM_ITEMS)[number]["id"]) => {
+    setActiveId(id);
+    setIsSwapped(false);
+  };
 
   return (
     <section className="bg-[#ffffff] py-12 md:py-16 lg:py-20" aria-labelledby="about-mvm-title">
@@ -44,10 +50,10 @@ export function AboutMvmSection() {
   >
     <button
       type="button"
-      onClick={() => setActiveId("mission")}
+      onClick={() => handleSetActive("mission")}
       className={
         active.id === "mission"
-          ? "flex w-[190px] items-center justify-between rounded-full bg-[#d4d5d9] px-4 py-2 text-sm font-semibold text-[#4a5160]"
+          ? "flex w-[190px] items-center gap-3 rounded-full bg-[#d4d5d9] px-4 py-2 text-sm font-semibold text-[#4a5160]"
           : "flex items-center gap-3 text-sm font-semibold text-[#1e2537]/90"
       }
     >
@@ -56,12 +62,6 @@ export function AboutMvmSection() {
       </span>
 
       <span>Mission</span>
-
-      {active.id === "mission" && (
-        <span className="inline-flex size-5 items-center justify-center rounded-full bg-[#bfc1c6] text-[#5a6270]">
-          <X className="size-3" />
-        </span>
-      )}
     </button>
   </div>
 
@@ -80,10 +80,10 @@ export function AboutMvmSection() {
   >
     <button
       type="button"
-      onClick={() => setActiveId("vision")}
+      onClick={() => handleSetActive("vision")}
       className={
         active.id === "vision"
-          ? "flex w-[190px] items-center justify-between rounded-full bg-[#d4d5d9] px-4 py-2 text-sm font-semibold text-[#4a5160]"
+          ? "flex w-[190px] items-center gap-3 rounded-full bg-[#d4d5d9] px-4 py-2 text-sm font-semibold text-[#4a5160]"
           : "flex items-center gap-3 text-sm font-semibold text-[#1e2537]/90"
       }
     >
@@ -92,12 +92,6 @@ export function AboutMvmSection() {
       </span>
 
       <span>Vision</span>
-
-      {active.id === "vision" && (
-        <span className="inline-flex size-5 items-center justify-center rounded-full bg-[#bfc1c6] text-[#5a6270]">
-          <X className="size-3" />
-        </span>
-      )}
     </button>
   </div>
 
@@ -116,10 +110,10 @@ export function AboutMvmSection() {
   >
     <button
       type="button"
-      onClick={() => setActiveId("values")}
+      onClick={() => handleSetActive("values")}
       className={
         active.id === "values"
-          ? "flex w-[190px] items-center justify-between rounded-full bg-[#d4d5d9] px-4 py-2 text-sm font-semibold text-[#4a5160]"
+          ? "flex w-[190px] items-center gap-3 rounded-full bg-[#d4d5d9] px-4 py-2 text-sm font-semibold text-[#4a5160]"
           : "flex items-center gap-3 text-sm font-semibold text-[#1e2537]/90"
       }
     >
@@ -128,12 +122,6 @@ export function AboutMvmSection() {
       </span>
 
       <span>Values</span>
-
-      {active.id === "values" && (
-        <span className="inline-flex size-5 items-center justify-center rounded-full bg-[#bfc1c6] text-[#5a6270]">
-          <X className="size-3" />
-        </span>
-      )}
     </button>
   </div>
 </div>
@@ -141,28 +129,31 @@ export function AboutMvmSection() {
  <div className="relative ml-8 -mt-30 h-[520px] max-w-[620px] md:ml-10 md:h-[560px]">
 
   {/* BACK IMAGE */}
-  <div
+  <button
+  type="button"
+  onClick={() => setIsSwapped(!isSwapped)}
   className={`
-    absolute z-0 bg-cover bg-center transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
+    absolute z-0 bg-cover bg-center transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer hover:opacity-95
 
     ${active.id === "mission" ? "right-[20px] top-[30px]" : ""}
     ${active.id === "vision" ? "right-[10px] top-[100px]" : ""}
     ${active.id === "values" ? "right-[40px] top-[150px]" : ""}
   `}
   style={{
-    backgroundImage: `url(${active.secondaryImage})`,
+    backgroundImage: `url(${isSwapped ? active.cardImage : active.secondaryImage})`,
     width: "281px",
     height: "341.5px",
   }}
-  role="img"
-  aria-label={`${active.id} secondary visual`}
+  aria-label="Swap images"
 />
 
   {/* FRONT IMAGE */}
-  <article
+  <button
+  type="button"
+  onClick={() => setIsSwapped(!isSwapped)}
   className={`
     absolute z-10 overflow-hidden shadow-[0_18px_40px_rgba(15,23,42,0.18)]
-    transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
+    transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer text-left
 
     ${active.id === "mission" ? "bottom-[70px] left-[90px]" : ""}
     ${active.id === "vision" ? "bottom-[-20px] left-[90px]" : ""}
@@ -171,29 +162,25 @@ export function AboutMvmSection() {
   style={{
     width: "289.5px",
   }}
+  aria-label="Swap images"
 >
   <div
     className="h-[341.5px] bg-cover bg-center"
-    style={{ backgroundImage: `url(${active.cardImage})` }}
+    style={{ backgroundImage: `url(${isSwapped ? active.secondaryImage : active.cardImage})` }}
     role="img"
-    aria-label={active.cardTitle}
+    aria-label={isSwapped ? active.secondaryCardTitle : active.cardTitle}
   />
 
   <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0f172a] via-[#0f172abf] to-transparent p-4 text-white md:p-5">
-    <h3 className="text-lg font-semibold leading-tight md:text-xl">
-      {active.cardTitle}
+    <h3 className="text-lg font-semibold leading-tight text-white md:text-xl">
+      {isSwapped ? active.secondaryCardTitle : active.cardTitle}
     </h3>
 
-    <p className="mt-1 text-xs leading-relaxed text-white/85 md:text-sm">
-      {active.cardCaption}
+    <p className="mt-1 text-xs leading-relaxed text-white/90 md:text-sm">
+      {isSwapped ? active.secondaryCardCaption : active.cardCaption}
     </p>
   </div>
-</article>
-
-  {/* TARGET ICON */}
-  <span className="absolute right-[150px] top-[165px] z-20 inline-flex size-9 items-center justify-center rounded-full border border-white/80 bg-black/20 text-white">
-    <span className="h-3 w-3 rounded-full border-2 border-white" />
-  </span>
+</button>
 
 </div>
 </div>
