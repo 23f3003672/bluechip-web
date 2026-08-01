@@ -1,23 +1,33 @@
+import { CountUp } from "@/components/ui/count-up";
+
 export function DeliverExcellenceSection() {
   const stats = [
     {
       label: "YEARS OF EXPERIENCE",
       value: "20+",
+      numericValue: 20,
+      suffix: "+",
       id: "experience",
     },
     {
       label: "MAJOR PROJECTS",
       value: "100+",
+      numericValue: 100,
+      suffix: "+",
       id: "projects",
     },
     {
       label: "NATIONWIDE PRESENCE",
       value: "Pan-India",
+      numericValue: null,
+      suffix: "",
       id: "presence",
     },
     {
       label: "SKILLED PROFESSIONALS",
       value: "350+",
+      numericValue: 350,
+      suffix: "+",
       id: "professionals",
     },
   ];
@@ -70,7 +80,11 @@ export function DeliverExcellenceSection() {
                   md:text-[42px]
                 "
               >
-                {stat.value}
+                {stat.numericValue !== null ? (
+                  <CountUp end={stat.numericValue} suffix={stat.suffix} />
+                ) : (
+                  stat.value
+                )}
               </p>
             </div>
           ))}
