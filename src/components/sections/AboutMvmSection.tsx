@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Plus, X } from "lucide-react";
+import { Plus, X, MousePointerClick } from "lucide-react";
 import { ABOUT_MVM_ITEMS } from "@/lib/mock-data";
 
 export function AboutMvmSection() {
@@ -53,12 +53,12 @@ export function AboutMvmSection() {
       onClick={() => handleSetActive("mission")}
       className={
         active.id === "mission"
-          ? "flex w-[190px] items-center gap-3 rounded-full bg-[#d4d5d9] px-4 py-2 text-sm font-semibold text-[#4a5160]"
-          : "flex items-center gap-3 text-sm font-semibold text-[#1e2537]/90"
+          ? "flex w-[160px] items-center gap-2.5 rounded-full bg-[#d4d5d9] px-3 py-1.5 text-xs font-semibold text-[#4a5160]"
+          : "flex items-center gap-2.5 text-xs font-semibold text-[#1e2537]/90"
       }
     >
-      <span className="inline-flex size-5 items-center justify-center rounded-full bg-[#0057b8] text-white">
-        <Plus className="size-3.5" />
+      <span className="inline-flex size-4 items-center justify-center rounded-full bg-[#0057b8] text-white">
+        <Plus className="size-3" />
       </span>
 
       <span>Mission</span>
@@ -83,12 +83,12 @@ export function AboutMvmSection() {
       onClick={() => handleSetActive("vision")}
       className={
         active.id === "vision"
-          ? "flex w-[190px] items-center gap-3 rounded-full bg-[#d4d5d9] px-4 py-2 text-sm font-semibold text-[#4a5160]"
-          : "flex items-center gap-3 text-sm font-semibold text-[#1e2537]/90"
+          ? "flex w-[160px] items-center gap-2.5 rounded-full bg-[#d4d5d9] px-3 py-1.5 text-xs font-semibold text-[#4a5160]"
+          : "flex items-center gap-2.5 text-xs font-semibold text-[#1e2537]/90"
       }
     >
-      <span className="inline-flex size-5 items-center justify-center rounded-full bg-[#0057b8] text-white">
-        <Plus className="size-3.5" />
+      <span className="inline-flex size-4 items-center justify-center rounded-full bg-[#0057b8] text-white">
+        <Plus className="size-3" />
       </span>
 
       <span>Vision</span>
@@ -113,12 +113,12 @@ export function AboutMvmSection() {
       onClick={() => handleSetActive("values")}
       className={
         active.id === "values"
-          ? "flex w-[190px] items-center gap-3 rounded-full bg-[#d4d5d9] px-4 py-2 text-sm font-semibold text-[#4a5160]"
-          : "flex items-center gap-3 text-sm font-semibold text-[#1e2537]/90"
+          ? "flex w-[160px] items-center gap-2.5 rounded-full bg-[#d4d5d9] px-3 py-1.5 text-xs font-semibold text-[#4a5160]"
+          : "flex items-center gap-2.5 text-xs font-semibold text-[#1e2537]/90"
       }
     >
-      <span className="inline-flex size-5 items-center justify-center rounded-full bg-[#0057b8] text-white">
-        <Plus className="size-3.5" />
+      <span className="inline-flex size-4 items-center justify-center rounded-full bg-[#0057b8] text-white">
+        <Plus className="size-3" />
       </span>
 
       <span>Values</span>
@@ -170,6 +170,11 @@ export function AboutMvmSection() {
     role="img"
     aria-label={isSwapped ? active.secondaryCardTitle : active.cardTitle}
   />
+
+  <div className="absolute top-3 right-3 flex items-center gap-1.5 rounded-full bg-black/50 px-2.5 py-1 backdrop-blur-sm text-white transition-opacity hover:bg-black/70">
+    <MousePointerClick className="size-3.5" />
+    <span className="text-[10px] font-medium uppercase tracking-wider">Click to Swap</span>
+  </div>
 
   <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0f172a] via-[#0f172abf] to-transparent p-4 text-white md:p-5">
     <h3 className="text-lg font-semibold leading-tight text-white md:text-xl">
