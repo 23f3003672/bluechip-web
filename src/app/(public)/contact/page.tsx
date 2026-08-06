@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/layout/Container";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { getSiteSettings } from "@/lib/site-settings";
-import { Mail, Phone, MapPin, Clock, ShieldCheck, Award, ArrowRight } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, ShieldCheck, Award, ArrowRight, MessageCircle } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -30,7 +30,7 @@ export default async function ContactPage() {
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-20 items-start">
             
             {/* LEFT COLUMN */}
-            <div className="flex flex-col relative z-10">
+            <div className="flex flex-col relative z-10 pt-8 lg:pt-20">
               <h1 className="text-4xl font-extrabold leading-[1.1] tracking-tight text-[#1f2a44] sm:text-5xl md:text-6xl">
                 Get in touch
               </h1>
@@ -76,6 +76,27 @@ export default async function ContactPage() {
                     </div>
                   </div>
                   <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-50 text-slate-400 group-hover:bg-[#1a56a8] group-hover:text-white transition-colors">
+                    <ArrowRight className="h-4 w-4 -rotate-45" />
+                  </div>
+                </a>
+
+                {/* WhatsApp Block */}
+                <a
+                  href={`https://wa.me/${contact.phone.replace(/[^0-9]/g, "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:shadow-lg hover:border-[#25D366]/50"
+                >
+                  <div className="flex items-center gap-5">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-slate-50 border border-slate-100 text-slate-600 transition-colors group-hover:bg-[#25D366]/10 group-hover:text-[#25D366]">
+                      <MessageCircle className="h-5 w-5" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-bold text-slate-900">WhatsApp us</span>
+                      <span className="mt-1 text-sm text-slate-500">{contact.phone}</span>
+                    </div>
+                  </div>
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-50 text-slate-400 group-hover:bg-[#25D366] group-hover:text-white transition-colors">
                     <ArrowRight className="h-4 w-4 -rotate-45" />
                   </div>
                 </a>
