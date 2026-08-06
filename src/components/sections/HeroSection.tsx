@@ -203,12 +203,12 @@ export function HeroSection() {
         </div>
         {/* Floating Contact Button */}
 <div className="absolute right-0 top-1/2 z-30 -translate-y-1/2">
-  <button
-    type="button"
+  <a
+    href="tel:7990324881"
     className="group flex h-[52px] w-[74px] items-center justify-center rounded-l-full bg-gradient-to-r from-[#0d5fa8] via-[#117ab2] to-[#1593d1] shadow-[0_8px_24px_rgba(17,122,178,0.45)] transition-all duration-300 hover:w-[82px]"
   >
     <Phone className="size-6 fill-white text-white" />
-  </button>
+  </a>
 </div>
       </section>
 
