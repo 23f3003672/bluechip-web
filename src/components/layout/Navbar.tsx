@@ -17,14 +17,13 @@ interface PrimaryCategory {
 }
 
 const UTILITY_LINKS = [
-  { label: "CONTACT US", href: "/#contact" },
+  { label: "ABOUT US", href: "/about" },
   { label: "NEWS & MEDIA", href: "/media" },
   { label: "CAREERS", href: "/careers" },
   { label: "FAQs", href: "/#faq" },
 ];
 
 const PRIMARY_CATEGORIES: PrimaryCategory[] = [
-  { label: "ABOUT US", href: "/about" },
   { label: "BUSINESS", href: "/services", megaKey: "business" },
   { label: "PROJECTS", href: "/projects", megaKey: "projects" },
   { label: "INNOVATIONS", href: "/services#innovations", megaKey: "innovations" },
