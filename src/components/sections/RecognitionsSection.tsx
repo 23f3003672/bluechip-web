@@ -92,13 +92,13 @@ function RecognitionRow({
   const subText = lines.slice(1).join("\n");
 
   return (
-    <article className="grid items-center gap-10 py-10 md:grid-cols-[340px_1.3fr_1fr]">
-      <div className="flex justify-center">
+    <article className="flex flex-col items-center gap-10 py-10 md:flex-row md:items-center md:justify-between md:gap-8 lg:gap-12">
+      <div className="flex w-full shrink-0 justify-center md:w-[320px] md:justify-start">
         <LaurelWreath text={title} />
       </div>
 
-      <div className="flex flex-col gap-1">
-        <h3 className="text-[16.5px] font-semibold text-black leading-tight">
+      <div className="flex w-full flex-col gap-1 md:max-w-[480px]">
+        <h3 className="text-[15px] font-normal text-[#222b3d] leading-[1.6]">
           {mainText}
         </h3>
         {subText && (
@@ -108,13 +108,13 @@ function RecognitionRow({
         )}
       </div>
 
-      <dl className="grid gap-2 text-[12.5px]">
+      <dl className="grid w-full shrink-0 gap-2 text-[12.5px] md:w-[280px]">
         <div className="flex items-baseline gap-3">
-          <dt className="text-[#78868e]">Category</dt>
+          <dt className="text-[#78868e] min-w-[70px]">Category</dt>
           <dd className="font-normal text-[#222b3d]">{categoryLabel}</dd>
         </div>
-        <div className="flex items-baseline gap-3">
-          <dt className="text-[#78868e]">Organised by</dt>
+        <div className="flex gap-3">
+          <dt className="text-[#78868e] min-w-[70px]">Organised by</dt>
           <dd className="font-normal text-[#222b3d]">{organisedBy}</dd>
         </div>
       </dl>

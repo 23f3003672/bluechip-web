@@ -50,19 +50,19 @@ export function JourneyMilestonesSection() {
           <div className="relative z-10 max-w-[720px] px-6 pt-20 pb-10 md:pt-24 md:pb-12 lg:px-16 lg:pt-[160px]">
             <span className="block text-[#d49a2a] font-medium text-[18px]">About BlueChip</span>
 
-            <h2 id="home-about-title" className="mt-6 text-white text-[34px] font-semibold leading-[1.25] tracking-[-0.02em] md:text-[42px] lg:text-[48px] xl:text-[52px]">
+            <h2 id="home-about-title" className="mt-6 text-white text-[30px] font-semibold leading-[1.25] tracking-[-0.02em] md:text-[35px] lg:text-[40px] xl:text-[44px]">
               More than structures
               <br />
               we build trust.
             </h2>
 
-            <p className="mt-8 max-w-[620px] text-[15px] leading-[1.7] text-[rgba(255,255,255,0.9)] md:text-[18px] lg:text-[20px]">
+            <p className="mt-8 max-w-[620px] text-[12px] leading-[1.7] text-[rgba(255,255,255,0.9)] md:text-[15px] lg:text-[17px]">
               What began as a commitment to honest craftsmanship has grown into a company shaped by responsibility and trust.
             </p>
 
             <div className="mt-8">
               <a
-                className="inline-block text-[18px] font-normal text-white underline underline-offset-[6px] decoration-[#d49a2a] transition-opacity hover:opacity-80"
+                className="inline-block text-[15px] font-normal text-white underline underline-offset-[6px] decoration-[#d49a2a] transition-opacity hover:opacity-80"
                 href="/about"
               >
                 Read our story →
@@ -83,7 +83,7 @@ export function JourneyMilestonesSection() {
           <div className="flex min-h-[520px] lg:min-h-[660px] flex-col justify-end bg-[#f3f7fb] p-8 md:p-10 lg:px-12 lg:pb-16 lg:pt-10">
             <span className="block text-[#9aa3a9] text-[18px]">Our Journey &amp; Milestones</span>
 
-            <h3 className="mt-4 text-[#1f2933] text-[26px] md:text-[34px] lg:text-[36px] font-normal">Built steadily since 1998.</h3>
+            <h3 className="mt-4 text-[#1f2933] text-[24px] md:text-[28px] lg:text-[30px] font-normal">Built steadily since 1998.</h3>
 
             {/* timeline row */}
             <div className="mt-10 flex items-center gap-4">

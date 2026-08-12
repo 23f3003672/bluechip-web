@@ -22,10 +22,10 @@ export function AboutMvmSection() {
     <section className="bg-[#ffffff] py-12 md:py-16 lg:py-20" aria-labelledby="about-mvm-title">
       <div className="grid w-full grid-cols-1 md:grid-cols-2 gap-0">
           <div className="border-r border-[#e3e5ea] px-6 py-16 md:px-12 md:py-20 lg:px-20 lg:py-24">
-            <p className="text-4xl font-medium text-[#c2902a] md:text-3xl">{active.eyebrow}</p>
+            <p className="text-xl font-medium text-[#c2902a] md:text-xl">{active.eyebrow}</p>
             <h2
               id="about-mvm-title"
-              className="mt-4 max-w-md text-6xl font-bold leading-[1.4] tracking-tight text-[#222b40] md:text-5xl"
+              className="mt-4 max-w-md text-4xl font-bold leading-[1.4] tracking-tight text-[#222b40] md:text-5xl"
             >
               {active.title}
             </h2>

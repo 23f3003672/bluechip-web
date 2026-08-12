@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { ABOUT_VISIONARIES, type AboutVisionary } from "@/lib/mock-data";
 
@@ -134,11 +135,31 @@ export function AboutVisionariesSection({
                   </div>
 
                   {/* DESCRIPTION */}
-                  <div className="mt-4 flex-1 overflow-y-auto pr-2 scrollbar-sleek">
-                    <p className="max-w-[260px] text-[13.5px] leading-relaxed text-white/95">
-                      {person.bio}
-                    </p>
-                  </div>
+                  {(() => {
+                    const isMD = person.role.toLowerCase().includes("managing director") || 
+                                 person.role.toLowerCase().includes("md") || 
+                                 person.id === "1" || 
+                                 person.name.toLowerCase().includes("dimple shah");
+
+                    return isMD ? (
+                      <div className="mt-4 flex flex-col h-full pr-2">
+                        <p className="max-w-[260px] text-[13.5px] leading-relaxed text-white/95 line-clamp-4">
+                          {person.bio}
+                        </p>
+                        <div className="mt-auto pt-4 pb-2">
+                          <Link href={`/about/visionaries/${person.id}`} className="inline-flex items-center text-sm font-semibold text-[#c9962d] hover:text-white transition-colors">
+                            Read More <ArrowRight className="ml-1 size-4" />
+                          </Link>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="mt-4 flex-1 overflow-y-auto pr-2 scrollbar-sleek">
+                        <p className="max-w-[260px] text-[13.5px] leading-relaxed text-white/95">
+                          {person.bio}
+                        </p>
+                      </div>
+                    );
+                  })()}
                 </div>
 
               </div>

@@ -23,7 +23,7 @@ export function FaqSection({
             <p className="text-lg font-medium text-[#bf8b2a] md:text-xl">FAQ</p>
             <h2
               id="home-faq-title"
-              className="mt-4 max-w-[480px] text-2xl font-bold leading-tight tracking-tight text-[#1f2a44] md:text-3xl lg:text-[48px] scroll-mt-[120px]"
+              className="mt-4 max-w-[480px] text-2xl font-bold leading-tight tracking-tight text-[#1f2a44] md:text-2xl lg:text-[44px] scroll-mt-[120px]"
             >
               We are here to help you!
             </h2>
