@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { JourneyProject } from "@/lib/mock-data";
+import { ProjectHeroSlider } from "./ProjectHeroSlider";
 
 interface ProjectDetailHeroSectionProps {
   project: JourneyProject;
@@ -8,6 +9,8 @@ interface ProjectDetailHeroSectionProps {
 export function ProjectDetailHeroSection({
   project,
 }: ProjectDetailHeroSectionProps) {
+  const images = Array.from(new Set([project.heroImageUrl, ...(project.gallery || [])])).filter(Boolean);
+
   return (
     <section
       className="w-full overflow-hidden bg-[#f3f4f7]"
@@ -101,14 +104,7 @@ export function ProjectDetailHeroSection({
 
         {/* RIGHT IMAGE SECTION */}
         <div className="relative min-h-[500px] overflow-hidden lg:min-h-screen">
-          <img
-            src={project.heroImageUrl}
-            alt={project.title}
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-
-          {/* Optional subtle overlay */}
-          <div className="absolute inset-0 bg-black/5" />
+          <ProjectHeroSlider images={images} title={project.title} />
         </div>
       </div>
     </section>

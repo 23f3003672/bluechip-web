@@ -551,6 +551,7 @@ export interface JourneyProject {
   thumbnailUrl: string;
   heroImageUrl: string;
   featured?: boolean;
+  gallery?: string[];
 }
 
 export const JOURNEY_PROJECTS: JourneyProject[] = [
