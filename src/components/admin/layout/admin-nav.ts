@@ -16,6 +16,11 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     description: "Project management",
   },
   {
+    label: "Hero Slides",
+    href: "/admin/hero",
+    description: "Homepage hero slider",
+  },
+  {
     label: "Media",
     href: "/admin/media",
     description: "Media library",

@@ -7,9 +7,10 @@ import type {
   MockFaq,
   RecognitionItem,
   RecognitionCategory,
+  HeroSlide as MockHeroSlide,
 } from "@/lib/mock-data";
 import { RECOGNITION_CATEGORY_LABELS } from "@/lib/mock-data";
-import type { FAQ, Media, MediaArticle, Project, Recognition, Service, Visionary } from "@/types";
+import type { FAQ, Media, MediaArticle, Project, Recognition, Service, Visionary, HeroSlide as HeroSlideRow } from "@/types";
 import { PROJECT_SUBCATEGORIES } from "@/lib/project-subcategories";
 import { slugify, truncate } from "@/lib/utils";
 
@@ -170,3 +171,16 @@ export function mapVisionaryToAboutVisionary(row: Visionary): AboutVisionary {
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1000&q=80",
   };
 }
+
+export function mapHeroSlideToMockSlide(row: HeroSlideRow): MockHeroSlide {
+  return {
+    id: row.id,
+    eyebrow: row.category,
+    title: row.tagline,
+    location: row.project_name,
+    imageUrl: row.image_url,
+    videoEmbedUrl: row.video_url || "",
+    projectHref: row.project_href || "/projects",
+  };
+}
+

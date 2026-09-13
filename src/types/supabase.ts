@@ -72,6 +72,12 @@ export interface Database {
         Update: Partial<SettingInsert>;
         Relationships: [];
       };
+      hero_slides: {
+        Row: HeroSlide;
+        Insert: HeroSlideInsert;
+        Update: Partial<HeroSlideInsert>;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
@@ -227,3 +233,19 @@ export interface Setting {
 }
 
 export type SettingInsert = Setting;
+
+export interface HeroSlide {
+  id: string;
+  image_url: string;
+  category: string;
+  tagline: string;
+  project_name: string;
+  video_url: string | null;
+  project_href: string;
+  sort_order: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export type HeroSlideInsert = Omit<HeroSlide, "id" | "created_at" | "updated_at">;

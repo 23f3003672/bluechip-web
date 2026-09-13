@@ -122,10 +122,10 @@ export function Navbar() {
               href="/brochure.pdf"
               download="Bluechip_Brochure.pdf"
               aria-label="Download Brochure"
-              className="hidden h-7 items-center justify-center gap-1.5 rounded-[5px] border border-[#c9ccd2] bg-[#f1f2f4] px-2.5 text-[11px] font-semibold uppercase tracking-wide text-[#7f838b] transition-colors hover:border-[#1d2537] hover:text-[#1d2537] md:inline-flex"
+              title="Download Brochure"
+              className="hidden h-9 w-9 items-center justify-center rounded-[8px] border border-[#c9ccd2] bg-[#f1f2f4] text-[#7f838b] transition-all duration-300 hover:border-[#1d2537] hover:bg-[#e6e8ec] hover:text-[#1d2537] md:inline-flex"
             >
-              <Download className="size-4" />
-              <span>Brochure</span>
+              <Download className="size-5" strokeWidth={1.8} />
             </a>
 
             {/* Separator */}

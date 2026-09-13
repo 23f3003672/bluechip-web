@@ -87,8 +87,20 @@ export const mediaArticleFormSchema = z.object({
   meta_keywords: z.string().default(""),
 });
 
+export const heroSlideFormSchema = z.object({
+  image_url: z.string().min(1, "Background image is required"),
+  category: z.string().default(""),
+  tagline: z.string().default(""),
+  project_name: z.string().min(1, "Project name is required"),
+  video_url: z.string().default(""),
+  project_href: z.string().default("/projects"),
+  sort_order: z.coerce.number().int().default(0),
+  is_active: z.boolean().default(true),
+});
+
 export type RecognitionFormValues = z.output<typeof recognitionFormSchema>;
 export type VisionaryFormValues = z.output<typeof visionaryFormSchema>;
 export type ServiceFormValues = z.output<typeof serviceFormSchema>;
 export type FaqFormValues = z.output<typeof faqFormSchema>;
 export type MediaArticleFormValues = z.output<typeof mediaArticleFormSchema>;
+export type HeroSlideFormValues = z.output<typeof heroSlideFormSchema>;

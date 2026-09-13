@@ -7,8 +7,8 @@ import { ProjectsCarouselSection } from "@/components/sections/ProjectsCarouselS
 import { FaqSection } from "@/components/sections/FaqSection";
 import { ContactMapSection } from "@/components/sections/ContactMapSection";
 import { createClient } from "@/lib/supabase/server";
-import { HOME_SERVICES, MOCK_FAQS } from "@/lib/mock-data";
-import { mapFaqToMockFaq, mapServiceToHomeService } from "@/lib/public-content";
+import { HOME_SERVICES, MOCK_FAQS, HERO_SLIDES } from "@/lib/mock-data";
+import { mapFaqToMockFaq, mapServiceToHomeService, mapHeroSlideToMockSlide } from "@/lib/public-content";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -31,27 +31,36 @@ export const dynamic = "force-dynamic";
 export default async function HomePage() {
   const supabase = await createClient();
 
-  const [{ data: servicesData }, { data: faqData }] = await Promise.all([
-    supabase
-      .from("services")
-      .select("id, title, slug, description, icon, image_url, published, sort_order, created_at, updated_at")
-      .eq("published", true)
-      .order("sort_order", { ascending: true }),
-    supabase
-      .from("faqs")
-      .select("id, question, answer, category, sort_order, published, created_at")
-      .eq("published", true)
-      .order("sort_order", { ascending: true }),
-  ]);
+  const [{ data: servicesData }, { data: faqData }, { data: heroSlidesData }] =
+    await Promise.all([
+      supabase
+        .from("services")
+        .select("id, title, slug, description, icon, image_url, published, sort_order, created_at, updated_at")
+        .eq("published", true)
+        .order("sort_order", { ascending: true }),
+      supabase
+        .from("faqs")
+        .select("id, question, answer, category, sort_order, published, created_at")
+        .eq("published", true)
+        .order("sort_order", { ascending: true }),
+      supabase
+        .from("hero_slides")
+        .select("*")
+        .eq("is_active", true)
+        .order("sort_order", { ascending: true }),
+    ]);
 
   const services = servicesData?.length
     ? servicesData.map(mapServiceToHomeService)
     : HOME_SERVICES;
   const faqs = faqData?.length ? faqData.map(mapFaqToMockFaq) : MOCK_FAQS;
+  const heroSlides = heroSlidesData?.length
+    ? heroSlidesData.map(mapHeroSlideToMockSlide)
+    : HERO_SLIDES;
 
   return (
     <>
-      <HeroSection />
+      <HeroSection slides={heroSlides} />
       <TrustedLeadersSection />
       <ServicesSection initialServices={services} />
       <ProjectsCarouselSection />

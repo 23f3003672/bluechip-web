@@ -6,10 +6,15 @@ import { ArrowRight, ChevronLeft, ChevronRight, Play } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { SiteButtonLink } from "@/components/ui/site-button";
-import { HERO_SLIDES } from "@/lib/mock-data";
+import { HERO_SLIDES, type HeroSlide } from "@/lib/mock-data";
 import { Phone, Mail, X } from "lucide-react";
 
-export function HeroSection() {
+interface HeroSectionProps {
+  slides?: HeroSlide[];
+}
+
+export function HeroSection({ slides = HERO_SLIDES }: HeroSectionProps) {
+  const currentSlides = slides && slides.length > 0 ? slides : HERO_SLIDES;
   const [activeIndex, setActiveIndex] = useState(0);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
@@ -18,19 +23,22 @@ export function HeroSection() {
   const [touchStartY, setTouchStartY] = useState<number | null>(null);
   const [contactOpen, setContactOpen] = useState(false);
 
-  const activeSlide = useMemo(() => HERO_SLIDES[activeIndex], [activeIndex]);
+  const activeSlide = useMemo(
+    () => currentSlides[activeIndex] ?? currentSlides[0],
+    [currentSlides, activeIndex]
+  );
 
   useEffect(() => {
-    if (isVideoOpen || isHovering || HERO_SLIDES.length <= 1) {
+    if (isVideoOpen || isHovering || currentSlides.length <= 1) {
       return;
     }
 
     const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % HERO_SLIDES.length);
+      setActiveIndex((current) => (current + 1) % currentSlides.length);
     }, 5500);
 
     return () => window.clearInterval(timer);
-  }, [isVideoOpen, isHovering, HERO_SLIDES.length]);
+  }, [isVideoOpen, isHovering, currentSlides.length]);
 
   const openVideo = (index: number) => {
     if (didSwipe) {
@@ -44,12 +52,12 @@ export function HeroSection() {
 
   const goToPrevious = () => {
     setActiveIndex((current) =>
-      current === 0 ? HERO_SLIDES.length - 1 : current - 1
+      current === 0 ? currentSlides.length - 1 : current - 1
     );
   };
 
   const goToNext = () => {
-    setActiveIndex((current) => (current + 1) % HERO_SLIDES.length);
+    setActiveIndex((current) => (current + 1) % currentSlides.length);
   };
 
   const handleTouchStart = (event: TouchEvent<HTMLElement>) => {
@@ -84,6 +92,13 @@ export function HeroSection() {
 
   return (
     <>
+      {/* Brand accent stripes */}
+      <div className="w-full flex flex-col" aria-hidden="true">
+        <div className="h-[7px] w-full bg-[#1f2c4c]" />
+        <div className="h-[4px] w-full bg-white" />
+        <div className="h-[7px] w-full bg-[#810b1f]" />
+      </div>
+
       <section className="relative isolate overflow-hidden bg-[#f2f4f8]">
         <div
           className="relative h-[56vh] min-h-[450px] sm:h-[62vh] sm:min-h-[450px] lg:h-[calc(100vh-4rem)] lg:max-h-[590px]"
@@ -92,7 +107,7 @@ export function HeroSection() {
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          {HERO_SLIDES.map((slide, index) => (
+          {currentSlides.map((slide, index) => (
             <div
               key={slide.id}
               className={`absolute inset-0 transition-opacity duration-700 ${
@@ -101,12 +116,7 @@ export function HeroSection() {
                   : "pointer-events-none opacity-0"
               }`}
             >
-              <button
-                type="button"
-                onClick={() => openVideo(index)}
-                className="relative h-full w-full text-left"
-                aria-label={`Open video for ${slide.title}`}
-              >
+              <div className="relative h-full w-full text-left">
                 <div
                   className="absolute inset-0 bg-cover bg-center"
                   style={{ backgroundImage: `url('${slide.imageUrl}')` }}
@@ -129,33 +139,37 @@ export function HeroSection() {
 
                     <div className="mt-17 flex flex-wrap items-center gap-3">
                       <SiteButtonLink
-                      href={slide.projectHref}
-                      size="md"
-                      className="h-10 rounded-none border border-white bg-transparent px-6 text-[11px] font-bold uppercase tracking-[0.08em] text-white transition-colors hover:border-[#496a9c] hover:bg-[#c9962d] hover:text-white"
-                      onClick={(event) => event.stopPropagation()}
+                        href={slide.projectHref}
+                        size="md"
+                        className="h-10 rounded-none border border-white bg-transparent px-6 text-[11px] font-bold uppercase tracking-[0.08em] text-white transition-colors hover:border-[#496a9c] hover:bg-[#c9962d] hover:text-white"
+                        onClick={(event) => event.stopPropagation()}
                       >
                         View Our Projects
                       </SiteButtonLink>
 
-                      <Link
-  href={slide.projectHref}
-  onClick={(event) => event.stopPropagation()}
-  className="group inline-flex h-10 items-center gap-2 rounded-none border border-[#f3b246] bg-white px-4 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#1c3767] transition-all duration-300 hover:border-[#c9962d]"
->
-  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#d39a2c]">
-    <Play className="ml-[1px] size-2.5 fill-white text-white" />
-  </span>
+                      {slide.videoEmbedUrl ? (
+                        <button
+                          type="button"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            openVideo(index);
+                          }}
+                          className="group inline-flex h-10 items-center gap-2 rounded-none border border-[#f3b246] bg-white px-4 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#1c3767] transition-all duration-300 hover:border-[#c9962d]"
+                        >
+                          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#d39a2c]">
+                            <Play className="ml-[1px] size-2.5 fill-white text-white" />
+                          </span>
 
-  <span className="relative">
-    Watch Project Walkthrough
-
-    <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-[#c9962d] transition-all duration-300 group-hover:w-full" />
-  </span>
-</Link>
+                          <span className="relative">
+                            Watch Project Walkthrough
+                            <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-[#c9962d] transition-all duration-300 group-hover:w-full" />
+                          </span>
+                        </button>
+                      ) : null}
                     </div>
                   </div>
                 </div>
-              </button>
+              </div>
             </div>
           ))}
 
@@ -184,7 +198,7 @@ export function HeroSection() {
           <div className="absolute inset-x-0 bottom-2 z-20">
             <Container>
               <div className="flex items-center justify-center gap-2 pb-2">
-                {HERO_SLIDES.map((slide, index) => (
+                {currentSlides.map((slide, index) => (
                   <button
                     key={slide.id}
                     type="button"
@@ -218,15 +232,30 @@ export function HeroSection() {
             {activeSlide?.title} video walkthrough
           </DialogTitle>
           <div className="relative bg-black pt-[56.25%]">
-            {activeSlide && (
-              <iframe
-                title={`${activeSlide.title} walkthrough video`}
-                src={activeSlide.videoEmbedUrl}
-                className="absolute inset-0 h-full w-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              />
+            {activeSlide?.videoEmbedUrl && (
+              activeSlide.videoEmbedUrl.includes("pika.art") ? (
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-zinc-950 p-6 text-center text-white">
+                  <p className="text-base font-medium">Walkthrough video hosted on Pika</p>
+                  <a
+                    href={activeSlide.videoEmbedUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex h-10 items-center gap-2 rounded-md bg-[#c9962d] px-5 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#b08325]"
+                  >
+                    <Play className="size-4 fill-white" />
+                    Open Video in New Tab
+                  </a>
+                </div>
+              ) : (
+                <iframe
+                  title={`${activeSlide.title || activeSlide.location} walkthrough video`}
+                  src={activeSlide.videoEmbedUrl}
+                  className="absolute inset-0 h-full w-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              )
             )}
           </div>
 

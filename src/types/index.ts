@@ -20,7 +20,9 @@ export type {
   Setting,
   SettingInsert,
   MediaArticle,
-MediaArticleInsert,
+  MediaArticleInsert,
+  HeroSlide,
+  HeroSlideInsert,
 } from "./supabase";
 
 /* ─── UI / Component helpers ─────────────────────────────────────── */
