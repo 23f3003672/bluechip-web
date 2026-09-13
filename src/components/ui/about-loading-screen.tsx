@@ -19,8 +19,8 @@ const HOLD_MS     = 1100; // solid B holds (gentle float)
 const EXIT_MS     = 800;  // fade / dissolve out
 const BUFFER_MS   = 200;
 
-// Image path — same asset your current version uses.
-const IMG_SRC = "/PhotoshopExtension_Image.png";
+// Optimized 2x WebP asset (97 KB instead of 2.5 MB)
+const IMG_SRC = "/about/about-b-logo.webp";
 
 /* ─── Types ──────────────────────────────────────────────────────────── */
 interface Blob {
@@ -74,7 +74,11 @@ function buildBlobs(): Blob[] {
 /* ─── Main ───────────────────────────────────────────────────────────── */
 type Phase = "hidden" | "assembling" | "holding" | "exiting" | "done";
 
-export function AboutLoadingScreen() {
+interface AboutLoadingScreenProps {
+  onComplete?: () => void;
+}
+
+export function AboutLoadingScreen({ onComplete }: AboutLoadingScreenProps = {}) {
   const [phase, setPhase] = useState<Phase>("hidden");
   const blobsRef = useRef<Blob[]>([]);
   // Stable-ish filter id (avoids collisions if mounted more than once).
@@ -82,17 +86,54 @@ export function AboutLoadingScreen() {
 
   useEffect(() => {
     blobsRef.current = buildBlobs();
-    setPhase("assembling");
 
-    const t1 = setTimeout(() => setPhase("holding"),
-      ASSEMBLE_MS + BUFFER_MS);
-    const t2 = setTimeout(() => setPhase("exiting"),
-      ASSEMBLE_MS + BUFFER_MS + HOLD_MS);
-    const t3 = setTimeout(() => setPhase("done"),
-      ASSEMBLE_MS + BUFFER_MS + HOLD_MS + EXIT_MS + 100);
+    let isMounted = true;
+    const timers: NodeJS.Timeout[] = [];
 
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
-  }, []);
+    const startAnimation = () => {
+      if (!isMounted) return;
+      setPhase("assembling");
+
+      const t1 = setTimeout(() => {
+        if (isMounted) setPhase("holding");
+      }, ASSEMBLE_MS + BUFFER_MS);
+
+      const t2 = setTimeout(() => {
+        if (isMounted) setPhase("exiting");
+      }, ASSEMBLE_MS + BUFFER_MS + HOLD_MS);
+
+      const t3 = setTimeout(() => {
+        if (isMounted) {
+          setPhase("done");
+          onComplete?.();
+        }
+      }, ASSEMBLE_MS + BUFFER_MS + HOLD_MS + EXIT_MS + 100);
+
+      timers.push(t1, t2, t3);
+    };
+
+    // Preload & decode image in memory first so it never animates over an empty canvas
+    const img = new window.Image();
+    img.src = IMG_SRC;
+
+    if (img.complete && img.naturalWidth > 0) {
+      startAnimation();
+    } else {
+      img.onload = () => {
+        if ("decode" in img) {
+          img.decode().then(startAnimation).catch(startAnimation);
+        } else {
+          startAnimation();
+        }
+      };
+      img.onerror = startAnimation; // Fail-safe: always start so UI never gets stuck
+    }
+
+    return () => {
+      isMounted = false;
+      timers.forEach(clearTimeout);
+    };
+  }, [onComplete]);
 
   if (phase === "hidden" || phase === "done") return null;
 

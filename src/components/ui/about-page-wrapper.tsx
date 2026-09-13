@@ -1,22 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { AboutLoadingScreen } from "@/components/ui/about-loading-screen";
-
-// assemble 1700 + buffer 200 + hold 1100 + exit 800 + 100 ≈ 3.9s
-const TOTAL_ANIM_MS = 1700 + 200 + 1100 + 800 + 100;
 
 export function AboutPageWrapper({ children }: { children: React.ReactNode }) {
   const [ready, setReady] = useState(false);
 
+  const handleComplete = useCallback(() => {
+    setReady(true);
+  }, []);
+
   useEffect(() => {
-    const timer = setTimeout(() => setReady(true), TOTAL_ANIM_MS);
-    return () => clearTimeout(timer);
+    // Safety fallback in case animation is interrupted or tab is in background
+    const fallback = setTimeout(() => setReady(true), 5000);
+    return () => clearTimeout(fallback);
   }, []);
 
   return (
     <>
-      <AboutLoadingScreen />
+      <link rel="preload" as="image" href="/about/about-b-logo.webp" type="image/webp" />
+      <AboutLoadingScreen onComplete={handleComplete} />
       <div
         style={{
           opacity: ready ? 1 : 0,
