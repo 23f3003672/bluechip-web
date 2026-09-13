@@ -221,7 +221,7 @@ export default async function CareerDetailPage({
             <JobApplyCard
               jobId={job.id}
               jobTitle={job.title}
-              contactPhone={settings.contact.phone}
+              contactEmail="info@bluechiptechno.com"
             />
           </div>
         </div>

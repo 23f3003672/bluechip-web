@@ -3,18 +3,19 @@
 import { useState } from "react";
 import { SiteButton } from "@/components/ui/site-button";
 import { JobApplicationModal } from "@/components/forms/JobApplicationModal";
-import { Phone, FileText } from "lucide-react";
+import { Mail, FileText } from "lucide-react";
 
 interface JobApplyCardProps {
   jobId: string;
   jobTitle: string;
-  contactPhone: string;
+  contactEmail?: string;
+  contactPhone?: string;
 }
 
 export function JobApplyCard({
   jobId,
   jobTitle,
-  contactPhone,
+  contactEmail = "info@bluechiptechno.com",
 }: JobApplyCardProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -39,17 +40,21 @@ export function JobApplyCard({
             <span>Apply Now</span>
           </SiteButton>
 
-          <div className="text-center text-[10px] text-slate-400 font-mono">
-            OR CALL RECRUITMENT AT
+          <div className="text-center text-[10px] text-slate-400 font-mono uppercase tracking-wider">
+            Have queries? Email us at
           </div>
 
           <a
-            href={`tel:${contactPhone.replace(/\s/g, "")}`}
-            className="flex items-center justify-center gap-2 rounded-lg border border-slate-700 hover:border-slate-600 bg-slate-800/40 py-2.5 text-xs font-semibold text-slate-200 transition-colors"
+            href={`mailto:${contactEmail}?subject=${encodeURIComponent(`Query regarding ${jobTitle} opening`)}`}
+            className="flex items-center justify-center gap-2 rounded-lg border border-slate-700/80 hover:border-slate-600 bg-slate-800/40 hover:bg-slate-800/70 py-2.5 px-3 text-xs font-semibold text-slate-200 hover:text-white transition-all group"
           >
-            <Phone className="h-3.5 w-3.5 text-amber-500" />
-            <span>{contactPhone}</span>
+            <Mail className="h-3.5 w-3.5 text-sky-400 transition-transform group-hover:scale-110 shrink-0" />
+            <span className="truncate">{contactEmail}</span>
           </a>
+
+          <p className="text-center text-[11px] text-slate-400 leading-snug">
+            Applications are accepted only via the portal above. Please email only for queries.
+          </p>
         </div>
       </div>
 
