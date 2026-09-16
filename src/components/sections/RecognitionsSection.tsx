@@ -131,7 +131,7 @@ const GROUP_HEADING_LABELS: Record<RecognitionCategory, string> = {
 };
 
 export function RecognitionsSection({
-  initialRecords = RECOGNITIONS,
+  initialRecords = [],
 }: {
   initialRecords?: RecognitionItem[];
 }) {
@@ -197,25 +197,31 @@ export function RecognitionsSection({
           Recognised for Excellence.
         </h1>
 
-        <div className="mt-8 space-y-10 md:mt-12 md:space-y-12">
-          {grouped.map((group) => (
-            <section key={group.category} aria-labelledby={`recognitions-${group.category}`}>
-              <div className="mb-2 flex items-center gap-4 md:mb-3">
-                <h2
-                  id={`recognitions-${group.category}`}
-                  className="text-[19.4px] font-semibold tracking-tight text-[#222b3d]"
-                >
-                  {GROUP_HEADING_LABELS[group.category]}
-                </h2>
-                <div className="h-px flex-1 bg-[#d6dbe5]" aria-hidden="true" />
-              </div>
+        {grouped.length === 0 ? (
+          <div className="mt-8 rounded-2xl border border-dashed border-slate-200 bg-slate-50/70 p-12 text-center text-slate-500">
+            Nothing added here yet.
+          </div>
+        ) : (
+          <div className="mt-8 space-y-10 md:mt-12 md:space-y-12">
+            {grouped.map((group) => (
+              <section key={group.category} aria-labelledby={`recognitions-${group.category}`}>
+                <div className="mb-2 flex items-center gap-4 md:mb-3">
+                  <h2
+                    id={`recognitions-${group.category}`}
+                    className="text-[19.4px] font-semibold tracking-tight text-[#222b3d]"
+                  >
+                    {GROUP_HEADING_LABELS[group.category]}
+                  </h2>
+                  <div className="h-px flex-1 bg-[#d6dbe5]" aria-hidden="true" />
+                </div>
 
-              {group.items.map((item) => (
-                <RecognitionRow key={item.id} {...item} />
-              ))}
-            </section>
-          ))}
-        </div>
+                {group.items.map((item) => (
+                  <RecognitionRow key={item.id} {...item} />
+                ))}
+              </section>
+            ))}
+          </div>
+        )}
 
         {hasMore ? (
           <div className="mt-10 flex justify-center">

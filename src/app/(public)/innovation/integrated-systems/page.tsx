@@ -1,16 +1,5 @@
-import { ProjectsGallerySection } from "@/components/sections/ProjectGallerySection";
+import { redirect } from "next/navigation";
 
-import { getGroupedProjectsByColumnTitle } from "@/lib/project-subcategory-server-utils";
-
-export const dynamic = "force-dynamic";
-
-export default async function IntegratedSystemsPage() {
-  const groups = await getGroupedProjectsByColumnTitle("Integrated Systems");
-
-  return (
-    <ProjectsGallerySection
-      title="Integrated Systems"
-      groups={groups}
-    />
-  );
+export default function IntegratedSystemsPage() {
+  redirect("/innovation#integrated-systems");
 }

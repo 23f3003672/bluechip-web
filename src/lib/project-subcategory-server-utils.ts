@@ -1,11 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { mapProjectToJourneyProject } from "@/lib/public-content";
-import { JOURNEY_PROJECTS } from "@/lib/mock-data";
 import { PROJECT_SUBCATEGORIES } from "@/lib/project-subcategories";
-import {
-  SUBCATEGORY_KEYWORDS,
-  rotateProjects,
-} from "@/lib/project-subcategory-utils";
 
 export async function getProjectsForSubcategory(subcategorySlug: string) {
   try {
@@ -52,19 +47,7 @@ export async function getProjectsByColumnTitle(columnTitle: string) {
     console.error("Error fetching projects for column:", error);
   }
 
-  // Fallback to mock data filter
-  return JOURNEY_PROJECTS.filter((project) => {
-    const haystack =
-      `${project.title} ${project.category} ${project.projectType} ${project.summary}`.toLowerCase();
-
-    return slugs.some((slug) => {
-      const keywords = SUBCATEGORY_KEYWORDS[slug] ?? [];
-
-      return keywords.some((keyword) =>
-        haystack.includes(keyword.toLowerCase())
-      );
-    });
-  });
+  return [];
 }
 
 export async function getGroupedProjectsByColumnTitle(columnTitle: string) {

@@ -4,12 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { Container } from "@/components/layout/Container";
 import { mapMediaListToGalleryItems } from "@/lib/public-content";
 import { PROJECT_SUBCATEGORIES } from "@/lib/project-subcategories";
-import {
-  HOME_SERVICES,
-  JOURNEY_PROJECTS,
-  MEDIA_GALLERY_ITEMS,
-  RECOGNITIONS,
-} from "@/lib/mock-data";
+import { HOME_SERVICES } from "@/lib/mock-data";
 
 export const metadata: Metadata = {
   title: "Search",
@@ -78,19 +73,7 @@ export default async function SearchPage(props: SearchPageProps) {
     return haystack.includes(queryLower);
   });
 
-  const projects =
-    projectsFromDb.length > 0
-      ? projectsFromDb
-      : JOURNEY_PROJECTS.filter((item) => {
-          const haystack = `${item.title} ${item.summary} ${item.category} ${item.projectType} ${item.locationYear}`.toLowerCase();
-          return haystack.includes(queryLower);
-        }).slice(0, 8).map((item) => ({
-          id: item.id,
-          title: item.title,
-          slug: item.slug,
-          location: item.locationYear,
-          year: undefined,
-        }));
+  const projects = projectsFromDb;
 
   const services =
     servicesFromDb.length > 0
@@ -105,26 +88,9 @@ export default async function SearchPage(props: SearchPageProps) {
           description: item.description,
         }));
 
-  const recognitions =
-    recognitionsFromDb.length > 0
-      ? recognitionsFromDb
-      : RECOGNITIONS.filter((item) => {
-          const haystack = `${item.title} ${item.subtitle} ${item.categoryLabel} ${item.organisedBy}`.toLowerCase();
-          return haystack.includes(queryLower);
-        }).slice(0, 8).map((item) => ({
-          id: item.id,
-          title: item.title,
-          issuer: item.organisedBy,
-          year: undefined,
-        }));
+  const recognitions = recognitionsFromDb;
 
-  const media =
-    mediaFromDb.length > 0
-      ? mediaFromDb
-      : MEDIA_GALLERY_ITEMS.filter((item) => {
-          const haystack = `${item.title} ${item.excerpt} ${item.recordedYear}`.toLowerCase();
-    return haystack.includes(query.toLowerCase());
-        }).slice(0, 12);
+  const media = mediaFromDb;
 
   const subcategoryMatches = PROJECT_SUBCATEGORIES.filter((item) => {
     const haystack = `${item.label} ${item.columnTitle}`.toLowerCase();
@@ -180,7 +146,7 @@ export default async function SearchPage(props: SearchPageProps) {
                 {services.map((service) => (
                   <li key={service.id}>
                     <Link
-                      href="/services"
+                      href="/business"
                       className="text-sm font-medium text-[#0e57a0] hover:underline"
                     >
                       {service.title}

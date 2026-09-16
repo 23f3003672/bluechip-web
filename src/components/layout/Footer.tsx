@@ -13,10 +13,10 @@ const COMPANY_LINKS = [
 ];
 
 const BUSINESS_LINKS = [
-  { label: "EPC", href: "/projects/subcategory/epc" },
-  { label: "Civil Construction", href: "/projects/subcategory/civil-construction" },
-  { label: "Mechanical Works", href: "/projects/subcategory/mechanical-works" },
-  { label: "Facade Engineering", href: "/projects/subcategory/facade-engineering" },
+  { label: "EPC", href: "/business" },
+  { label: "Civil Construction", href: "/business#civil-construction" },
+  { label: "Mechanical Works", href: "/business#mechanical-works" },
+  { label: "Facade Engineering", href: "/business#facade-engineering" },
   { label: "Industrial Construction", href: "/projects/subcategory/industrial-construction" },
   { label: "Piling & Foundations", href: "/projects/subcategory/piling-foundations" },
 

@@ -21,6 +21,11 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     description: "Homepage hero slider",
   },
   {
+    label: "B'CHIP Insiders",
+    href: "/admin/insiders",
+    description: "The People & The Experience photos",
+  },
+  {
     label: "Media",
     href: "/admin/media",
     description: "Media library",

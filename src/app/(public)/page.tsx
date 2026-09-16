@@ -53,7 +53,7 @@ export default async function HomePage() {
   const services = servicesData?.length
     ? servicesData.map(mapServiceToHomeService)
     : HOME_SERVICES;
-  const faqs = faqData?.length ? faqData.map(mapFaqToMockFaq) : MOCK_FAQS;
+  const faqs = faqData?.length ? faqData.map(mapFaqToMockFaq) : [];
   const heroSlides = heroSlidesData?.length
     ? heroSlidesData.map(mapHeroSlideToMockSlide)
     : HERO_SLIDES;

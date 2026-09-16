@@ -8,6 +8,21 @@ const extraAllowedDevOrigins = (process.env.NEXT_PUBLIC_ALLOWED_DEV_ORIGINS ?? "
 const nextConfig: NextConfig = {
   // Allow LAN/dev access so HMR and internal dev assets work over local IPs.
   allowedDevOrigins: ["localhost", "127.0.0.1", "192.168.29.76", ...extraAllowedDevOrigins],
+  images: {
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 2592000,
+    qualities: [60, 75],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.supabase.co",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+    ],
+  },
   turbopack: {
     root: process.cwd(),
   },

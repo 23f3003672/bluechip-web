@@ -5,17 +5,21 @@ import { cn } from "@/lib/utils";
 
 /* ─── Service Links ──────────────────────────────────────────────── */
 const serviceLinks: Record<string, string> = {
-  EPC: "/projects/subcategory/epc",
-  "Civil Construction": "/projects/subcategory/civil-construction",
-  "Mechanical Works": "/projects/subcategory/mechanical-works",
-  "Facade Engineering": "/projects/subcategory/facade-engineering",
+  EPC: "/business",
+  "Civil Construction": "/business#civil-construction",
+  "Mechanical Works": "/business#mechanical-works",
+  "Facade Engineering": "/business#facade-engineering",
+  "Facade Works": "/business#facade-engineering",
 };
 
 /* ─── Service Card ──────────────────────────────────────────────── */
 function ServiceCard({ service }: { service: HomeService }) {
+  const normalizedTitle = service.title?.trim() || "";
+  const href = serviceLinks[normalizedTitle] || serviceLinks[service.title] || "/business";
+
   return (
     <Link
-      href={serviceLinks[service.title] || "/services"}
+      href={href}
       className={cn(
         "group flex h-[240px] w-full max-w-[240px] flex-col items-center justify-center",
         "border-3 border-[#c8ced8] bg-[#f5f8ff]",

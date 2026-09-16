@@ -40,7 +40,7 @@ export function AboutStrengthsSection() {
               </p>
 
               {/* TITLE */}
-              <h3 className="mt-2 max-w-[350px] text-[22px] font-semibold leading-[1.18] tracking-[-0.03em] text-[#222b3d] md:text-[26px]">
+              <h3 className="mt-2 max-w-[350px] text-[22px] font-normal leading-[1.18] tracking-[-0.03em] text-[#222b3d] md:text-[26px]">
                 {item.title}
               </h3>
 

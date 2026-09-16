@@ -60,7 +60,7 @@ export function ContactForm() {
       <div className="flex flex-col gap-6">
         {/* Full Name */}
         <div className="space-y-2">
-          <label htmlFor="form-name" className="ml-1 text-[11px] font-bold uppercase tracking-wider text-slate-500 font-mono">
+          <label htmlFor="form-name" className="ml-1 text-[11px] font-bold uppercase tracking-wider text-slate-500">
             Full Name *
           </label>
           <input
@@ -71,13 +71,13 @@ export function ContactForm() {
             className="h-14 w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-5 text-sm text-[#1f2a44] outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-[#1a56a8] focus:bg-white focus:ring-2 focus:ring-[#1a56a8]/10"
           />
           {errors.name && (
-            <p className="ml-1 text-[10px] font-medium text-destructive font-mono">{errors.name.message}</p>
+            <p className="ml-1 text-[10px] font-medium text-destructive">{errors.name.message}</p>
           )}
         </div>
 
         {/* Company Name */}
         <div className="space-y-2">
-          <label htmlFor="form-company" className="ml-1 text-[11px] font-bold uppercase tracking-wider text-slate-500 font-mono">
+          <label htmlFor="form-company" className="ml-1 text-[11px] font-bold uppercase tracking-wider text-slate-500">
             Company Name
           </label>
           <input
@@ -91,7 +91,7 @@ export function ContactForm() {
 
         {/* Email Address */}
         <div className="space-y-2">
-          <label htmlFor="form-email" className="ml-1 text-[11px] font-bold uppercase tracking-wider text-slate-500 font-mono">
+          <label htmlFor="form-email" className="ml-1 text-[11px] font-bold uppercase tracking-wider text-slate-500">
             Email Address *
           </label>
           <input
@@ -102,13 +102,13 @@ export function ContactForm() {
             className="h-14 w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-5 text-sm text-[#1f2a44] outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-[#1a56a8] focus:bg-white focus:ring-2 focus:ring-[#1a56a8]/10"
           />
           {errors.email && (
-            <p className="ml-1 text-[10px] font-medium text-destructive font-mono">{errors.email.message}</p>
+            <p className="ml-1 text-[10px] font-medium text-destructive">{errors.email.message}</p>
           )}
         </div>
 
         {/* Phone Number */}
         <div className="space-y-2">
-          <label htmlFor="form-phone" className="ml-1 text-[11px] font-bold uppercase tracking-wider text-slate-500 font-mono">
+          <label htmlFor="form-phone" className="ml-1 text-[11px] font-bold uppercase tracking-wider text-slate-500">
             Phone Number
           </label>
           <input
@@ -119,13 +119,13 @@ export function ContactForm() {
             className="h-14 w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-5 text-sm text-[#1f2a44] outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-[#1a56a8] focus:bg-white focus:ring-2 focus:ring-[#1a56a8]/10"
           />
           {errors.phone && (
-            <p className="ml-1 text-[10px] font-medium text-destructive font-mono">{errors.phone.message}</p>
+            <p className="ml-1 text-[10px] font-medium text-destructive">{errors.phone.message}</p>
           )}
         </div>
 
         {/* Service Interested In */}
         <div className="space-y-2">
-          <label htmlFor="form-service" className="ml-1 text-[11px] font-bold uppercase tracking-wider text-slate-500 font-mono">
+          <label htmlFor="form-service" className="ml-1 text-[11px] font-bold uppercase tracking-wider text-slate-500">
             Service Category
           </label>
           <div className="relative">
@@ -151,7 +151,7 @@ export function ContactForm() {
 
         {/* Project Location */}
         <div className="space-y-2">
-          <label htmlFor="form-location" className="ml-1 text-[11px] font-bold uppercase tracking-wider text-slate-500 font-mono">
+          <label htmlFor="form-location" className="ml-1 text-[11px] font-bold uppercase tracking-wider text-slate-500">
             Project Location
           </label>
           <input
@@ -165,7 +165,7 @@ export function ContactForm() {
 
         {/* Message */}
         <div className="space-y-2">
-          <label htmlFor="form-message" className="ml-1 text-[11px] font-bold uppercase tracking-wider text-slate-500 font-mono">
+          <label htmlFor="form-message" className="ml-1 text-[11px] font-bold uppercase tracking-wider text-slate-500">
             Project Details & Message *
           </label>
           <textarea
@@ -176,7 +176,7 @@ export function ContactForm() {
             className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-5 py-4 text-sm text-[#1f2a44] outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-[#1a56a8] focus:bg-white focus:ring-2 focus:ring-[#1a56a8]/10 resize-none"
           />
           {errors.message && (
-            <p className="ml-1 text-[10px] font-medium text-destructive font-mono">{errors.message.message}</p>
+            <p className="ml-1 text-[10px] font-medium text-destructive">{errors.message.message}</p>
           )}
         </div>
 

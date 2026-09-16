@@ -8,11 +8,36 @@ import { ABOUT_VISIONARIES, type AboutVisionary } from "@/lib/mock-data";
 const VISIBLE_COUNT = 4;
 
 export function AboutVisionariesSection({
-  initialVisionaries = ABOUT_VISIONARIES,
+  initialVisionaries = [],
 }: {
   initialVisionaries?: AboutVisionary[];
 }) {
   const [startIndex, setStartIndex] = useState(0);
+
+  if (initialVisionaries.length === 0) {
+    return (
+      <section
+        className="overflow-hidden bg-white py-12 lg:py-16"
+        aria-labelledby="about-visionaries-title"
+      >
+        <div className="px-6 md:px-12 lg:px-20">
+          <div className="mb-8">
+            <h2
+              id="about-visionaries-title"
+              className="max-w-[320px] text-[22px] font-bold leading-[1.2] tracking-[-0.02em] text-[#1c2438] md:text-[36px]"
+            >
+              Meet our
+              <br />
+              visionaries.
+            </h2>
+          </div>
+          <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50/70 p-12 text-center text-slate-500">
+            Nothing added here yet.
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const visibleCount = Math.min(VISIBLE_COUNT, initialVisionaries.length);
   const visibleCards = Array.from({ length: visibleCount }, (_, i) => {
@@ -125,7 +150,7 @@ export function AboutVisionariesSection({
 
                   {/* TOP CONTENT */}
                   <div>
-                    <h3 className="max-w-[220px] text-[20px] font-semibold leading-[1.08] tracking-[-0.03em]">
+                    <h3 className="max-w-[220px] text-[20px] font-semibold leading-[1.08] tracking-[-0.03em] text-white">
                       {person.name}
                     </h3>
 

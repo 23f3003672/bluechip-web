@@ -13,6 +13,19 @@ export default async function ProjectSubcategoryPage(
 ) {
   const { subcategory } = await props.params;
 
+  if (subcategory === "epc") {
+    redirect("/business");
+  }
+  if (subcategory === "civil-construction") {
+    redirect("/business#civil-construction");
+  }
+  if (subcategory === "mechanical-works") {
+    redirect("/business#mechanical-works");
+  }
+  if (subcategory === "facade-engineering" || subcategory === "facade-works") {
+    redirect("/business#facade-engineering");
+  }
+
   const item = PROJECT_SUBCATEGORY_MAP[subcategory];
 
   if (!item) {
@@ -25,13 +38,25 @@ export default async function ProjectSubcategoryPage(
     "Urban & Institutional":
       "/projects/urban-institutional",
 
-    Services: "/business/services",
+    "Civil Construction":
+      "/business#civil-construction",
+
+    "Mechanical Works":
+      "/business#mechanical-works",
+
+    "Facade Works":
+      "/business#facade-engineering",
+
+    "Water & Solid Waste Management":
+      "/business#water-and-solid-waste-management",
+
+    Services: "/business",
 
     Infrastructure:
-      "/business/infrastructure",
+      "/business",
 
     "Industrial Structures":
-      "/business/industrial-structures",
+      "/business",
 
     "Construction Technologies":
       "/innovation/construction-technologies",

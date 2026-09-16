@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { PROJECT_SUBCATEGORIES } from "@/lib/project-subcategories";
+import { PROJECT_SUBCATEGORIES, PRIMARY_PROJECT_SUBCATEGORIES } from "@/lib/project-subcategories";
 import {
   parseGalleryInput,
   projectFormSchema,
@@ -104,7 +104,7 @@ export function ProjectForm({
     if (!selectedCategorySlug) {
       return []; // Return empty if no category is selected
     }
-    return PROJECT_SUBCATEGORIES.filter(
+    return PRIMARY_PROJECT_SUBCATEGORIES.filter(
       (sub) => sub.megaKey === selectedCategorySlug
     );
   }, [selectedCategorySlug]);

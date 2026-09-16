@@ -40,7 +40,7 @@ export function JobApplyCard({
             <span>Apply Now</span>
           </SiteButton>
 
-          <div className="text-center text-[10px] text-slate-400 font-mono uppercase tracking-wider">
+          <div className="text-center text-[10px] text-slate-400 uppercase tracking-wider">
             Have queries? Email us at
           </div>
 

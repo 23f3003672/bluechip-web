@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ChevronDown, ChevronUp, Menu, Download, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Container } from "./Container";
@@ -18,29 +18,36 @@ interface PrimaryCategory {
 
 const UTILITY_LINKS = [
   { label: "ABOUT US", href: "/about" },
-  { label: "NEWS & MEDIA", href: "/media" },
-  { label: "CAREERS", href: "/careers" },
-  { label: "FAQs", href: "/#faq" },
+  { label: "BUSINESS", href: "/business" },
+  { label: "INNOVATIONS", href: "/innovation" },
+  { label: "CONTACT US", href: "/#contact" },
 ];
 
 const PRIMARY_CATEGORIES: PrimaryCategory[] = [
-  { label: "BUSINESS", href: "/services", megaKey: "business" },
   { label: "PROJECTS", href: "/projects", megaKey: "projects" },
-  { label: "INNOVATIONS", href: "/services#innovations", megaKey: "innovations" },
-  { label: "RECOGNITIONS", href: "/recognitions" },
+  { label: "B'CHIP INSIDERS", href: "/insiders/the-people", megaKey: "insiders" },
+  { label: "RECOGNITION", href: "/recognitions" },
+  { label: "CAREERS", href: "/careers" },
   { label: "INQUIRIES", href: "/contact" },
 ];
 
 export function Navbar() {
   const router = useRouter();
+  const pathname = usePathname();
   const headerRef = useRef<HTMLElement | null>(null);
   const [expanded, setExpanded] = useState(false);
-  const [activeMegaKey, setActiveMegaKey] = useState<MegaMenuKey>("business");
+  const [activeMegaKey, setActiveMegaKey] = useState<MegaMenuKey | null>(null);
+
+  useEffect(() => {
+    setExpanded(false);
+    setActiveMegaKey(null);
+  }, [pathname]);
 
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setExpanded(false);
+        setActiveMegaKey(null);
       }
     };
 
@@ -51,6 +58,7 @@ export function Navbar() {
 
       if (!headerRef.current.contains(event.target as Node)) {
         setExpanded(false);
+        setActiveMegaKey(null);
       }
     };
 
@@ -63,97 +71,111 @@ export function Navbar() {
     };
   }, []);
 
-  const handleCategoryClick = (megaKey?: MegaMenuKey) => {
+  const handleCategoryToggle = (megaKey?: MegaMenuKey) => {
     if (!megaKey) {
       return;
     }
 
-    setActiveMegaKey(megaKey);
+    setActiveMegaKey((current) => (current === megaKey ? null : megaKey));
     setExpanded(true);
   };
 
   return (
     <header
       ref={headerRef}
-      className="relative sticky top-0 z-50 w-full border-b border-[#d8d9dd] bg-white"
+      className="relative sticky top-0 z-50 w-full bg-white"
     >
-        <div className="mx-auto flex min-h-[84px] w-full items-center justify-between px-8 py-3 xl:px-14 2xl:px-20">
-          {/* Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            aria-label="Bluechip Engineering home"
-          >
-            <Image
-              src="/Bluechip-Logo.webp"
-              alt="Bluechip Engineering Logo"
-              width={90}
-              height={90}
-              className="h-[90px] w-[90px] rounded-sm object-cover"
-              priority
-            />
-            <span className="hidden sm:block">
-              <span className="block text-[15px] font-bold uppercase leading-none tracking-tight bg-gradient-to-r from-[#0d5f8c] via-[#117ab2] to-[#0d5f8c] bg-clip-text text-transparent md:text-[18px]">
-                CIVIL | MECHANICAL | FACADE | EPC
-              </span>
-              <span className="mt-1 block text-[12px] italic leading-none text-[#62656b] md:text-[12px]">
-                Driven by Innovation, Powered by Technology
-              </span>
+      <div className="mx-auto flex min-h-[84px] w-full items-center justify-between px-8 py-3 xl:px-14 2xl:px-20">
+        {/* Logo */}
+        <Link
+          href="/"
+          className="flex items-center gap-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          aria-label="Bluechip Engineering home"
+        >
+          <Image
+            src="/Bluechip-Logo.webp"
+            alt="Bluechip Engineering Logo"
+            width={90}
+            height={90}
+            className="h-[90px] w-[90px] rounded-sm object-cover"
+            priority
+          />
+          <span className="hidden sm:block">
+            <span className="block text-[15px] font-bold uppercase leading-none tracking-tight bg-gradient-to-r from-[#0d5f8c] via-[#117ab2] to-[#0d5f8c] bg-clip-text text-transparent md:text-[18px]">
+              CIVIL | MECHANICAL | FACADE | EPC
             </span>
-          </Link>
+            <span className="mt-1 block text-[12px] italic leading-none text-[#62656b] md:text-[12px]">
+              Driven by Innovation, Powered by Technology
+            </span>
+          </span>
+        </Link>
 
-          {/* Utility Nav & Actions */}
-          <div className="flex items-center gap-4 lg:gap-6">
-            {/* Utility Links */}
-            <nav aria-label="Utility navigation" className="hidden items-center gap-7 md:flex">
-              {UTILITY_LINKS.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className="text-[15px] font-medium uppercase tracking-wide text-[#1d2537] transition-all duration-300 hover:text-[#8f8f8f]"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
+        {/* Utility Nav & Actions */}
+        <div className="flex items-center gap-4 lg:gap-6">
+          {/* Utility Links */}
+          <nav aria-label="Utility navigation" className="hidden items-center gap-7 md:flex">
+            {UTILITY_LINKS.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="text-[15px] font-medium uppercase tracking-wide text-[#1d2537] transition-all duration-300 hover:text-[#8f8f8f]"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
 
-            {/* Download Brochure Button */}
-            <a
-              href="/brochure.pdf"
-              download="Bluechip_Brochure.pdf"
-              aria-label="Download Brochure"
-              title="Download Brochure"
-              className="hidden h-9 w-9 items-center justify-center rounded-[8px] border border-[#c9ccd2] bg-[#f1f2f4] text-[#7f838b] transition-all duration-300 hover:border-[#1d2537] hover:bg-[#e6e8ec] hover:text-[#1d2537] md:inline-flex"
-            >
-              <Download className="size-5" strokeWidth={1.8} />
-            </a>
+          {/* Download Brochure Button */}
+          <a
+            href="/brochure.pdf"
+            download="Bluechip_Brochure.pdf"
+            aria-label="Download Brochure"
+            title="Download Brochure"
+            className="hidden h-9 w-9 items-center justify-center rounded-[8px] border border-[#c9ccd2] bg-[#f1f2f4] text-[#7f838b] transition-all duration-300 hover:border-[#1d2537] hover:bg-[#e6e8ec] hover:text-[#1d2537] md:inline-flex"
+          >
+            <Download className="size-5" strokeWidth={1.8} />
+          </a>
 
-            {/* Separator */}
-            <span className="hidden h-9 w-px bg-[#c6c8ce] md:block" aria-hidden="true" />
+          {/* Separator */}
+          <span className="hidden h-9 w-px bg-[#c6c8ce] md:block" aria-hidden="true" />
 
-            {/* Desktop Mega Menu Toggle (desktop only) */}
-            <button
-              type="button"
-              onClick={() => setExpanded((current) => !current)}
-              aria-expanded={expanded}
-              aria-controls="desktop-mega-nav"
-              aria-label={expanded ? "Collapse navigation" : "Expand navigation"}
-              className="hidden lg:inline-flex h-9 w-9 items-center justify-center text-[#22252b] transition-colors hover:text-[#1d2537]"
-            >
-              {expanded ? (
-                <X className="size-6" strokeWidth={1.8} />
-              ) : (
-                <Menu className="size-6" strokeWidth={1.8} />
-              )}
-            </button>
+          {/* Desktop Mega Menu Toggle (desktop only) */}
+          <button
+            type="button"
+            onClick={() => {
+              setExpanded((current) => {
+                if (current) {
+                  setActiveMegaKey(null);
+                  return false;
+                }
+                return true;
+              });
+            }}
+            aria-expanded={expanded}
+            aria-controls="desktop-mega-nav"
+            aria-label={expanded ? "Collapse navigation" : "Expand navigation"}
+            className="hidden lg:inline-flex h-9 w-9 items-center justify-center text-[#22252b] transition-colors hover:text-[#1d2537]"
+          >
+            {expanded ? (
+              <X className="size-6" strokeWidth={1.8} />
+            ) : (
+              <Menu className="size-6" strokeWidth={1.8} />
+            )}
+          </button>
 
-            {/* Mobile hamburger + sheet drawer (mobile only) */}
-            <div className="lg:hidden">
-              <MobileMenu />
-            </div>
+          {/* Mobile hamburger + sheet drawer (mobile only) */}
+          <div className="lg:hidden">
+            <MobileMenu />
           </div>
         </div>
-      
+      </div>
+
+      {/* Brand accent stripes */}
+      <div className="w-full flex flex-col" aria-hidden="true">
+        <div className="h-[7px] w-full bg-[#1f2c4c]" />
+        <div className="h-[4px] w-full bg-white" />
+        <div className="h-[7px] w-full bg-[#810b1f]" />
+      </div>
 
       {/* Mega Menu */}
       {expanded && (
@@ -174,12 +196,12 @@ export function Navbar() {
                     <button
                       key={category.label}
                       type="button"
-                      onClick={() => handleCategoryClick(category.megaKey)}
+                      onClick={() => handleCategoryToggle(category.megaKey)}
                       aria-expanded={isActive}
                       className={cn(
-                          "inline-flex items-center gap-1.5 transition-colors hover:text-[#8f8f8f]",
-                          isActive && "text-[#111318]"
-                        )}
+                        "inline-flex items-center gap-1.5 transition-colors hover:text-[#8f8f8f]",
+                        isActive && "text-[#111318]"
+                      )}
                     >
                       {category.label}
                       {isActive ? (
@@ -195,8 +217,11 @@ export function Navbar() {
                   <Link
                     key={category.label}
                     href={category.href}
-                    onClick={() => setExpanded(false)}
-                      className={cn(
+                    onClick={() => {
+                      setExpanded(false);
+                      setActiveMegaKey(null);
+                    }}
+                    className={cn(
                       "inline-flex items-center gap-1.5 transition-colors hover:text-[#8f8f8f]",
                       isActive && "text-[#111318]"
                     )}
@@ -207,28 +232,49 @@ export function Navbar() {
               })}
             </nav>
 
-            <div className="mx-auto mt-8 grid max-w-[860px] gap-10 md:grid-cols-2 lg:grid-cols-3">
-              {NAVBAR_MEGA_MENU[activeMegaKey].map((column) => (
-                <div key={column.title}>
-                  <Link
-  href={column.href}
-  onClick={() => setExpanded(false)}
-  className="text-[20px] font-medium text-[#135da9] transition-colors hover:text-[#0f4d8c]"
->
-  {column.title}
-</Link>
-                  <ul className="mt-3 space-y-2.5">
-                    {column.items.map((item) => (
-                      <li key={item.slug}>
+            {activeMegaKey && NAVBAR_MEGA_MENU[activeMegaKey] && (
+              <div
+                className={cn(
+                  "mx-auto mt-8 grid gap-10 md:grid-cols-2",
+                  NAVBAR_MEGA_MENU[activeMegaKey].length === 2
+                    ? "max-w-[720px]"
+                    : NAVBAR_MEGA_MENU[activeMegaKey].length === 4
+                    ? "max-w-[1100px] lg:grid-cols-4"
+                    : "max-w-[860px] lg:grid-cols-3"
+                )}
+              >
+                {NAVBAR_MEGA_MENU[activeMegaKey].map((column) => (
+                  <div key={column.title}>
+                    <Link
+                      href={column.href}
+                      onClick={() => {
+                        setExpanded(false);
+                        setActiveMegaKey(null);
+                      }}
+                      style={{
+                        backgroundImage: "radial-gradient(circle at 50% 50%, #117ab2 0%, #023d9f 100%)",
+                        WebkitBackgroundClip: "text",
+                        backgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        color: "transparent",
+                      }}
+                      className="inline-block text-[20px] font-medium bg-clip-text text-transparent transition-opacity hover:opacity-80"
+                    >
+                      {column.title}
+                    </Link>
+                    <ul className="mt-3 space-y-2.5">
+                      {column.items.map((item) => (
+                        <li key={item.slug}>
                           <span className="text-[14px] leading-tight text-[#6d727b]">
-                          {item.label}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
+                            {item.label}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            )}
           </Container>
         </div>
       )}

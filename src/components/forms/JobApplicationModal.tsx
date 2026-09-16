@@ -184,7 +184,7 @@ export function JobApplicationModal({
                   className="rounded-xl h-11 border-slate-200 focus-visible:ring-[#1a56a8]/20 focus-visible:border-[#1a56a8]"
                 />
                 {errors.name && (
-                  <p className="text-[10px] text-destructive font-mono">{errors.name.message}</p>
+                  <p className="text-[10px] text-destructive">{errors.name.message}</p>
                 )}
               </div>
 
@@ -200,7 +200,7 @@ export function JobApplicationModal({
                     className="rounded-xl h-11 border-slate-200 focus-visible:ring-[#1a56a8]/20 focus-visible:border-[#1a56a8]"
                   />
                   {errors.email && (
-                    <p className="text-[10px] text-destructive font-mono">{errors.email.message}</p>
+                    <p className="text-[10px] text-destructive">{errors.email.message}</p>
                   )}
                 </div>
 
@@ -213,7 +213,7 @@ export function JobApplicationModal({
                     className="rounded-xl h-11 border-slate-200 focus-visible:ring-[#1a56a8]/20 focus-visible:border-[#1a56a8]"
                   />
                   {errors.phone && (
-                    <p className="text-[10px] text-destructive font-mono">{errors.phone.message}</p>
+                    <p className="text-[10px] text-destructive">{errors.phone.message}</p>
                   )}
                 </div>
               </div>
@@ -262,7 +262,7 @@ export function JobApplicationModal({
                   </div>
                 )}
                 {errors.resume_url && (
-                  <p className="text-[10px] text-destructive font-mono">{errors.resume_url.message}</p>
+                  <p className="text-[10px] text-destructive">{errors.resume_url.message}</p>
                 )}
               </div>
 

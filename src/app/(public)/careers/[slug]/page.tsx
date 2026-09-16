@@ -199,19 +199,19 @@ export default async function CareerDetailPage({
               
               <ul className="space-y-3.5 text-xs">
                 <li className="flex justify-between py-1.5 border-b border-slate-100">
-                  <span className="text-slate-400 font-medium font-mono uppercase">Department</span>
+                  <span className="text-slate-400 font-medium uppercase">Department</span>
                   <span className="font-semibold text-slate-800 text-right">{job.department}</span>
                 </li>
                 <li className="flex justify-between py-1.5 border-b border-slate-100">
-                  <span className="text-slate-400 font-medium font-mono uppercase">Employment</span>
+                  <span className="text-slate-400 font-medium uppercase">Employment</span>
                   <span className="font-semibold text-slate-800 text-right">{job.employment_type}</span>
                 </li>
                 <li className="flex justify-between py-1.5 border-b border-slate-100">
-                  <span className="text-slate-400 font-medium font-mono uppercase">Location</span>
+                  <span className="text-slate-400 font-medium uppercase">Location</span>
                   <span className="font-semibold text-slate-800 text-right">{job.location || "Remote"}</span>
                 </li>
                 <li className="flex justify-between py-1.5">
-                  <span className="text-slate-400 font-medium font-mono uppercase">Experience</span>
+                  <span className="text-slate-400 font-medium uppercase">Experience</span>
                   <span className="font-semibold text-slate-800 text-right">{job.experience || "2+ Years"}</span>
                 </li>
               </ul>

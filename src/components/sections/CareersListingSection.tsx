@@ -77,7 +77,12 @@ export function CareersListingSection({
                 Careers
               </h1>
 
-              <h2 className="mt-8 text-3xl font-extrabold tracking-tight text-[#1a56a8] md:text-4xl">
+              <h2 
+                className="mt-8 text-3xl font-bold tracking-tight md:text-4xl inline-block bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: "radial-gradient(circle at 50% 50%, #117ab2 0%, #023d9f 100%)",
+                }}
+              >
                 Join Our Team
               </h2>
 
@@ -93,10 +98,10 @@ export function CareersListingSection({
           <div className="mx-auto max-w-[1500px] px-6 md:px-10 lg:px-16 font-sans">
             
             <div className="flex flex-col items-center text-center pb-10">
-              <h2 className="text-3xl font-extrabold text-[#1f2a44] tracking-tight md:text-4xl">
+              <h2 className="text-3xl font-bold text-[#1f2a44] tracking-tight md:text-4xl">
                 Current Opportunities
               </h2>
-              <p className="mt-3 text-sm text-slate-500 font-mono">
+              <p className="mt-3 text-sm text-slate-500">
                 {initialItems.length} Available Roles
               </p>
             </div>
@@ -130,9 +135,14 @@ export function CareersListingSection({
                   <Link
                     key={job.id}
                     href={`/careers/${job.slug}`}
-                    className="group flex flex-col rounded-3xl border border-slate-200 bg-white p-8 transition-all duration-300 hover:shadow-xl hover:border-[#1a56a8]/30 hover:-translate-y-1"
+                    className="group flex flex-col rounded-3xl border border-slate-200 bg-white p-8 transition-all duration-300 hover:shadow-xl hover:border-[#117ab2]/40 hover:-translate-y-1"
                   >
-                    <h3 className="text-xl font-bold text-[#1a56a8] transition-colors mb-1">
+                    <h3 
+                      className="text-xl font-bold inline-block bg-clip-text text-transparent transition-opacity group-hover:opacity-90 mb-1"
+                      style={{
+                        backgroundImage: "radial-gradient(circle at 50% 50%, #117ab2 0%, #023d9f 100%)",
+                      }}
+                    >
                       {job.title}
                     </h3>
                     <p className="text-sm font-medium text-slate-500 mb-6">
@@ -143,7 +153,12 @@ export function CareersListingSection({
                       {job.description}
                     </p>
                     
-                    <div className="text-xs font-bold uppercase tracking-wider text-[#1a56a8] group-hover:text-[#023d9f] transition-colors mt-auto">
+                    <div 
+                      className="text-xs font-bold uppercase tracking-wider inline-block bg-clip-text text-transparent group-hover:opacity-90 transition-opacity mt-auto"
+                      style={{
+                        backgroundImage: "radial-gradient(circle at 50% 50%, #117ab2 0%, #023d9f 100%)",
+                      }}
+                    >
                       JOIN NOW
                     </div>
                   </Link>
@@ -167,7 +182,12 @@ export function CareersListingSection({
                 
                 <div className="relative z-10 flex flex-col items-center text-center p-12 md:p-20">
                   {/* Icon at top, overlapping border slightly like the quote icon in image */}
-                  <div className="absolute -top-8 flex h-16 w-16 items-center justify-center rounded-full bg-[#1a56a8] text-white shadow-xl ring-8 ring-white">
+                  <div 
+                    className="absolute -top-8 flex h-16 w-16 items-center justify-center rounded-full text-white shadow-xl ring-8 ring-white"
+                    style={{
+                      backgroundImage: "radial-gradient(circle at 50% 50%, #117ab2 0%, #023d9f 100%)",
+                    }}
+                  >
                     <Compass className="h-7 w-7" />
                   </div>
                   
@@ -203,8 +223,8 @@ export function CareersListingSection({
         <section className="bg-white py-16 md:py-24 border-t border-slate-100">
           <div className="mx-auto max-w-[1500px] px-6 md:px-10 lg:px-16">
             <div className="max-w-3xl">
-              <p className="text-xs font-bold uppercase tracking-wider text-amber-600 font-mono">Why Bluechip</p>
-              <h2 className="mt-2 text-3xl font-extrabold text-[#1f2a44] tracking-tight md:text-4xl">
+              <p className="text-xs font-bold uppercase tracking-wider text-amber-600">Why Bluechip</p>
+              <h2 className="mt-2 text-3xl font-bold text-[#1f2a44] tracking-tight md:text-4xl">
                 A Career of Impact, Innovation, and Trust
               </h2>
               <p className="mt-4 text-sm text-slate-500 leading-relaxed">

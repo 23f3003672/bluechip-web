@@ -19,7 +19,7 @@ export default async function VisionaryProfilePage({
     .eq("id", id)
     .single();
 
-  const visionary = data ? mapVisionaryToAboutVisionary(data) : ABOUT_VISIONARIES.find((v) => v.id === id);
+  const visionary = data ? mapVisionaryToAboutVisionary(data) : null;
 
   if (!visionary) {
     notFound();

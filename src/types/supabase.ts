@@ -249,3 +249,30 @@ export interface HeroSlide {
 }
 
 export type HeroSlideInsert = Omit<HeroSlide, "id" | "created_at" | "updated_at">;
+
+export interface InsidersItem {
+  id: string;
+  title: string;
+  slug: string;
+  category: "the-people" | "the-experience" | string;
+  subcategory:
+    | "meetings-moments"
+    | "life-at-bluechip"
+    | "aerial-views"
+    | "behind-the-scenes"
+    | "events-milestones"
+    | string;
+  description: string | null;
+  image_url: string;
+  location: string | null;
+  year: string | null;
+  published: boolean;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export type InsidersItemInsert = Omit<
+  InsidersItem,
+  "id" | "created_at" | "updated_at"
+>;

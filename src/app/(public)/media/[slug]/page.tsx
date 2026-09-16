@@ -1,15 +1,10 @@
 import type { Metadata } from "next";
-import { MEDIA_GALLERY_ITEMS } from "@/lib/mock-data";
 import { MediaDetailResolverSection } from "@/components/sections/MediaDetailResolverSection";
 import { createClient } from "@/lib/supabase/server";
 import { mapMediaArticlesToGalleryItems } from "@/lib/public-content";
 
 interface MediaDetailPageProps {
   params: Promise<{ slug: string }>;
-}
-
-function getMediaBySlug(slug: string) {
-  return MEDIA_GALLERY_ITEMS.find((item) => item.slug === slug);
 }
 
 async function getMediaBySlugFromDb(slug: string) {
@@ -25,7 +20,6 @@ async function getMediaBySlugFromDb(slug: string) {
     return null;
   }
 
-  // We can map it and just grab the 'image' type which has all the text properties we need anyway
   const mapped = mapMediaArticlesToGalleryItems([data as any]);
   return mapped[0] ?? null;
 }
@@ -34,7 +28,7 @@ export async function generateMetadata(
   props: MediaDetailPageProps
 ): Promise<Metadata> {
   const { slug } = await props.params;
-  const item = (await getMediaBySlugFromDb(slug)) ?? getMediaBySlug(slug);
+  const item = await getMediaBySlugFromDb(slug);
 
   if (!item) {
     return {
@@ -51,7 +45,7 @@ export async function generateMetadata(
 
 export default async function MediaDetailPage(props: MediaDetailPageProps) {
   const { slug } = await props.params;
-  const item = (await getMediaBySlugFromDb(slug)) ?? getMediaBySlug(slug);
+  const item = await getMediaBySlugFromDb(slug);
 
   return <MediaDetailResolverSection initialItem={item ?? null} />;
 }

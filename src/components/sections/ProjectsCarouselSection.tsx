@@ -40,7 +40,7 @@ const ITEMS = [
     sector: "SERVICES",
     title: "Facade Engineering",
     subtitle: "Facade Design & Engineering Solutions",
-    href: "/projects/subcategory/metro-rail",
+    href: "/business#facade-works",
   },
   {
     src: "/home/projects/commercialbuilding_sgcci.webp",

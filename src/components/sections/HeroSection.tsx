@@ -92,13 +92,6 @@ export function HeroSection({ slides = HERO_SLIDES }: HeroSectionProps) {
 
   return (
     <>
-      {/* Brand accent stripes */}
-      <div className="w-full flex flex-col" aria-hidden="true">
-        <div className="h-[7px] w-full bg-[#1f2c4c]" />
-        <div className="h-[4px] w-full bg-white" />
-        <div className="h-[7px] w-full bg-[#810b1f]" />
-      </div>
-
       <section className="relative isolate overflow-hidden bg-[#f2f4f8]">
         <div
           className="relative h-[56vh] min-h-[450px] sm:h-[62vh] sm:min-h-[450px] lg:h-[calc(100vh-4rem)] lg:max-h-[590px]"

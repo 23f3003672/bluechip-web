@@ -3,6 +3,8 @@
  * Kept in one file so the migration surface is small and obvious.
  */
 
+import type { InsidersItem } from "@/types";
+
 /* ─── Hero Stats ─────────────────────────────────────────────────── */
 export interface HeroStat {
   value: string;
@@ -987,5 +989,280 @@ export const MEDIA_GALLERY_ITEMS: MediaGalleryItem[] = [
     excerpt:
       "Business partnership engagements supporting resilient and future-ready engineering growth.",
     recordedYear: 2002,
+  },
+];
+
+/* ─── B'Chip Insiders Mock Data ───────────────────────────────────── */
+export const MOCK_INSIDERS_ITEMS: InsidersItem[] = [
+  // THE PEOPLE -> Meetings & Moments
+  {
+    id: "insider-1",
+    title: "Strategic Annual Leadership Assembly",
+    slug: "strategic-annual-leadership-assembly",
+    category: "the-people",
+    subcategory: "meetings-moments",
+    description:
+      "Executive and engineering leads aligning on cutting-edge precast and composite technology roadmaps for the upcoming fiscal cycle.",
+    image_url: "/about/about-mission-1.webp",
+    location: "Surat Headquarters",
+    year: "2025",
+    published: true,
+    sort_order: 1,
+    created_at: "2025-01-10T10:00:00Z",
+    updated_at: "2025-01-10T10:00:00Z",
+  },
+  {
+    id: "insider-2",
+    title: "Global Technical Delegation Exchange",
+    slug: "global-technical-delegation-exchange",
+    category: "the-people",
+    subcategory: "meetings-moments",
+    description:
+      "International engineering summit discussing high-performance facade systems and European structural standards.",
+    image_url: "/about/about-values-2.webp",
+    location: "Frankfurt & Surat",
+    year: "2024",
+    published: true,
+    sort_order: 2,
+    created_at: "2024-11-15T10:00:00Z",
+    updated_at: "2024-11-15T10:00:00Z",
+  },
+  {
+    id: "insider-3",
+    title: "Site Engineering Protocol Review",
+    slug: "site-engineering-protocol-review",
+    category: "the-people",
+    subcategory: "meetings-moments",
+    description:
+      "Cross-functional design engineers and project managers conducting pre-construction BIM clash reviews.",
+    image_url: "/about/about-mission-2.webp",
+    location: "Dahej Industrial Zone",
+    year: "2025",
+    published: true,
+    sort_order: 3,
+    created_at: "2025-02-01T10:00:00Z",
+    updated_at: "2025-02-01T10:00:00Z",
+  },
+  {
+    id: "insider-4",
+    title: "Project Stakeholders Quarterly Review",
+    slug: "project-stakeholders-quarterly-review",
+    category: "the-people",
+    subcategory: "meetings-moments",
+    description:
+      "Collaborative symposium between EPC clients, municipal authorities, and Bluechip execution partners.",
+    image_url: "/about/about-vision-2.webp",
+    location: "Gandhinagar",
+    year: "2024",
+    published: true,
+    sort_order: 4,
+    created_at: "2024-09-20T10:00:00Z",
+    updated_at: "2024-09-20T10:00:00Z",
+  },
+
+  // THE PEOPLE -> Life at Bluechip
+  {
+    id: "insider-5",
+    title: "Bluechip Foundation Day Celebrations",
+    slug: "bluechip-foundation-day-celebrations",
+    category: "the-people",
+    subcategory: "life-at-bluechip",
+    description:
+      "Celebrating decades of relentless engineering innovation, team loyalty, and milestone accomplishments.",
+    image_url: "/about/about-vision-1.webp",
+    location: "Surat",
+    year: "2025",
+    published: true,
+    sort_order: 1,
+    created_at: "2025-03-05T10:00:00Z",
+    updated_at: "2025-03-05T10:00:00Z",
+  },
+  {
+    id: "insider-6",
+    title: "Collaborative Workspace & Ideation",
+    slug: "collaborative-workspace-ideation",
+    category: "the-people",
+    subcategory: "life-at-bluechip",
+    description:
+      "Modern design pods fostering creative synergy, computational modelling, and rapid structural prototyping.",
+    image_url: "/about/about-main.webp",
+    location: "Head Office",
+    year: "2025",
+    published: true,
+    sort_order: 2,
+    created_at: "2025-02-12T10:00:00Z",
+    updated_at: "2025-02-12T10:00:00Z",
+  },
+  {
+    id: "insider-7",
+    title: "Women in Engineering & Site Leadership",
+    slug: "women-in-engineering-site-leadership",
+    category: "the-people",
+    subcategory: "life-at-bluechip",
+    description:
+      "Spotlighting female project managers, structural analysts, and site supervisors driving our marquee developments.",
+    image_url: "/about/about-values-1.webp",
+    location: "Regional Hubs",
+    year: "2024",
+    published: true,
+    sort_order: 3,
+    created_at: "2024-10-18T10:00:00Z",
+    updated_at: "2024-10-18T10:00:00Z",
+  },
+
+  // THE EXPERIENCE -> Aerial Views
+  {
+    id: "insider-8",
+    title: "Panoramic Aerial Grid of Dahej Industrial Hub",
+    slug: "panoramic-aerial-grid-dahej-industrial-hub",
+    category: "the-experience",
+    subcategory: "aerial-views",
+    description:
+      "Drone surveillance capturing 45,000 sq. meter heavy industrial fabrication yard and pre-engineered facilities.",
+    image_url:
+      "https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=1200&q=80",
+    location: "Dahej, Gujarat",
+    year: "2025",
+    published: true,
+    sort_order: 1,
+    created_at: "2025-01-22T10:00:00Z",
+    updated_at: "2025-01-22T10:00:00Z",
+  },
+  {
+    id: "insider-9",
+    title: "Highway Logistics Corridor Elevation",
+    slug: "highway-logistics-corridor-elevation",
+    category: "the-experience",
+    subcategory: "aerial-views",
+    description:
+      "Bird's eye perspective of multi-lane rigid pavement (DLC & PQC) infrastructure corridor during final compaction.",
+    image_url:
+      "https://images.unsplash.com/photo-1508873696983-2df5293cb32b?auto=format&fit=crop&w=1200&q=80",
+    location: "Gujarat Expressway",
+    year: "2024",
+    published: true,
+    sort_order: 2,
+    created_at: "2024-12-05T10:00:00Z",
+    updated_at: "2024-12-05T10:00:00Z",
+  },
+  {
+    id: "insider-10",
+    title: "Elevated Water Network Topography",
+    slug: "elevated-water-network-topography",
+    category: "the-experience",
+    subcategory: "aerial-views",
+    description:
+      "Aerial mapping of integrated water supply networks and overhead reservoir balancing tanks across the district.",
+    image_url:
+      "https://images.unsplash.com/photo-1590486803833-1c5dc8ddd4c8?auto=format&fit=crop&w=1200&q=80",
+    location: "Bharuch District",
+    year: "2025",
+    published: true,
+    sort_order: 3,
+    created_at: "2025-02-14T10:00:00Z",
+    updated_at: "2025-02-14T10:00:00Z",
+  },
+
+  // THE EXPERIENCE -> Behind the Scenes
+  {
+    id: "insider-11",
+    title: "High-Precision Deep Piling Rig Operations",
+    slug: "high-precision-deep-piling-rig-operations",
+    category: "the-experience",
+    subcategory: "behind-the-scenes",
+    description:
+      "Real-time rotary hydraulic rig operations sinking foundation piles to 32 meters depth in marine clay subsoil.",
+    image_url:
+      "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80",
+    location: "Site Alpha",
+    year: "2025",
+    published: true,
+    sort_order: 1,
+    created_at: "2025-01-18T10:00:00Z",
+    updated_at: "2025-01-18T10:00:00Z",
+  },
+  {
+    id: "insider-12",
+    title: "Structural Spider Glazing Laser Alignment",
+    slug: "structural-spider-glazing-laser-alignment",
+    category: "the-experience",
+    subcategory: "behind-the-scenes",
+    description:
+      "Specialized facade technicians fine-tuning stainless steel spider fittings and seismic dampening joints.",
+    image_url:
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
+    location: "Commercial Tower Hub",
+    year: "2024",
+    published: true,
+    sort_order: 2,
+    created_at: "2024-11-28T10:00:00Z",
+    updated_at: "2024-11-28T10:00:00Z",
+  },
+  {
+    id: "insider-13",
+    title: "Night-Shift Monolithic Concrete Pour",
+    slug: "night-shift-monolithic-concrete-pour",
+    category: "the-experience",
+    subcategory: "behind-the-scenes",
+    description:
+      "Continuous 1,800 cu.m raft slab pour utilizing automated boom pumpers and temperature monitoring sensors.",
+    image_url:
+      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80",
+    location: "Corridor Beta",
+    year: "2025",
+    published: true,
+    sort_order: 3,
+    created_at: "2025-02-20T10:00:00Z",
+    updated_at: "2025-02-20T10:00:00Z",
+  },
+
+  // THE EXPERIENCE -> Events & Milestones
+  {
+    id: "insider-14",
+    title: "Golden Trowel Operational Excellence Award",
+    slug: "golden-trowel-operational-excellence-award",
+    category: "the-experience",
+    subcategory: "events-milestones",
+    description:
+      "Honored for achieving super-flat flooring tolerance standards across 85,000 sq. meters of logistics space.",
+    image_url: "/about/about-values-2.webp",
+    location: "National Conclave, Delhi",
+    year: "2024",
+    published: true,
+    sort_order: 1,
+    created_at: "2024-10-05T10:00:00Z",
+    updated_at: "2024-10-05T10:00:00Z",
+  },
+  {
+    id: "insider-15",
+    title: "25 Million Safe Man-Hours Milestone Celebration",
+    slug: "25-million-safe-man-hours-milestone",
+    category: "the-experience",
+    subcategory: "events-milestones",
+    description:
+      "Commemorating zero lost-time incidents across mega EPC and industrial construction sites with site workforce.",
+    image_url: "/about/about-vision-2.webp",
+    location: "Surat Mega Project",
+    year: "2025",
+    published: true,
+    sort_order: 2,
+    created_at: "2025-01-30T10:00:00Z",
+    updated_at: "2025-01-30T10:00:00Z",
+  },
+  {
+    id: "insider-16",
+    title: "Technology Innovation & Precast Launch Summit",
+    slug: "technology-innovation-precast-launch-summit",
+    category: "the-experience",
+    subcategory: "events-milestones",
+    description:
+      "Unveiling proprietary modular light-gauge framing and automated wall panel manufacturing line.",
+    image_url: "/about/about-mission-1.webp",
+    location: "Ahmedabad Tech Park",
+    year: "2024",
+    published: true,
+    sort_order: 3,
+    created_at: "2024-08-14T10:00:00Z",
+    updated_at: "2024-08-14T10:00:00Z",
   },
 ];

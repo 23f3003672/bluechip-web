@@ -2,6 +2,7 @@
 /*     /projects page              */
 
 import Link from "next/link";
+import Image from "next/image";
 import { useMemo, useState } from "react";
 
 import {
@@ -10,8 +11,6 @@ import {
   JOURNEY_PROJECTS,
   type JourneyProject,
 } from "@/lib/mock-data";
-
-import { Container } from "@/components/layout/Container";
 
 type FilterKey = "all" | JourneyPhase;
 
@@ -61,7 +60,7 @@ export function ProjectsTimelineSection({
 
   return (
     <section
-      className="bg-[#f5f8ff] pt-2 pb-10 md:pt-4 md:pb-14"
+      className="overflow-x-clip bg-[#f5f8ff] pt-2 pb-10 md:pt-4 md:pb-14"
       aria-labelledby="journey-timeline-title"
     >
       <div className="mx-auto w-full max-w-[1850px] px-6 md:px-10 lg:px-16">
@@ -104,37 +103,54 @@ export function ProjectsTimelineSection({
         </div>
 
         {/* Project Grid */}
-        <div className="grid grid-cols-6 gap-[1px] sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-14 xl:grid-cols-18">
-          {tiles.map((project, index) => (
-            <Link
-              key={`${project.id}-${index}`}
-              href={`/projects/${project.slug}`}
-              className="group relative block overflow-visible"
-            >
-              {/* Smaller Image Tiles */}
-              <div
-                className="aspect-square w-full overflow-hidden bg-cover bg-center transition-all duration-300 group-hover:scale-[1.04] group-hover:z-10"
-                style={{
-                  backgroundImage: `url(${project.thumbnailUrl})`,
-                }}
-                role="img"
-                aria-label={project.title}
-              />
-
-              {/* Hover Description Box */}
-              <div className="pointer-events-none absolute left-1/2 top-0 z-30 hidden -translate-x-1/2 -translate-y-[115%] group-hover:block">
-                <div className="relative min-w-[220px] bg-[#efefef] px-4 py-4 shadow-lg">
-                  {/* Bottom Triangle */}
-                  <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-l-[8px] border-r-[8px] border-t-[8px] border-l-transparent border-r-transparent border-t-[#efefef]" />
-
-                  <p className="text-center text-[14px] font-semibold leading-snug text-[#4b4b4b]">
-                    {project.title}
-                  </p>
+        {tiles.length === 0 ? (
+          <div className="py-20 text-center rounded-2xl border border-dashed border-slate-200 bg-slate-50/60">
+            <p className="text-sm font-medium text-slate-400">
+              Nothing added here yet.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-6 gap-[1px] sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-14 xl:grid-cols-18">
+            {tiles.map((project, index) => (
+              <Link
+                key={`${project.id}-${index}`}
+                href={`/projects/${project.slug}`}
+                prefetch={false}
+                className="group relative block aspect-square w-full overflow-visible bg-[#e8ecf2]"
+              >
+                {/* Image Tile */}
+                <div className="relative h-full w-full overflow-hidden transition-transform duration-200 group-hover:scale-[1.04] group-hover:z-10">
+                  {project.thumbnailUrl ? (
+                    <Image
+                      src={project.thumbnailUrl}
+                      alt={project.title}
+                      fill
+                      sizes="(max-width: 640px) 16vw, (max-width: 768px) 12vw, (max-width: 1024px) 10vw, (max-width: 1280px) 7vw, 90px"
+                      quality={60}
+                      loading={index < 18 ? "eager" : "lazy"}
+                      priority={index < 18}
+                      className="object-cover object-center"
+                    />
+                  ) : (
+                    <div className="h-full w-full bg-[#dbe2ec]" />
+                  )}
                 </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+
+                {/* Hover Description Box */}
+                <div className="pointer-events-none absolute left-1/2 top-0 z-40 hidden -translate-x-1/2 -translate-y-[115%] group-hover:block will-change-transform">
+                  <div className="relative min-w-[220px] bg-[#efefef] px-4 py-4 shadow-lg">
+                    {/* Bottom Triangle */}
+                    <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-l-[8px] border-r-[8px] border-t-[8px] border-l-transparent border-r-transparent border-t-[#efefef]" />
+
+                    <p className="text-center text-[14px] font-semibold leading-snug text-[#4b4b4b]">
+                      {project.title}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
 
         {/* Timeline Footer */}
         <div className="mt-8 flex items-center justify-between text-2xl font-semibold text-[#cc962f] md:text-2xl">

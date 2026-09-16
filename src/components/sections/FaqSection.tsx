@@ -11,7 +11,7 @@ import { MOCK_FAQS, type MockFaq } from "@/lib/mock-data";
  * Mobile: stacked single column.
  */
 export function FaqSection({
-  initialFaqs = MOCK_FAQS,
+  initialFaqs = [],
 }: {
   initialFaqs?: MockFaq[];
 }) {

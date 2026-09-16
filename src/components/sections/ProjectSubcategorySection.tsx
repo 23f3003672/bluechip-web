@@ -31,7 +31,7 @@ export function ProjectSubcategorySection({
   const hasMore = visibleCount < projects.length;
 
   return (
-    <section className="bg-[#e9eaec] pb-8 md:pb-12" aria-labelledby="subcategory-projects-title">
+    <section className="bg-white pb-8 md:pb-12" aria-labelledby="subcategory-projects-title">
       <Container className="px-0">
         <div className="grid min-h-[160px] grid-cols-1 bg-[#edeff3] md:grid-cols-[1.05fr_1fr]">
           <div className="px-6 py-8 md:px-12 md:py-10">
@@ -58,23 +58,31 @@ export function ProjectSubcategorySection({
         </div>
 
         <div className="px-6 pb-8 pt-7 md:px-10 md:pb-10 md:pt-8">
-          <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
-            {displayProjects.map((project) => (
-              <Link
-                key={`${subcategory.slug}-${project.id}`}
-                href={`/projects/${project.slug}`}
-                className="group block overflow-hidden border border-[#d9dce2] bg-white"
-                aria-label={`Open project: ${project.title}`}
-              >
-                <div
-                  className="aspect-[1/1.15] w-full bg-cover bg-center transition-transform duration-300 group-hover:scale-[1.03]"
-                  style={{ backgroundImage: `url(${project.thumbnailUrl})` }}
-                  role="img"
-                  aria-label={project.title}
-                />
-              </Link>
-            ))}
-          </div>
+          {displayProjects.length > 0 ? (
+            <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+              {displayProjects.map((project) => (
+                <Link
+                  key={`${subcategory.slug}-${project.id}`}
+                  href={`/projects/${project.slug}`}
+                  className="group block overflow-hidden border border-[#d9dce2] bg-white"
+                  aria-label={`Open project: ${project.title}`}
+                >
+                  <div
+                    className="aspect-[1/1.15] w-full bg-cover bg-center transition-transform duration-300 group-hover:scale-[1.03]"
+                    style={{ backgroundImage: `url(${project.thumbnailUrl})` }}
+                    role="img"
+                    aria-label={project.title}
+                  />
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="py-16 text-center rounded-2xl border border-dashed border-slate-200 bg-slate-50/60">
+              <p className="text-sm font-medium text-slate-400">
+                Nothing added here yet.
+              </p>
+            </div>
+          )}
 
           {hasMore && (
             <div className="mt-8 flex justify-center">

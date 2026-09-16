@@ -23,6 +23,8 @@ export type {
   MediaArticleInsert,
   HeroSlide,
   HeroSlideInsert,
+  InsidersItem,
+  InsidersItemInsert,
 } from "./supabase";
 
 /* ─── UI / Component helpers ─────────────────────────────────────── */

@@ -15,11 +15,13 @@ import {
   Briefcase,
   Settings,
   Mail,
+  Sparkles,
 } from "lucide-react";
 
 const NAV_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   Dashboard: LayoutDashboard,
   Projects: FolderKanban,
+  "B'CHIP Insiders": Sparkles,
   Media: Image,
   Recognitions: Award,
   Visionaries: Users,

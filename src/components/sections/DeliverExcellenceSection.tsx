@@ -3,28 +3,28 @@ import { CountUp } from "@/components/ui/count-up";
 export function DeliverExcellenceSection() {
   const stats = [
     {
-      label: "YEARS OF EXPERIENCE",
+      label: "years of experience",
       value: "20+",
       numericValue: 20,
       suffix: "+",
       id: "experience",
     },
     {
-      label: "MAJOR PROJECTS",
+      label: "major projects",
       value: "100+",
       numericValue: 100,
       suffix: "+",
       id: "projects",
     },
     {
-      label: "NATIONWIDE PRESENCE",
+      label: "nationwide presence",
       value: "Pan-India",
       numericValue: null,
       suffix: "",
       id: "presence",
     },
     {
-      label: "SKILLED PROFESSIONALS",
+      label: "skilled professionals",
       value: "350+",
       numericValue: 350,
       suffix: "+",
@@ -62,30 +62,38 @@ export function DeliverExcellenceSection() {
             <div key={stat.id}>
               
               {/* LABEL */}
-              <p className="text-[13px] font-medium uppercase tracking-[0.12em] text-[#545454]">
+              <p className="text-[13px] font-medium lowercase tracking-[0.02em] text-[#545454]">
                 {stat.label}
               </p>
 
               {/* VALUE */}
-              <p
-                className="
-                  mt-4
-                  text-[22px]
-                  font-normal
-                  leading-none
-                  tracking-[-0.04em]
-                  text-transparent
-                  bg-clip-text
-                  bg-gradient-to-r from-[#023d9f] via-[#117ab2] to-[#023d9f]
-                  md:text-[42px]
-                "
-              >
-                {stat.numericValue !== null ? (
-                  <CountUp end={stat.numericValue} suffix={stat.suffix} />
-                ) : (
-                  stat.value
-                )}
-              </p>
+              <div className="mt-4">
+                <span
+                  style={{
+                    backgroundImage: "radial-gradient(circle at 50% 50%, #117ab2 0%, #023d9f 100%)",
+                    WebkitBackgroundClip: "text",
+                    backgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    color: "transparent",
+                  }}
+                  className="
+                    inline-block
+                    bg-clip-text
+                    text-transparent
+                    text-[28px]
+                    font-normal
+                    leading-none
+                    tracking-[-0.04em]
+                    md:text-[42px]
+                  "
+                >
+                  {stat.numericValue !== null ? (
+                    <CountUp end={stat.numericValue} suffix={stat.suffix} />
+                  ) : (
+                    stat.value
+                  )}
+                </span>
+              </div>
             </div>
           ))}
         </div>

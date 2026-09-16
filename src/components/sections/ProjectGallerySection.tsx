@@ -20,7 +20,7 @@ export function ProjectsGallerySection({
   groups,
 }: ProjectsGallerySectionProps) {
   return (
-    <section className="bg-[#ececec] pb-16">
+    <section className="bg-white pb-16 min-h-screen">
       {/* HERO */}
       <div className="border-b border-[#d8dbe2] bg-[#eef0f4]">
         <Container className="grid min-h-[240px] grid-cols-1 gap-10 px-6 py-14 md:grid-cols-2 md:px-12">
@@ -58,9 +58,9 @@ export function ProjectsGallerySection({
                       <ProjectCard key={project.id} project={project} />
                     ))
                   ) : (
-                    <div className="col-span-full py-12 text-center">
-                      <p className="text-lg text-[#5d6472]">
-                        New projects coming soon
+                    <div className="col-span-full py-12 text-center rounded-2xl border border-dashed border-slate-200 bg-slate-50/60">
+                      <p className="text-sm font-medium text-slate-400">
+                        Nothing added here yet.
                       </p>
                     </div>
                   )}
@@ -75,9 +75,9 @@ export function ProjectsGallerySection({
                 <ProjectCard key={project.id} project={project} />
               ))
             ) : (
-              <div className="col-span-full py-12 text-center">
-                <p className="text-lg text-[#5d6472]">
-                  New projects coming soon
+              <div className="col-span-full py-12 text-center rounded-2xl border border-dashed border-slate-200 bg-slate-50/60">
+                <p className="text-sm font-medium text-slate-400">
+                  Nothing added here yet.
                 </p>
               </div>
             )}

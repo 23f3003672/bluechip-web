@@ -24,7 +24,7 @@ export default async function AboutPage() {
     .select("id, name, designation, bio, image_url, linkedin_url, sort_order, created_at")
     .order("sort_order", { ascending: true });
 
-  const visionaries = data?.length ? data.map(mapVisionaryToAboutVisionary) : ABOUT_VISIONARIES;
+  const visionaries = data?.length ? data.map(mapVisionaryToAboutVisionary) : [];
 
   return (
     <>

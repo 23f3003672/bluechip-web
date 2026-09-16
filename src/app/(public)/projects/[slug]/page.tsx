@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProjectDetailHeroSection } from "@/components/sections/ProjectDetailHeroSection";
-import { JOURNEY_PROJECTS } from "@/lib/mock-data";
 import { createClient } from "@/lib/supabase/server";
 import { mapProjectToJourneyProject } from "@/lib/public-content";
 
@@ -21,7 +20,7 @@ async function getProjectBySlug(slug: string) {
     return mapProjectToJourneyProject(data);
   }
 
-  return JOURNEY_PROJECTS.find((project) => project.slug === slug);
+  return null;
 }
 
 export async function generateMetadata(

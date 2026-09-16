@@ -18,6 +18,14 @@ interface FaqAccordionProps {
  * Swap `MockFaq` for the Supabase `FAQ` type when migrating.
  */
 export function FaqAccordion({ faqs }: FaqAccordionProps) {
+  if (faqs.length === 0) {
+    return (
+      <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50/70 p-8 text-center text-slate-500">
+        Nothing added here yet.
+      </div>
+    );
+  }
+
   return (
     <Accordion className="w-full">
       {faqs.map((faq) => (
