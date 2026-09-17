@@ -26,30 +26,30 @@ export default async function ContactPage() {
   return (
     <>
       {/* UNIFIED CONTACT SECTION */}
-      <section className="relative overflow-hidden bg-white py-24 md:py-32">
+      <section className="relative overflow-hidden bg-white py-14 sm:py-20 md:py-32">
         
-        {/* Giant Background Watermark Text */}
-        <div className="absolute -top-10 left-1/2 -translate-x-1/2 select-none pointer-events-none z-0 flex justify-center w-full">
-          <span className="text-[12rem] sm:text-[16rem] lg:text-[22rem] font-black tracking-tight uppercase leading-none bg-clip-text text-transparent bg-gradient-to-br from-[#1a56a8]/20 to-[#117ab2]/5">
+        {/* Background Watermark Text - scales properly on mobile and desktop */}
+        <div className="absolute top-2 sm:top-0 md:-top-10 left-1/2 -translate-x-1/2 select-none pointer-events-none z-0 flex justify-center w-full overflow-hidden px-4">
+          <span className="text-[15.5vw] sm:text-[12rem] md:text-[16rem] lg:text-[22rem] font-black tracking-tight uppercase leading-none bg-clip-text text-transparent bg-gradient-to-br from-[#1a56a8]/20 to-[#117ab2]/5 whitespace-nowrap">
             CONTACT
           </span>
         </div>
 
-        <Container className="relative z-10 pt-10 md:pt-16">
+        <Container className="relative z-10 pt-4 sm:pt-10 md:pt-16">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-20 items-start">
             
             {/* LEFT COLUMN */}
-            <div className="flex flex-col relative z-10 pt-8 lg:pt-20">
-              <h1 className="text-4xl font-extrabold leading-[1.1] tracking-tight text-[#1f2a44] sm:text-5xl md:text-6xl">
+            <div className="flex flex-col relative z-10 pt-4 sm:pt-8 lg:pt-20 items-center md:items-start text-center md:text-left">
+              <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold leading-[1.1] tracking-tight text-[#1f2a44] text-center md:text-left mt-2 md:mt-0">
                 Get in touch
               </h1>
               
-              <p className="mt-6 text-lg leading-[1.8] text-slate-500 max-w-md">
+              <p className="mt-4 md:mt-6 text-base md:text-lg leading-[1.8] text-slate-500 max-w-md text-center md:text-left mx-auto md:mx-0">
                 Have questions or ready to transform your upcoming project with Bluechip Engineering? Our team is here to deliver engineering excellence.
               </p>
 
               {/* Contact Info Stack */}
-              <div className="mt-12 flex flex-col gap-4">
+              <div className="mt-8 md:mt-12 flex flex-col gap-4 w-full text-left">
                 
                 {/* Email Block */}
                 <a

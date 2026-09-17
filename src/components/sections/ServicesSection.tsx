@@ -21,7 +21,7 @@ function ServiceCard({ service }: { service: HomeService }) {
     <Link
       href={href}
       className={cn(
-        "group flex h-[240px] w-full max-w-[240px] flex-col items-center justify-center",
+        "group flex h-[240px] w-full max-w-[280px] flex-col items-center justify-center sm:max-w-[240px]",
         "border-3 border-[#c8ced8] bg-[#f5f8ff]",
         "px-8 py-8 text-center",
         "transition-all duration-300",
@@ -80,11 +80,11 @@ export function ServicesSection({
         </div>
 
         {/* Cards */}
-<div className="mx-auto grid max-w-[1150px] gap-2 sm:grid-cols-2 lg:grid-cols-4">
-  {initialServices.map((service) => (
-    <ServiceCard key={service.id} service={service} />
-  ))}
-</div>
+        <div className="mx-auto grid max-w-[1150px] justify-items-center gap-5 sm:gap-2 sm:justify-items-stretch sm:grid-cols-2 lg:grid-cols-4">
+          {initialServices.map((service) => (
+            <ServiceCard key={service.id} service={service} />
+          ))}
+        </div>
       </div>
     </section>
   );

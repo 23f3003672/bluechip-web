@@ -137,13 +137,13 @@ export function ProjectsCarouselSection() {
         <div className="relative">
           <div
             ref={scrollerRef}
-            className="flex gap-5 overflow-hidden pb-6"
+            className="flex gap-5 overflow-x-auto scrollbar-none pb-6 lg:overflow-hidden"
             style={{ scrollSnapType: "x mandatory" }}
           >
             {ITEMS.map((item) => (
               <article
                 key={item.href}
-                className="flex w-[24%] min-w-[24%] shrink-0 flex-col overflow-hidden rounded-sm border border-border bg-white"
+                className="flex w-full min-w-full shrink-0 flex-col overflow-hidden rounded-sm border border-border bg-white sm:w-[48%] sm:min-w-[48%] lg:w-[24%] lg:min-w-[24%]"
                 style={{ scrollSnapAlign: "start" }}
               >
                 <div className="relative h-[240px] w-full overflow-hidden">
