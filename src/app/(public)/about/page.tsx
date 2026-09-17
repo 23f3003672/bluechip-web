@@ -10,9 +10,19 @@ import { ABOUT_VISIONARIES } from "@/lib/mock-data";
 import { mapVisionaryToAboutVisionary } from "@/lib/public-content";
 
 export const metadata: Metadata = {
-  title: "About Us",
+  title: "About Us | Journey & Leadership",
   description:
-    "Learn about Bluechip Engineering & Technologies, our journey since 1998, leadership vision, mission, values, and core strengths in EPC and infrastructure delivery.",
+    "Learn about Bluechip Engineering & Technologies, our 25+ years journey since 1998, leadership vision, mission, and proven EPC infrastructure capabilities across India.",
+  keywords: [
+    "About Bluechip Engineering",
+    "Bluechip Engineering journey",
+    "Bluechip leadership",
+    "EPC contractor Surat",
+    "construction company history",
+  ],
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 export const dynamic = "force-dynamic";

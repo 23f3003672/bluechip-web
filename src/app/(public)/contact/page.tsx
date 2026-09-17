@@ -5,9 +5,18 @@ import { getSiteSettings } from "@/lib/site-settings";
 import { Mail, Phone, MapPin, Clock, ShieldCheck, Award, ArrowRight, MessageCircle } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: "Contact & Project Inquiries",
   description:
-    "Connect with Bluechip Engineering for project consultations and partnership inquiries.",
+    "Get in touch with Bluechip Engineering & Technologies in Surat, Gujarat. Connect with our engineering and EPC experts for project consultations, tenders, and inquiries.",
+  keywords: [
+    "Contact Bluechip Engineering",
+    "Bluechip office Surat",
+    "EPC project inquiry",
+    "construction company contact Gujarat",
+  ],
+  alternates: {
+    canonical: "/contact",
+  },
 };
 
 export default async function ContactPage() {

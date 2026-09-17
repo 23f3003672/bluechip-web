@@ -3,9 +3,20 @@ import { createClient } from "@/lib/supabase/server";
 import { BusinessPageContent, type BusinessProjectItem } from "@/components/sections/BusinessPageContent";
 
 export const metadata: Metadata = {
-  title: "Business & Engineering Services",
+  title: "EPC, Civil, Mechanical & Facade Services",
   description:
-    "Explore Bluechip Engineering's turnkey EPC solutions across Water & Solid Waste Management, Civil Construction, Mechanical Works, and Facade Engineering.",
+    "Explore Bluechip Engineering's turnkey EPC solutions across Water & Solid Waste Management, Civil Construction, Mechanical Works, and Architectural Facade Engineering across India.",
+  keywords: [
+    "EPC contractor India",
+    "Civil construction services",
+    "Mechanical works contractor",
+    "Facade engineering Gujarat",
+    "Water and solid waste management",
+    "Bluechip Engineering services",
+  ],
+  alternates: {
+    canonical: "/business",
+  },
 };
 
 export const dynamic = "force-dynamic";

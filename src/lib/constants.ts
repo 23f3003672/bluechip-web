@@ -3,7 +3,7 @@ import type { NavLink } from "@/types";
 /* ─── Site Info ─────────────────────────────────────────────────── */
 export const SITE_NAME = "Bluechip Engineering & Technologies";
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://bluechipengineering.com";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://bluechiptechno.com";
 export const SITE_EMAIL = "bluechiptech.org";
 export const SITE_PHONE = "+91-12345 XXXXX";
 export const SITE_ADDRESS =

@@ -36,9 +36,26 @@ export async function generateMetadata(
     };
   }
 
+  const description = `${project.title} — ${project.category} (${project.projectType}) project executed by Bluechip Engineering & Technologies in ${project.locationYear}.`;
+
   return {
     title: project.title,
-    description: `${project.title} - ${project.category} (${project.projectType}) delivered by Bluechip Engineering in ${project.locationYear}.`,
+    description,
+    alternates: {
+      canonical: `/projects/${slug}`,
+    },
+    openGraph: {
+      title: `${project.title} | Bluechip Engineering & Technologies`,
+      description,
+      url: `/projects/${slug}`,
+      images: project.thumbnailUrl ? [{ url: project.thumbnailUrl, alt: project.title }] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} | Bluechip Engineering & Technologies`,
+      description,
+      images: project.thumbnailUrl ? [project.thumbnailUrl] : [],
+    },
   };
 }
 

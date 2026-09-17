@@ -11,9 +11,27 @@ import { HOME_SERVICES, MOCK_FAQS, HERO_SLIDES } from "@/lib/mock-data";
 import { mapFaqToMockFaq, mapServiceToHomeService, mapHeroSlideToMockSlide } from "@/lib/public-content";
 
 export const metadata: Metadata = {
-  title: "Home",
+  title: {
+    absolute:
+      "Bluechip Engineering & Technologies | Premier EPC, Civil & Facade Solutions",
+  },
   description:
-    "Bluechip Engineering & Technologies builds trusted EPC, civil, mechanical, and facade engineering solutions with a proven journey since 1998.",
+    "Established in 1998, Bluechip Engineering & Technologies (Bluechip Techno) is an integrated engineering and construction firm delivering Civil, Mechanical, Facade, and EPC solutions across India.",
+  keywords: [
+    "Bluechip Engineering",
+    "Bluechip Techno",
+    "Bluechip Engineering & Technologies",
+    "EPC contractor India",
+    "Civil construction Surat",
+    "Civil construction company Gujarat",
+    "Facade engineering India",
+    "Industrial construction contractors",
+    "Precast wall slab systems",
+    "PEB structures",
+  ],
+  alternates: {
+    canonical: "/",
+  },
 };
 
 /**

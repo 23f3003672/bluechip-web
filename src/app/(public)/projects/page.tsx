@@ -4,9 +4,19 @@ import { createClient } from "@/lib/supabase/server";
 import { mapProjectToJourneyProject } from "@/lib/public-content";
 
 export const metadata: Metadata = {
-  title: "Our Journey & Milestones",
+  title: "Featured Projects & Infrastructure Journey",
   description:
-    "Explore Bluechip Engineering's project timeline through key milestones, expansion phases, and foundational infrastructure deliveries since 1998.",
+    "Explore Bluechip Engineering's portfolio of landmark infrastructure, EPC, civil, mechanical, and architectural facade projects delivered across India since 1998.",
+  keywords: [
+    "Bluechip Engineering projects",
+    "infrastructure portfolio India",
+    "EPC completed projects",
+    "civil construction projects Gujarat",
+    "industrial construction portfolio",
+  ],
+  alternates: {
+    canonical: "/projects",
+  },
 };
 
 export const revalidate = 300;

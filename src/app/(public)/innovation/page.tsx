@@ -6,9 +6,21 @@ import {
 } from "@/components/sections/InnovationPageContent";
 
 export const metadata: Metadata = {
-  title: "Innovation & Construction Technologies | Bluechip Engineering",
+  title: "Innovation & Advanced Construction Technologies",
   description:
     "Explore Bluechip Engineering's state-of-the-art construction technologies, precast systems, hybrid structures, and advanced engineering methodologies across India.",
+  keywords: [
+    "construction technologies",
+    "precast wall slab systems",
+    "light gauge steel frames",
+    "composite structures",
+    "self supporting roofing",
+    "suspended slab systems",
+    "engineering innovation India",
+  ],
+  alternates: {
+    canonical: "/innovation",
+  },
 };
 
 export const dynamic = "force-dynamic";
