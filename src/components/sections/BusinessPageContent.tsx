@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -172,7 +172,35 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
     };
   }, []);
 
+  const categoryMenuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const clearCategoryTimeout = () => {
+    if (categoryMenuTimeoutRef.current) {
+      clearTimeout(categoryMenuTimeoutRef.current);
+      categoryMenuTimeoutRef.current = null;
+    }
+  };
+
+  const handleCategoryHover = (category: "civil" | "mechanical" | "facade") => {
+    clearCategoryTimeout();
+    setActiveCategoryMenu(category);
+  };
+
+  const handleCategoryLeave = () => {
+    clearCategoryTimeout();
+    categoryMenuTimeoutRef.current = setTimeout(() => {
+      setActiveCategoryMenu(null);
+    }, 200);
+  };
+
+  useEffect(() => {
+    return () => {
+      clearCategoryTimeout();
+    };
+  }, []);
+
   const toggleCategoryDrawer = (category: "civil" | "mechanical" | "facade") => {
+    clearCategoryTimeout();
     if (activeCategoryMenu === category) {
       setActiveCategoryMenu(null);
     } else {
@@ -181,6 +209,8 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
   };
 
   const handleSubcategoryClick = (section: "civil" | "mechanical" | "facade", tag: string, sectionId: string) => {
+    clearCategoryTimeout();
+    setActiveCategoryMenu(null);
     setSelectedSubcategoryFilter({ section, tag });
     scrollToSection(sectionId);
   };
@@ -309,146 +339,156 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
       </section>
 
       {/* ─── EPC & CATEGORIES SUB-NAV BAR ─────────────────────────────────────── */}
-      {/* TOP BAR: Always White */}
-      <section className="border-b border-[#e5e7eb] bg-white py-6 sm:py-7 transition-colors duration-300">
-        <div className="mx-auto max-w-[1720px] px-6 sm:px-10 xl:px-14 2xl:px-20">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-14 xl:gap-20">
-            {/* Left Column: EPC Header & Description (visible throughout) */}
-            <div className="w-full shrink-0 lg:w-[280px] xl:w-[320px]">
-              <h2 className="text-[17px] font-bold tracking-wider text-[#1a253c] uppercase">
-                EPC
-              </h2>
-              {!activeCategoryMenu && (
-                <p className="mt-3 text-[13px] leading-relaxed text-[#687182] md:text-[13.5px]">
-                  As an integrated EPC partner, Bluechip delivers single-point accountability across engineering, procurement, and construction—unifying civil infrastructure, heavy mechanical works, architectural façades, and environmental management from design through commissioning.
-                </p>
-              )}
-            </div>
+      <div onMouseLeave={handleCategoryLeave} onMouseEnter={clearCategoryTimeout}>
+        {/* TOP BAR: Always White */}
+        <section className="border-b border-[#e5e7eb] bg-white py-6 sm:py-7 transition-colors duration-300">
+          <div className="mx-auto max-w-[1720px] px-6 sm:px-10 xl:px-14 2xl:px-20">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-14 xl:gap-20">
+              {/* Left Column: EPC Header (Image 1: description below EPC removed) */}
+              <div className="w-full shrink-0 lg:w-[280px] xl:w-[320px]">
+                <h2 className="text-[17px] font-bold tracking-wider text-[#1a253c] uppercase">
+                  EPC
+                </h2>
+              </div>
 
-                {/* Right Column: 4 Nav Category Links on ONE single row */}
-                <div className="min-w-0 flex-1 pt-0.5">
-                  <div className="flex items-center gap-x-8 overflow-x-auto whitespace-nowrap sm:gap-x-10 xl:gap-x-14 scrollbar-none">
-                    {/* 1. Water & Solid Waste Management (No subcategories, direct link) */}
+              {/* Right Column: 4 Nav Category Links on ONE single row */}
+              <div className="min-w-0 flex-1 pt-0.5">
+                <div className="flex items-center gap-x-8 overflow-x-auto whitespace-nowrap sm:gap-x-10 xl:gap-x-14 scrollbar-none">
+                  {/* 1. Water & Solid Waste Management (No subcategories, direct link) */}
+                  <button
+                    type="button"
+                    onMouseEnter={() => {
+                      clearCategoryTimeout();
+                      setActiveCategoryMenu(null);
+                    }}
+                    onClick={() => {
+                      clearCategoryTimeout();
+                      setActiveCategoryMenu(null);
+                      scrollToSection("water-and-solid-waste-management");
+                    }}
+                    className="shrink-0 text-[13px] font-semibold uppercase tracking-wider text-[#576070] transition-colors hover:text-[#1067ab] md:text-[14px]"
+                  >
+                    Water & Solid Waste Management
+                  </button>
+
+                  {/* 2. Civil Construction (Link + Chevron Toggle, opens on hover) */}
+                  <div
+                    className="inline-flex shrink-0 items-center gap-1"
+                    onMouseEnter={() => handleCategoryHover("civil")}
+                  >
                     <button
                       type="button"
-                      onClick={() => {
-                        setActiveCategoryMenu(null);
-                        scrollToSection("water-and-solid-waste-management");
-                      }}
-                      className="shrink-0 text-[13px] font-semibold uppercase tracking-wider text-[#576070] transition-colors hover:text-[#1067ab] md:text-[14px]"
+                      onClick={() => scrollToSection("civil-construction")}
+                      className={cn(
+                        "text-[13px] font-semibold uppercase tracking-wider transition-colors hover:text-[#1067ab] md:text-[14px]",
+                        activeCategoryMenu === "civil" ? "text-[#1a253c]" : "text-[#576070]"
+                      )}
                     >
-                      Water & Solid Waste Management
+                      Civil Construction
                     </button>
+                    <button
+                      type="button"
+                      onClick={() => toggleCategoryDrawer("civil")}
+                      aria-label="Toggle Civil Construction subcategories"
+                      className="p-1 text-[#6b7280] transition-colors hover:text-[#1a253c]"
+                    >
+                      {activeCategoryMenu === "civil" ? (
+                        <ChevronUp className="size-4" />
+                      ) : (
+                        <ChevronDown className="size-4" />
+                      )}
+                    </button>
+                  </div>
 
-                    {/* 2. Civil Construction (Link + Chevron Toggle) */}
-                    <div className="inline-flex shrink-0 items-center gap-1">
-                      <button
-                        type="button"
-                        onClick={() => scrollToSection("civil-construction")}
-                        className={cn(
-                          "text-[13px] font-semibold uppercase tracking-wider transition-colors hover:text-[#1067ab] md:text-[14px]",
-                          activeCategoryMenu === "civil" ? "text-[#1a253c]" : "text-[#576070]"
-                        )}
-                      >
-                        Civil Construction
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => toggleCategoryDrawer("civil")}
-                        aria-label="Toggle Civil Construction subcategories"
-                        className="p-1 text-[#6b7280] transition-colors hover:text-[#1a253c]"
-                      >
-                        {activeCategoryMenu === "civil" ? (
-                          <ChevronUp className="size-4" />
-                        ) : (
-                          <ChevronDown className="size-4" />
-                        )}
-                      </button>
-                    </div>
+                  {/* 3. Mechanical Works (Link + Chevron Toggle, opens on hover) */}
+                  <div
+                    className="inline-flex shrink-0 items-center gap-1"
+                    onMouseEnter={() => handleCategoryHover("mechanical")}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection("mechanical-works")}
+                      className={cn(
+                        "text-[13px] font-semibold uppercase tracking-wider transition-colors hover:text-[#1067ab] md:text-[14px]",
+                        activeCategoryMenu === "mechanical" ? "text-[#1a253c]" : "text-[#576070]"
+                      )}
+                    >
+                      Mechanical Works
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => toggleCategoryDrawer("mechanical")}
+                      aria-label="Toggle Mechanical Works subcategories"
+                      className="p-1 text-[#6b7280] transition-colors hover:text-[#1a253c]"
+                    >
+                      {activeCategoryMenu === "mechanical" ? (
+                        <ChevronUp className="size-4" />
+                      ) : (
+                        <ChevronDown className="size-4" />
+                      )}
+                    </button>
+                  </div>
 
-                    {/* 3. Mechanical Works (Link + Chevron Toggle) */}
-                    <div className="inline-flex shrink-0 items-center gap-1">
-                      <button
-                        type="button"
-                        onClick={() => scrollToSection("mechanical-works")}
-                        className={cn(
-                          "text-[13px] font-semibold uppercase tracking-wider transition-colors hover:text-[#1067ab] md:text-[14px]",
-                          activeCategoryMenu === "mechanical" ? "text-[#1a253c]" : "text-[#576070]"
-                        )}
-                      >
-                        Mechanical Works
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => toggleCategoryDrawer("mechanical")}
-                        aria-label="Toggle Mechanical Works subcategories"
-                        className="p-1 text-[#6b7280] transition-colors hover:text-[#1a253c]"
-                      >
-                        {activeCategoryMenu === "mechanical" ? (
-                          <ChevronUp className="size-4" />
-                        ) : (
-                          <ChevronDown className="size-4" />
-                        )}
-                      </button>
-                    </div>
-
-                    {/* 4. Facade Works (Link + Chevron Toggle) */}
-                    <div className="inline-flex shrink-0 items-center gap-1">
-                      <button
-                        type="button"
-                        onClick={() => scrollToSection("facade-works")}
-                        className={cn(
-                          "text-[13px] font-semibold uppercase tracking-wider transition-colors hover:text-[#1067ab] md:text-[14px]",
-                          activeCategoryMenu === "facade" ? "text-[#1a253c]" : "text-[#576070]"
-                        )}
-                      >
-                        Facade Works
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => toggleCategoryDrawer("facade")}
-                        aria-label="Toggle Facade Works subcategories"
-                        className="p-1 text-[#6b7280] transition-colors hover:text-[#1a253c]"
-                      >
-                        {activeCategoryMenu === "facade" ? (
-                          <ChevronUp className="size-4" />
-                        ) : (
-                          <ChevronDown className="size-4" />
-                        )}
-                      </button>
-                    </div>
+                  {/* 4. Facade Works (Link + Chevron Toggle, opens on hover) */}
+                  <div
+                    className="inline-flex shrink-0 items-center gap-1"
+                    onMouseEnter={() => handleCategoryHover("facade")}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection("facade-works")}
+                      className={cn(
+                        "text-[13px] font-semibold uppercase tracking-wider transition-colors hover:text-[#1067ab] md:text-[14px]",
+                        activeCategoryMenu === "facade" ? "text-[#1a253c]" : "text-[#576070]"
+                      )}
+                    >
+                      Facade Works
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => toggleCategoryDrawer("facade")}
+                      aria-label="Toggle Facade Works subcategories"
+                      className="p-1 text-[#6b7280] transition-colors hover:text-[#1a253c]"
+                    >
+                      {activeCategoryMenu === "facade" ? (
+                        <ChevronUp className="size-4" />
+                      ) : (
+                        <ChevronDown className="size-4" />
+                      )}
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* DROPDOWN DRAWER: Grey Background (Image 1) with Placeholder text aligned to Stone Cladding */}
-          {activeCategoryMenu && (
-            <section className="border-b border-[#e5e7eb] bg-[#f0f3f7] py-10 transition-all duration-300 animate-in fade-in-50">
-              <div className="mx-auto max-w-[1720px] px-6 sm:px-10 xl:px-14 2xl:px-20">
-                <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-14 xl:gap-20">
-                  {/* Left Column: Dynamic Category Description */}
-                  <div className="w-full shrink-0 lg:w-[280px] xl:w-[320px]">
-                    {activeCategoryMenu === "civil" && (
-                      <p className="text-[13px] leading-relaxed text-[#687182] md:text-[13.5px]">
-                        <strong className="font-semibold text-[#1a253c]">Civil Construction: </strong>
-                        End-to-end civil construction solutions engineered for scale, durability, and execution excellence—from site development, earthwork, and deep foundations to RCC structures, industrial complexes, roads, pavements, and infrastructure development.
-                      </p>
-                    )}
-                    {activeCategoryMenu === "mechanical" && (
-                      <p className="text-[13px] leading-relaxed text-[#687182] md:text-[13.5px]">
-                        <strong className="font-semibold text-[#1a253c]">Mechanical Works: </strong>
-                        Integrated mechanical execution capabilities supporting industrial, infrastructure, and process facilities—from design and 3D modeling (TEKLA, FEA, STAAD.Pro) and heavy fabrication to erection, piping, installation, testing, and commissioning.
-                      </p>
-                    )}
-                    {activeCategoryMenu === "facade" && (
-                      <p className="text-[13px] leading-relaxed text-[#687182] md:text-[13.5px]">
-                        <strong className="font-semibold text-[#1a253c]">Façade Works: </strong>
-                        High-performance architectural façade solutions engineered for aesthetics, durability, and demanding project conditions—delivering customized engineering and execution across structural glazing, ACP, metal and stone cladding, system windows, innovative louvers, space frames, 3D metal panels, and engineered hanging systems.
-                      </p>
-                    )}
-                  </div>
+        {/* DROPDOWN DRAWER: Grey Background (Image 1) with Placeholder text aligned to Stone Cladding */}
+        {activeCategoryMenu && (
+          <section
+            onMouseEnter={clearCategoryTimeout}
+            className="border-b border-[#e5e7eb] bg-[#f0f3f7] py-10 transition-all duration-300 animate-in fade-in-50"
+          >
+            <div className="mx-auto max-w-[1720px] px-6 sm:px-10 xl:px-14 2xl:px-20">
+              <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-14 xl:gap-20">
+                {/* Left Column: Dynamic Category Description (Images 2, 3, 4: bold headers removed) */}
+                <div className="w-full shrink-0 lg:w-[280px] xl:w-[320px]">
+                  {activeCategoryMenu === "civil" && (
+                    <p className="text-[13px] leading-relaxed text-[#687182] md:text-[13.5px]">
+                      End-to-end civil construction solutions engineered for scale, durability, and execution excellence—from site development, earthwork, and deep foundations to RCC structures, industrial complexes, roads, pavements, and infrastructure development.
+                    </p>
+                  )}
+                  {activeCategoryMenu === "mechanical" && (
+                    <p className="text-[13px] leading-relaxed text-[#687182] md:text-[13.5px]">
+                      Integrated mechanical execution capabilities supporting industrial, infrastructure, and process facilities—from design and 3D modeling (TEKLA, FEA, STAAD.Pro) and heavy fabrication to erection, piping, installation, testing, and commissioning.
+                    </p>
+                  )}
+                  {activeCategoryMenu === "facade" && (
+                    <p className="text-[13px] leading-relaxed text-[#687182] md:text-[13.5px]">
+                      High-performance architectural façade solutions engineered for aesthetics, durability, and demanding project conditions—delivering customized engineering and execution across structural glazing, ACP, metal and stone cladding, system windows, innovative louvers, space frames, 3D metal panels, and engineered hanging systems.
+                    </p>
+                  )}
+                </div>
 
                   {/* Right Column: Subcategory Items Grid (Image 1) */}
                   <div className="min-w-0 flex-1">
@@ -633,6 +673,7 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
               </div>
             </section>
           )}
+      </div>
 
       {/* ─── 4 MAIN PROJECT SECTIONS (Images 3 & 4) ─────────────────────── */}
       {/* Sized and styled to replicate the exact projects/sectors gallery */}

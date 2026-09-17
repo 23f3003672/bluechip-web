@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -186,7 +186,35 @@ export function InnovationPageContent({ projects }: InnovationPageContentProps) 
     };
   }, []);
 
+  const categoryMenuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const clearCategoryTimeout = () => {
+    if (categoryMenuTimeoutRef.current) {
+      clearTimeout(categoryMenuTimeoutRef.current);
+      categoryMenuTimeoutRef.current = null;
+    }
+  };
+
+  const handleCategoryHover = (category: "construction" | "integrated" | "engineering") => {
+    clearCategoryTimeout();
+    setActiveCategoryMenu(category);
+  };
+
+  const handleCategoryLeave = () => {
+    clearCategoryTimeout();
+    categoryMenuTimeoutRef.current = setTimeout(() => {
+      setActiveCategoryMenu(null);
+    }, 200);
+  };
+
+  useEffect(() => {
+    return () => {
+      clearCategoryTimeout();
+    };
+  }, []);
+
   const toggleCategoryDrawer = (category: "construction" | "integrated" | "engineering") => {
+    clearCategoryTimeout();
     if (activeCategoryMenu === category) {
       setActiveCategoryMenu(null);
     } else {
@@ -195,6 +223,8 @@ export function InnovationPageContent({ projects }: InnovationPageContentProps) 
   };
 
   const handleSubcategoryClick = (section: "construction" | "integrated" | "engineering", tag: string, sectionId: string) => {
+    clearCategoryTimeout();
+    setActiveCategoryMenu(null);
     setSelectedSubcategoryFilter({ section, tag });
     scrollToSection(sectionId);
   };
@@ -314,30 +344,26 @@ export function InnovationPageContent({ projects }: InnovationPageContentProps) 
       </section>
 
       {/* ─── INNOVATION CATEGORIES SUB-NAV BAR ───────────────────────────── */}
-      {!isMoreExpanded && (
-        <>
-          {/* TOP BAR: Always White */}
-          <section className="border-b border-[#e5e7eb] bg-white py-6 sm:py-7 transition-colors duration-300">
-            <div className="mx-auto max-w-[1720px] px-6 sm:px-10 xl:px-14 2xl:px-20">
-              <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-14 xl:gap-20">
-                {/* Left Column: Heading & Description */}
-                <div className="w-full shrink-0 lg:w-[280px] xl:w-[320px]">
-                  <h2 className="text-[17px] font-bold tracking-wider text-[#1a253c] uppercase">
-                    R&D & INNOVATION
-                  </h2>
-                  {!activeCategoryMenu && (
-                    <p className="mt-3 text-[13px] leading-relaxed text-[#687182] md:text-[13.5px]">
-                      Bluechip deploys next-generation construction technologies, hybrid structural frameworks, and
-                      value-engineered execution methodologies for accelerated, resilient delivery.
-                    </p>
-                  )}
-                </div>
+      <div onMouseLeave={handleCategoryLeave} onMouseEnter={clearCategoryTimeout}>
+        {/* TOP BAR: Always White */}
+        <section className="border-b border-[#e5e7eb] bg-white py-6 sm:py-7 transition-colors duration-300">
+          <div className="mx-auto max-w-[1720px] px-6 sm:px-10 xl:px-14 2xl:px-20">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-14 xl:gap-20">
+              {/* Left Column: Heading (Image 1: description below R&D removed) */}
+              <div className="w-full shrink-0 lg:w-[280px] xl:w-[320px]">
+                <h2 className="text-[17px] font-bold tracking-wider text-[#1a253c] uppercase">
+                  R&D & INNOVATION
+                </h2>
+              </div>
 
                 {/* Right Column: 3 Nav Category Links on ONE single row */}
                 <div className="min-w-0 flex-1 pt-0.5">
                   <div className="flex items-center gap-x-8 overflow-x-auto whitespace-nowrap sm:gap-x-10 xl:gap-x-14 scrollbar-none">
-                    {/* 1. Construction Technologies */}
-                    <div className="inline-flex shrink-0 items-center gap-1">
+                    {/* 1. Construction Technologies (Link + Chevron Toggle, hover to open) */}
+                    <div
+                      className="inline-flex shrink-0 items-center gap-1"
+                      onMouseEnter={() => handleCategoryHover("construction")}
+                    >
                       <button
                         type="button"
                         onClick={() => scrollToSection("construction-technologies")}
@@ -362,8 +388,11 @@ export function InnovationPageContent({ projects }: InnovationPageContentProps) 
                       </button>
                     </div>
 
-                    {/* 2. Integrated Systems */}
-                    <div className="inline-flex shrink-0 items-center gap-1">
+                    {/* 2. Integrated Systems (Link + Chevron Toggle, hover to open) */}
+                    <div
+                      className="inline-flex shrink-0 items-center gap-1"
+                      onMouseEnter={() => handleCategoryHover("integrated")}
+                    >
                       <button
                         type="button"
                         onClick={() => scrollToSection("integrated-systems")}
@@ -388,8 +417,11 @@ export function InnovationPageContent({ projects }: InnovationPageContentProps) 
                       </button>
                     </div>
 
-                    {/* 3. Engineering Excellence */}
-                    <div className="inline-flex shrink-0 items-center gap-1">
+                    {/* 3. Engineering Excellence (Link + Chevron Toggle, hover to open) */}
+                    <div
+                      className="inline-flex shrink-0 items-center gap-1"
+                      onMouseEnter={() => handleCategoryHover("engineering")}
+                    >
                       <button
                         type="button"
                         onClick={() => scrollToSection("engineering-excellence")}
@@ -421,7 +453,10 @@ export function InnovationPageContent({ projects }: InnovationPageContentProps) 
 
           {/* DROPDOWN DRAWER: Grey Background */}
           {activeCategoryMenu && (
-            <section className="border-b border-[#e5e7eb] bg-[#f0f3f7] py-10 transition-all duration-300 animate-in fade-in-50">
+            <section
+              onMouseEnter={clearCategoryTimeout}
+              className="border-b border-[#e5e7eb] bg-[#f0f3f7] py-10 transition-all duration-300 animate-in fade-in-50"
+            >
               <div className="mx-auto max-w-[1720px] px-6 sm:px-10 xl:px-14 2xl:px-20">
                 <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-14 xl:gap-20">
                   {/* Left Column: Context description */}
@@ -583,8 +618,7 @@ export function InnovationPageContent({ projects }: InnovationPageContentProps) 
               </div>
             </section>
           )}
-        </>
-      )}
+        </div>
 
       {/* ─── 3 MAIN PROJECT SECTIONS ─────────────────────────────────────── */}
       <div className="space-y-20 py-12 md:space-y-28 md:py-20">

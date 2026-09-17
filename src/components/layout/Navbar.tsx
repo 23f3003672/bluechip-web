@@ -38,6 +38,14 @@ export function Navbar() {
   const [expanded, setExpanded] = useState(false);
   const [activeMegaKey, setActiveMegaKey] = useState<MegaMenuKey | null>(null);
 
+  const handleCategoryHover = (megaKey?: MegaMenuKey) => {
+    if (megaKey) {
+      setActiveMegaKey(megaKey);
+    } else {
+      setActiveMegaKey(null);
+    }
+  };
+
   useEffect(() => {
     setExpanded(false);
     setActiveMegaKey(null);
@@ -139,7 +147,7 @@ export function Navbar() {
           {/* Separator */}
           <span className="hidden h-9 w-px bg-[#c6c8ce] md:block" aria-hidden="true" />
 
-          {/* Desktop Mega Menu Toggle (desktop only) */}
+          {/* Desktop Mega Menu Toggle (desktop only - click only) */}
           <button
             type="button"
             onClick={() => {
@@ -196,6 +204,7 @@ export function Navbar() {
                     <button
                       key={category.label}
                       type="button"
+                      onMouseEnter={() => handleCategoryHover(category.megaKey)}
                       onClick={() => handleCategoryToggle(category.megaKey)}
                       aria-expanded={isActive}
                       className={cn(
@@ -217,6 +226,7 @@ export function Navbar() {
                   <Link
                     key={category.label}
                     href={category.href}
+                    onMouseEnter={() => handleCategoryHover(undefined)}
                     onClick={() => {
                       setExpanded(false);
                       setActiveMegaKey(null);
