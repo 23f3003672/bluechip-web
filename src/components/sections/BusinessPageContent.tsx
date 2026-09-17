@@ -208,31 +208,40 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
               </h1>
             </div>
 
-            {/* Middle Description + MORE Toggle (Brought slightly right where it was earlier, formatted as a square box) */}
+            {/* Middle Description + MORE Toggle */}
             <div className="lg:col-span-5 xl:col-span-6">
-              <div className="max-w-[460px]">
+              <div className={cn("transition-all duration-300", isMoreExpanded ? "max-w-xl xl:max-w-2xl" : "max-w-[480px]")}>
                 <p className="text-[14px] font-normal leading-[1.75] text-[#404958]">
-                  Established in 1998, Bluechip Engineering and Technologies is an integrated engineering, procurement, and
-                  construction organization delivering multidisciplinary infrastructure and turnkey civil solutions across India.
+                  At Bluechip Technologies & Engineering Pvt. Ltd., we bring together engineering expertise, project execution, and innovative construction technologies to deliver demanding projects across civil construction, infrastructure, mechanical works, façade engineering, and environmental solutions.
                 </p>
 
-                {/* Extended Description revealed on "MORE" (Square box appearance with balanced words per line) */}
+                {/* Extended Description revealed on "MORE" */}
                 {isMoreExpanded && (
-                  <div className="mt-4 space-y-4 text-[14px] leading-[1.75] text-[#475263]">
-                    <p>
-                      With over two decades of technical excellence, we coordinate specialist engineering disciplines to
-                      execute high-value civil builds, heavy industrial structures, specialized mechanical installations, and
-                      bespoke architectural facade systems nationwide.
-                    </p>
-                    <p>
-                      Guided by precision engineering, structural accountability, and uncompromising safety benchmarks, our
-                      teams manage turnkey projects from geotechnical ground stabilization and heavy piling to sophisticated
-                      pre-engineered structural frameworks and advanced facade envelopes.
-                    </p>
-                    <p>
-                      Our integrated EPC model delivers single-point responsibility, streamlining procurement cycles,
-                      optimizing project timelines, and ensuring rigorous compliance with international quality standards.
-                    </p>
+                  <div className="mt-5 space-y-4 text-[13.5px] leading-[1.7] text-[#475263]">
+                    {/* Industries We Serve Section */}
+                    <div className="border-t border-[#e2e8f0] pt-4">
+                      <h3 className="text-[12px] font-bold uppercase tracking-wider text-[#1067ab]">
+                        Industries We Serve
+                      </h3>
+                      <div className="mt-3 space-y-2.5">
+                        <div>
+                          <span className="font-semibold text-[#1a253c]">Industrial Infrastructure: </span>
+                          <span className="text-[#556277]">Power plants • Chemical plants • Oil & Gas • Steel • Ports • Industrial facilities</span>
+                        </div>
+                        <div>
+                          <span className="font-semibold text-[#1a253c]">Transportation & Aviation: </span>
+                          <span className="text-[#556277]">Airports • Railway infrastructure • Highways • Transportation facilities</span>
+                        </div>
+                        <div>
+                          <span className="font-semibold text-[#1a253c]">Commercial & Institutional: </span>
+                          <span className="text-[#556277]">Commercial buildings • Residential buildings • Auditoriums • Institutional buildings • Warehouses</span>
+                        </div>
+                        <div>
+                          <span className="font-semibold text-[#1a253c]">Environmental Infrastructure: </span>
+                          <span className="text-[#556277]">Water supply • Wastewater • Sewerage • Recycling • Solid waste management</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 )}
 
@@ -299,24 +308,22 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
         </div>
       </section>
 
-      {/* ─── EPC & CATEGORIES SUB-NAV BAR (Image 2: White, Image 1: Grey) ─────── */}
-      {!isMoreExpanded && (
-        <>
-          {/* TOP BAR: Always White (Image 2) */}
-          <section className="border-b border-[#e5e7eb] bg-white py-6 sm:py-7 transition-colors duration-300">
-            <div className="mx-auto max-w-[1720px] px-6 sm:px-10 xl:px-14 2xl:px-20">
-              <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-14 xl:gap-20">
-                {/* Left Column: EPC Header & Description (visible throughout) */}
-                <div className="w-full shrink-0 lg:w-[280px] xl:w-[320px]">
-                  <h2 className="text-[17px] font-bold tracking-wider text-[#1a253c] uppercase">
-                    EPC
-                  </h2>
-                  {!activeCategoryMenu && (
-                    <p className="mt-3 text-[13px] leading-relaxed text-[#687182] md:text-[13.5px]">
-                      This is a placeholder for two to three lines about the EPC where it is stated how EPC covers all these areas.
-                    </p>
-                  )}
-                </div>
+      {/* ─── EPC & CATEGORIES SUB-NAV BAR ─────────────────────────────────────── */}
+      {/* TOP BAR: Always White */}
+      <section className="border-b border-[#e5e7eb] bg-white py-6 sm:py-7 transition-colors duration-300">
+        <div className="mx-auto max-w-[1720px] px-6 sm:px-10 xl:px-14 2xl:px-20">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-14 xl:gap-20">
+            {/* Left Column: EPC Header & Description (visible throughout) */}
+            <div className="w-full shrink-0 lg:w-[280px] xl:w-[320px]">
+              <h2 className="text-[17px] font-bold tracking-wider text-[#1a253c] uppercase">
+                EPC
+              </h2>
+              {!activeCategoryMenu && (
+                <p className="mt-3 text-[13px] leading-relaxed text-[#687182] md:text-[13.5px]">
+                  As an integrated EPC partner, Bluechip delivers single-point accountability across engineering, procurement, and construction—unifying civil infrastructure, heavy mechanical works, architectural façades, and environmental management from design through commissioning.
+                </p>
+              )}
+            </div>
 
                 {/* Right Column: 4 Nav Category Links on ONE single row */}
                 <div className="min-w-0 flex-1 pt-0.5">
@@ -421,11 +428,26 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
             <section className="border-b border-[#e5e7eb] bg-[#f0f3f7] py-10 transition-all duration-300 animate-in fade-in-50">
               <div className="mx-auto max-w-[1720px] px-6 sm:px-10 xl:px-14 2xl:px-20">
                 <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-14 xl:gap-20">
-                  {/* Left Column: Placeholder text below EPC (aligned horizontally with Stone Cladding) */}
+                  {/* Left Column: Dynamic Category Description */}
                   <div className="w-full shrink-0 lg:w-[280px] xl:w-[320px]">
-                    <p className="text-[13px] leading-relaxed text-[#687182] md:text-[13.5px]">
-                      This is a placeholder for two to three lines about the EPC where it is stated how EPC covers all these areas.
-                    </p>
+                    {activeCategoryMenu === "civil" && (
+                      <p className="text-[13px] leading-relaxed text-[#687182] md:text-[13.5px]">
+                        <strong className="font-semibold text-[#1a253c]">Civil Construction: </strong>
+                        End-to-end civil construction solutions engineered for scale, durability, and execution excellence—from site development, earthwork, and deep foundations to RCC structures, industrial complexes, roads, pavements, and infrastructure development.
+                      </p>
+                    )}
+                    {activeCategoryMenu === "mechanical" && (
+                      <p className="text-[13px] leading-relaxed text-[#687182] md:text-[13.5px]">
+                        <strong className="font-semibold text-[#1a253c]">Mechanical Works: </strong>
+                        Integrated mechanical execution capabilities supporting industrial, infrastructure, and process facilities—from design and 3D modeling (TEKLA, FEA, STAAD.Pro) and heavy fabrication to erection, piping, installation, testing, and commissioning.
+                      </p>
+                    )}
+                    {activeCategoryMenu === "facade" && (
+                      <p className="text-[13px] leading-relaxed text-[#687182] md:text-[13.5px]">
+                        <strong className="font-semibold text-[#1a253c]">Façade Works: </strong>
+                        High-performance architectural façade solutions engineered for aesthetics, durability, and demanding project conditions—delivering customized engineering and execution across structural glazing, ACP, metal and stone cladding, system windows, innovative louvers, space frames, 3D metal panels, and engineered hanging systems.
+                      </p>
+                    )}
                   </div>
 
                   {/* Right Column: Subcategory Items Grid (Image 1) */}
@@ -611,8 +633,6 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
               </div>
             </section>
           )}
-        </>
-      )}
 
       {/* ─── 4 MAIN PROJECT SECTIONS (Images 3 & 4) ─────────────────────── */}
       {/* Sized and styled to replicate the exact projects/sectors gallery */}
