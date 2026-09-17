@@ -26,7 +26,7 @@ const defaultSettings: SiteSettingsPayload = {
     tagline: "Driven by Innovation, Powered by Technology",
     copyright_text: "All rights reserved.",
     footer_note:
-      "Delivering precision-engineered infrastructure solutions that stand the test of time.",
+      "Established in 1998, Bluechip Engineering & Technologies is an integrated engineering and construction company delivering Civil, Mechanical, Facade, and EPC solutions across industrial and infrastructure sectors. Driven by a sustainable vision and a mission to engineer responsible, future-ready infrastructure, we combine technical expertise with innovation, quality, and safety. Our commitment to precision, performance, and long-term value creation enables us to build resilient environments that contribute to sustainable growth and development.",
   },
   contact: {
     email: SITE_EMAIL,

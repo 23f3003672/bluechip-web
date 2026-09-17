@@ -143,9 +143,48 @@ export function InnovationPageContent({ projects }: InnovationPageContentProps) 
   const scrollToSection = (sectionId: string) => {
     const el = document.getElementById(sectionId);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      const header = document.querySelector("header");
+      const headerHeight = header ? header.getBoundingClientRect().height : 135;
+      const elementPosition = el.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 35;
+
+      window.scrollTo({
+        top: Math.max(0, offsetPosition),
+        behavior: "smooth",
+      });
     }
   };
+
+  useEffect(() => {
+    const handleHash = () => {
+      const rawHash = window.location.hash.replace(/^#/, "");
+      if (!rawHash) return;
+
+      const el = document.getElementById(rawHash);
+      if (el) {
+        const header = document.querySelector("header");
+        const headerHeight = header ? header.getBoundingClientRect().height : 135;
+        const elementPosition = el.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 35;
+
+        window.scrollTo({
+          top: Math.max(0, offsetPosition),
+          behavior: "smooth",
+        });
+      }
+    };
+
+    handleHash();
+    const timer1 = setTimeout(handleHash, 100);
+    const timer2 = setTimeout(handleHash, 350);
+
+    window.addEventListener("hashchange", handleHash);
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      window.removeEventListener("hashchange", handleHash);
+    };
+  }, []);
 
   const toggleCategoryDrawer = (category: "construction" | "integrated" | "engineering") => {
     if (activeCategoryMenu === category) {

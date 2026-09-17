@@ -6,32 +6,16 @@ import { getSiteSettings } from "@/lib/site-settings";
 const COMPANY_LINKS = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
-  { label: "News & Media", href: "/media" },
   { label: "Careers", href: "/careers" },
   { label: "Recognitions", href: "/recognitions" },
   { label: "Inquiries", href: "/contact" },
 ];
 
 const BUSINESS_LINKS = [
-  { label: "EPC", href: "/business" },
+  { label: "Water & Solid Waste Management", href: "/business#water-and-solid-waste-management" },
   { label: "Civil Construction", href: "/business#civil-construction" },
   { label: "Mechanical Works", href: "/business#mechanical-works" },
-  { label: "Facade Engineering", href: "/business#facade-engineering" },
-  { label: "Industrial Construction", href: "/projects/subcategory/industrial-construction" },
-  { label: "Piling & Foundations", href: "/projects/subcategory/piling-foundations" },
-
-  { label: "Control Buildings", href: "/projects/subcategory/control-buildings" },
-  { label: "ETP/STP", href: "/projects/subcategory/etp-stp" },
-  { label: "PEB Structures & Shades", href: "/projects/subcategory/peb-structures-shades" },
-  { label: "RCC Flooring", href: "/projects/subcategory/rcc-flooring" },
-
-  { label: "Roads", href: "/projects/subcategory/roads" },
-  { label: "Rigid Pavement (DLC, PQC)", href: "/projects/subcategory/rigid-pavement-dlc-pqc" },
-  { label: "Flexible Pavement (Bitumen)", href: "/projects/subcategory/flexible-pavement-bitumen" },
-  { label: "Drainage Systems", href: "/projects/subcategory/drainage-systems" },
-  { label: "Sewage Networks", href: "/projects/subcategory/sewage-networks" },
-  { label: "Water Supply Networks", href: "/projects/subcategory/water-supply-networks" },
-  { label: "Cable Trenches", href: "/projects/subcategory/cable-trenches" },
+  { label: "Facade Works", href: "/business#facade-works" },
 ];
 
 const PROJECT_LINKS = [
@@ -51,17 +35,9 @@ const PROJECT_LINKS = [
 ];
 
 const INNOVATION_LINKS = [
-  { label: "Composite Structures", href: "/projects/subcategory/composite-structures" },
-  { label: "Light Gauge Steel Frames", href: "/projects/subcategory/light-gauge-steel-frames" },
-  { label: "Precast Wall & Slab Systems", href: "/projects/subcategory/precast-wall-slab-systems" },
-  { label: "Self Supporting Roofing", href: "/projects/subcategory/self-supporting-roofing" },
-  { label: "Suspended Slab Systems", href: "/projects/subcategory/suspended-slab-systems" },
-
-  { label: "Hybrid Structural Solutions", href: "/projects/subcategory/hybrid-structural-solutions" },
-  { label: "Multi-Technology Configurations", href: "/projects/subcategory/multi-technology-configurations" },
-
-  { label: "Optimized Execution Methodologies", href: "/projects/subcategory/optimized-execution-methodologies" },
-  { label: "Speed, Safety, and Cost Efficiencies", href: "/projects/subcategory/speed-safety-and-cost-efficiencies" },
+  { label: "Construction Technologies", href: "/innovation#construction-technologies" },
+  { label: "Integrated Systems", href: "/innovation#integrated-systems" },
+  { label: "Engineering Excellence", href: "/innovation#engineering-excellence" },
 ];
 
 export async function Footer() {
@@ -170,7 +146,11 @@ export async function Footer() {
             </p>
 
             <p className="mt-6 max-w-5xl text-sm leading-[1.9] text-white/72 md:text-[11px]">
-              {settings.footer.footer_note || "Established in 1998, Bluechip Engineering & Technologies is an integrated engineering and construction company delivering Civil, Mechanical, Facade, and EPC solutions across industrial and infrastructure sectors."}
+              {settings.footer.footer_note &&
+              settings.footer.footer_note !==
+                "Delivering precision-engineered infrastructure solutions that stand the test of time."
+                ? settings.footer.footer_note
+                : "Established in 1998, Bluechip Engineering & Technologies is an integrated engineering and construction company delivering Civil, Mechanical, Facade, and EPC solutions across industrial and infrastructure sectors. Driven by a sustainable vision and a mission to engineer responsible, future-ready infrastructure, we combine technical expertise with innovation, quality, and safety. Our commitment to precision, performance, and long-term value creation enables us to build resilient environments that contribute to sustainable growth and development."}
             </p>
           </div>
 
