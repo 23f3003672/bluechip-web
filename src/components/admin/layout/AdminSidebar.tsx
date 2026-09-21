@@ -16,11 +16,13 @@ import {
   Settings,
   Mail,
   Sparkles,
+  Sliders,
 } from "lucide-react";
 
 const NAV_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   Dashboard: LayoutDashboard,
   Projects: FolderKanban,
+  "Hero Slides": Sliders,
   "B'CHIP Insiders": Sparkles,
   Media: Image,
   Recognitions: Award,
@@ -32,12 +34,22 @@ const NAV_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   Settings: Settings,
 };
 
-export function AdminSidebar() {
+interface AdminSidebarProps {
+  className?: string;
+  onNavigate?: () => void;
+}
+
+export function AdminSidebar({ className, onNavigate }: AdminSidebarProps = {}) {
   const pathname = usePathname();
 
   return (
-    <aside className="border-r border-border bg-white flex flex-col h-full lg:h-screen lg:sticky lg:top-0 lg:overflow-y-auto">
-      <div className="border-b border-border px-6 py-5 shrink-0">
+    <aside
+      className={cn(
+        "border-r border-border bg-white flex flex-col w-60 shrink-0 h-screen sticky top-0 overflow-y-auto z-20 select-none",
+        className
+      )}
+    >
+      <div className="border-b border-border px-6 py-5 shrink-0 sticky top-0 bg-white z-10">
         <div className="flex items-center gap-2">
           <div className="h-2 w-2 rounded-full bg-[#1a56a8] animate-pulse" />
           <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#1a56a8]">
@@ -60,6 +72,7 @@ export function AdminSidebar() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={onNavigate}
               className={cn(
                 "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 cursor-pointer",
                 isActive
@@ -79,7 +92,7 @@ export function AdminSidebar() {
         })}
       </nav>
       
-      <div className="p-4 border-t border-border bg-slate-50/50 shrink-0">
+      <div className="p-4 border-t border-border bg-slate-50 shrink-0 sticky bottom-0">
         <p className="text-[10px] text-muted-foreground text-center font-mono">
           v1.0.0 • Connected
         </p>

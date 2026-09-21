@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { AdminSidebar } from "@/components/admin/layout/AdminSidebar";
 import { AdminTopbar } from "@/components/admin/layout/AdminTopbar";
+import { AdminMain } from "@/components/admin/layout/AdminMain";
 
 export default async function AdminLayout({
   children,
@@ -18,13 +19,11 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="min-h-screen bg-[#f6f7f9] text-foreground">
-      <div className="grid min-h-screen grid-cols-1 lg:grid-cols-[240px_1fr]">
-        <AdminSidebar />
-        <div className="flex min-h-screen flex-col">
-          <AdminTopbar email={user.email ?? "admin@bluechipengineering.com"} />
-          <main className="flex-1 p-5 md:p-8">{children}</main>
-        </div>
+    <div className="flex h-screen overflow-hidden bg-[#f6f7f9] text-foreground">
+      <AdminSidebar className="hidden lg:flex" />
+      <div className="flex flex-1 flex-col h-screen min-w-0 overflow-hidden">
+        <AdminTopbar email={user.email ?? "admin@bluechipengineering.com"} />
+        <AdminMain>{children}</AdminMain>
       </div>
     </div>
   );
