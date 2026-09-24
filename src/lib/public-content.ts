@@ -40,15 +40,21 @@ export function mapProjectToJourneyProject(project: Project): JourneyProject {
     : "General";
   const projectTypeName = sub ? sub.label : (project.client || "Project Delivery");
 
+  const clientName = project.excerpt?.trim() || "";
+  const fullDescription = project.description?.trim() || "";
+
   return {
     id: project.id,
     slug: project.slug,
     title: project.title,
     locationYear: `${location}, ${year}`,
     summary:
-      project.excerpt?.trim() ||
-      truncate(project.description, 150) ||
-      "Precision-led project delivery across infrastructure and EPC domains.",
+      fullDescription
+        ? truncate(fullDescription, 150)
+        : clientName ||
+          "Precision-led project delivery across infrastructure and EPC domains.",
+    description: fullDescription,
+    clientName,
     category: categoryName,
     projectType: projectTypeName,
     phase: resolvePhase(project.year),

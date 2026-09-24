@@ -36,7 +36,10 @@ export async function generateMetadata(
     };
   }
 
-  const description = `${project.title} — ${project.category} (${project.projectType}) project executed by Bluechip Engineering & Technologies in ${project.locationYear}.`;
+  const description =
+    project.description?.trim()
+      ? project.description.slice(0, 160)
+      : `${project.title} — ${project.category} (${project.projectType}) project executed by Bluechip Engineering & Technologies in ${project.locationYear}.`;
 
   return {
     title: project.title,

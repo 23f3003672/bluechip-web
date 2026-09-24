@@ -556,6 +556,8 @@ export interface JourneyProject {
   title: string;
   locationYear: string;
   summary: string;
+  description?: string;
+  clientName?: string;
   category: string;
   projectType: string;
   phase: JourneyPhase;

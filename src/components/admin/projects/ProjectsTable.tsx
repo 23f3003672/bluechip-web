@@ -37,6 +37,7 @@ export function ProjectsTable({ rows, onEdit, onDelete, isBusy = false }: Projec
         <TableHeader>
           <TableRow>
             <TableHead>Title</TableHead>
+            <TableHead>Client</TableHead>
             <TableHead>Category</TableHead>
             <TableHead>Year</TableHead>
             <TableHead>Featured</TableHead>
@@ -70,6 +71,9 @@ export function ProjectsTable({ rows, onEdit, onDelete, isBusy = false }: Projec
                     )}
                     <span className="truncate">{row.title}</span>
                   </div>
+                </TableCell>
+                <TableCell className="max-w-[200px] truncate text-sm text-muted-foreground">
+                  {row.excerpt || "-"}
                 </TableCell>
                 <TableCell className="text-muted-foreground">{resolvedCategory}</TableCell>
                 <TableCell className="text-muted-foreground">{row.year ?? "-"}</TableCell>

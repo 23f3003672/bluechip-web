@@ -179,13 +179,22 @@ export function ProjectForm({
 
       <div className="space-y-1.5">
         <Label htmlFor="description">Description</Label>
-        <Textarea id="description" rows={4} {...register("description")} />
+        <Textarea
+          id="description"
+          rows={4}
+          placeholder="Detailed project overview, scope of work, technical highlights..."
+          {...register("description")}
+        />
         {errors.description && <p className="text-xs text-destructive">{errors.description.message}</p>}
       </div>
 
       <div className="space-y-1.5">
-        <Label htmlFor="short_description">Short Description</Label>
-        <Textarea id="short_description" rows={2} {...register("short_description")} />
+        <Label htmlFor="short_description">Client Name</Label>
+        <Input
+          id="short_description"
+          placeholder="e.g. Bharat Heavy Electricals Limited (BHEL)"
+          {...register("short_description")}
+        />
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">

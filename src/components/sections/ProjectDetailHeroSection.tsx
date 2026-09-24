@@ -214,6 +214,12 @@ export function ProjectDetailHeroSection({
     project.category
   );
 
+  const descriptionText =
+    project.description?.trim() ||
+    (project.summary && project.summary !== project.clientName
+      ? project.summary
+      : "");
+
   return (
     <section
       className="w-full overflow-hidden bg-[#f3f4f7]"
@@ -221,7 +227,7 @@ export function ProjectDetailHeroSection({
     >
       <div className="grid min-h-screen lg:grid-cols-[1.08fr_0.92fr]">
         {/* LEFT CONTENT SECTION */}
-        <div className="relative flex min-h-screen overflow-hidden bg-[#ececf1] px-8 py-16 md:px-16 lg:px-24">
+        <div className="relative flex min-h-screen overflow-y-auto bg-[#ececf1] px-8 py-16 md:px-16 lg:px-24">
           {/* Bottom Architectural Background Illustration */}
           <div
             className="pointer-events-none absolute bottom-0 left-0 right-0 h-[50%] opacity-[0.1]"
@@ -235,7 +241,7 @@ export function ProjectDetailHeroSection({
 
           {/* Content Wrapper */}
           <div className="relative z-10 flex w-full items-center">
-            <div className="max-w-[640px] -mt-16 md:-mt-28">
+            <div className="max-w-[640px] my-auto py-6 md:-mt-8">
               {/* Year & Location */}
               <p className="text-[12px] font-medium text-[#c9962d] md:text-[18px]">
                 {project.locationYear}
@@ -249,13 +255,22 @@ export function ProjectDetailHeroSection({
                 {project.title}
               </h1>
 
+              {/* Client Name */}
+              {project.clientName && (
+                <p className="mt-4 text-[15px] font-medium text-[#222b3d]/90 md:text-[16px]">
+                  {project.clientName}
+                </p>
+              )}
+
               {/* Description */}
-              <p className="mt-10 max-w-[580px] text-[16px] leading-[1.8] text-[#222b3d]/90 md:text-[15px]">
-                {project.summary}
-              </p>
+              {descriptionText && (
+                <p className="mt-6 max-w-[580px] text-[15px] leading-[1.8] text-[#222b3d]/90 md:text-[15px] whitespace-pre-line">
+                  {descriptionText}
+                </p>
+              )}
 
               {/* Bottom Info */}
-              <div className="mt-20 grid gap-14 sm:grid-cols-2">
+              <div className="mt-14 md:mt-16 grid gap-14 sm:grid-cols-2">
                 {/* Category */}
                 <div>
                   <p className="text-sm uppercase tracking-[0.22em] text-[#545454]">
