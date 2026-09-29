@@ -11,6 +11,7 @@ import {
 import type { ActionResult } from "@/types";
 import { slugify } from "@/lib/utils";
 import { STORAGE_BUCKETS } from "@/lib/constants";
+import { sendJobApplicationNotificationEmail } from "@/lib/email";
 
 async function requireUser() {
   const supabase = await createClient();
@@ -212,6 +213,37 @@ export async function submitJobApplicationAction(
   if (error) {
     console.error("Error saving job application:", error);
     return { success: false, error: error.message };
+  }
+
+  // Lookup job title if job_id was provided
+  let jobTitle: string | null = null;
+  if (input.job_id) {
+    try {
+      const { data: jobData } = await supabase
+        .from("careers")
+        .select("title")
+        .eq("id", input.job_id)
+        .maybeSingle();
+      if (jobData?.title) {
+        jobTitle = jobData.title;
+      }
+    } catch (jobLookupErr) {
+      console.warn("[Job Title Lookup Warning]:", jobLookupErr);
+    }
+  }
+
+  // Trigger email notification to info@bluechiptechno.com
+  try {
+    await sendJobApplicationNotificationEmail({
+      name: input.name,
+      email: input.email,
+      phone: input.phone,
+      job_title: jobTitle,
+      resume_url: input.resume_url,
+      cover_letter: input.cover_letter,
+    });
+  } catch (emailErr) {
+    console.error("[Job Application Email Notification Error]:", emailErr);
   }
 
   revalidatePath("/admin/careers");

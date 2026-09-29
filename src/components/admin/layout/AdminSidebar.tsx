@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import NextImage from "next/image";
 import { usePathname } from "next/navigation";
 import { ADMIN_NAV_ITEMS } from "./admin-nav";
 import { cn } from "@/lib/utils";
@@ -49,14 +50,30 @@ export function AdminSidebar({ className, onNavigate }: AdminSidebarProps = {}) 
         className
       )}
     >
-      <div className="border-b border-border px-6 py-5 shrink-0 sticky top-0 bg-white z-10">
-        <div className="flex items-center gap-2">
-          <div className="h-2 w-2 rounded-full bg-[#1a56a8] animate-pulse" />
-          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#1a56a8]">
-            Bluechip Admin
-          </p>
-        </div>
-        <p className="mt-1 text-sm font-semibold text-foreground/90">Content Management</p>
+      <div className="border-b border-border px-5 py-4 shrink-0 sticky top-0 bg-white z-10">
+        <Link href="/admin" onClick={onNavigate} className="flex items-center gap-3 group">
+          <div className="relative size-10 shrink-0 overflow-hidden rounded-md border border-border/70 bg-white p-1 shadow-2xs transition-transform duration-200 group-hover:scale-105">
+            <NextImage
+              src="/Bluechip-Logo.webp"
+              alt="Bluechip Engineering Logo"
+              width={40}
+              height={40}
+              className="h-full w-full object-contain"
+              priority
+            />
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-1.5">
+              <span className="size-1.5 rounded-full bg-[#1a56a8] animate-pulse" />
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#1a56a8]">
+                Bluechip
+              </p>
+            </div>
+            <p className="text-sm font-semibold tracking-tight text-foreground truncate">
+              Admin Portal
+            </p>
+          </div>
+        </Link>
       </div>
 
       <nav aria-label="Admin navigation" className="flex-1 space-y-1.5 px-4 py-6">

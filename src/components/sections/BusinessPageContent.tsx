@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, FolderOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/layout/Container";
 
@@ -25,20 +25,19 @@ interface SubCategoryDef {
 
 const FACADE_SUBCATEGORIES: { column1: SubCategoryDef[]; column2: SubCategoryDef[]; column3: SubCategoryDef[] } = {
   column1: [
-    { title: "Stone Cladding", description: "Timeless texture, natural elegance, lasting durability.", tag: "STONE CLADDING" },
-    { title: "Glass Cladding", description: "Elegant, modern, transparent, durable, light-enhancing.", tag: "GLASS CLADDING" },
-    { title: "GRC", description: "Lightweight, durable, versatile, weather-resistant, aesthetic.", tag: "GRC" },
-    { title: "Innovation", description: "Innovative, sustainable, intelligent, adaptive, future-ready.", tag: "INNOVATION" },
+    { title: "Stone Cladding", description: "Timeless texture, natural elegance, and lasting exterior durability.", tag: "STONE CLADDING" },
+    { title: "GRC", description: "Lightweight glass reinforced concrete, architectural versatility, and weather resistance.", tag: "GRC" },
+    { title: "Louvers", description: "Industrial ventilation louvers, architectural acoustic systems, and sunscreen fins.", tag: "LOUVERS" },
   ],
   column2: [
-    { title: "Metal Cladding", description: "Modern finish, sleek strength, lasting protection.", tag: "METAL CLADDING" },
-    { title: "Structural Glazing", description: "Seamless, sleek, transparent, modern, frameless.", tag: "STRUCTURAL GLAZING" },
-    { title: "Spider Glazing", description: "Frameless, transparent, sleek, minimal, sophisticated.", tag: "SPIDER GLAZING" },
+    { title: "Metal Cladding", description: "Modern architectural finish, sleek structural strength, and lasting weather protection.", tag: "METAL CLADDING" },
+    { title: "Structural Glazing", description: "Seamless, sleek, frameless glass curtain walls and insulated modern envelopes.", tag: "STRUCTURAL GLAZING" },
+    { title: "Spider Glazing", description: "High-transparency frameless glass facades with articulated stainless steel spider fittings.", tag: "SPIDER GLAZING" },
   ],
   column3: [
-    { title: "ACP", description: "Lightweight, sleek, durable, versatile, weather-resistant.", tag: "ACP" },
-    { title: "Lift Glazing", description: "Elegant, transparent, modern, spacious, illuminated.", tag: "LIFT GLAZING" },
-    { title: "SS Railing", description: "Sleek, durable, corrosion-resistant, modern, low-maintenance.", tag: "SS RAILING" },
+    { title: "ACP", description: "Lightweight aluminium composite panels, sleek exterior aesthetics, and weather resistance.", tag: "ACP" },
+    { title: "SS Railing", description: "Architectural stainless steel railings, balustrades, and corrosion-resistant safety barriers.", tag: "SS RAILING" },
+    { title: "Innovation", description: "Dynamic kinetic facades, intelligent climate-responsive systems, and adaptive envelopes.", tag: "INNOVATION" },
   ],
 };
 
@@ -60,14 +59,12 @@ const CIVIL_SUBCATEGORIES: { column1: SubCategoryDef[]; column2: SubCategoryDef[
 
 const MECHANICAL_SUBCATEGORIES: { column1: SubCategoryDef[]; column2: SubCategoryDef[]; column3: SubCategoryDef[] } = {
   column1: [
-    { title: "PEB Wave Type Structures", description: "Engineered pre-engineered buildings and wave-form roofing.", tag: "PEB WAVE TYPE STRUCTURES" },
+    { title: "Wave Type Structures", description: "Engineered curved wave-form roofing and specialized structural configurations.", tag: "WAVE TYPE STRUCTURES" },
   ],
   column2: [
-    { title: "Louvers", description: "Industrial ventilation louvers and architectural acoustic systems.", tag: "LOUVERS" },
+    { title: "PEB Industrial Construction", description: "Pre-engineered buildings, heavy industrial plant facilities, and fabrication sheds.", tag: "PEB INDUSTRIAL CONSTRUCTION" },
   ],
-  column3: [
-    { title: "Metal Sheets", description: "High-tensile profiled metal cladding and roof decking.", tag: "METAL SHEETS" },
-  ],
+  column3: [],
 };
 
 /**
@@ -113,8 +110,8 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
     tag: string;
   } | null>(null);
 
-  // Animated running statistics
-  const experienceCount = useCountUp(20, 1600);
+  // Animated running statistics: 30+ years of experience & 100+ projects completed
+  const experienceCount = useCountUp(30, 1600);
   const projectsCount = useCountUp(100, 2000);
 
   const scrollToSection = (sectionId: string) => {
@@ -463,216 +460,238 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
           </div>
         </section>
 
-        {/* DROPDOWN DRAWER: Grey Background (Image 1) with Placeholder text aligned to Stone Cladding */}
+        {/* DROPDOWN DRAWER: Spacious Shapoorji Pallonji Inspired Menu */}
         {activeCategoryMenu && (
           <section
             onMouseEnter={clearCategoryTimeout}
-            className="border-b border-[#e5e7eb] bg-[#f0f3f7] py-10 transition-all duration-300 animate-in fade-in-50"
+            className="border-b border-[#e2e6ed] bg-[#f0f3f7] py-12 sm:py-14 md:py-16 transition-all duration-300 animate-in fade-in-50"
           >
             <div className="mx-auto max-w-[1720px] px-6 sm:px-10 xl:px-14 2xl:px-20">
-              <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-14 xl:gap-20">
-                {/* Left Column: Dynamic Category Description (Images 2, 3, 4: bold headers removed) */}
+              <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-16 xl:gap-24">
+                {/* Left Column: Dynamic Category Overview */}
                 <div className="w-full shrink-0 lg:w-[280px] xl:w-[320px]">
                   {activeCategoryMenu === "civil" && (
-                    <p className="text-[13px] leading-relaxed text-[#687182] md:text-[13.5px]">
+                    <p className="text-[14px] leading-[1.8] text-[#55657e]">
                       End-to-end civil construction solutions engineered for scale, durability, and execution excellence—from site development, earthwork, and deep foundations to RCC structures, industrial complexes, roads, pavements, and infrastructure development.
                     </p>
                   )}
                   {activeCategoryMenu === "mechanical" && (
-                    <p className="text-[13px] leading-relaxed text-[#687182] md:text-[13.5px]">
+                    <p className="text-[14px] leading-[1.8] text-[#55657e]">
                       Integrated mechanical execution capabilities supporting industrial, infrastructure, and process facilities—from design and 3D modeling (TEKLA, FEA, STAAD.Pro) and heavy fabrication to erection, piping, installation, testing, and commissioning.
                     </p>
                   )}
                   {activeCategoryMenu === "facade" && (
-                    <p className="text-[13px] leading-relaxed text-[#687182] md:text-[13.5px]">
+                    <p className="text-[14px] leading-[1.8] text-[#55657e]">
                       High-performance architectural façade solutions engineered for aesthetics, durability, and demanding project conditions—delivering customized engineering and execution across structural glazing, ACP, metal and stone cladding, system windows, innovative louvers, space frames, 3D metal panels, and engineered hanging systems.
                     </p>
                   )}
                 </div>
 
-                  {/* Right Column: Subcategory Items Grid (Image 1) */}
-                  <div className="min-w-0 flex-1">
-                    {/* FACADE SUB-CATEGORIES (Image 1 replica) */}
-                    {activeCategoryMenu === "facade" && (
-                      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        <div className="space-y-4">
-                          {FACADE_SUBCATEGORIES.column1.map((item) => (
-                            <button
-                              key={item.title}
-                              type="button"
-                              onClick={() => handleSubcategoryClick("facade", item.tag, "facade-works")}
-                              className="group block w-full text-left transition-transform duration-200 hover:translate-x-1"
-                            >
-                              <h4 className="text-[15px] font-medium text-[#1067ab] group-hover:text-[#0c4e83]">
+                {/* Right Column: Subcategory Items Grid (Spacious Layout) */}
+                <div className="min-w-0 flex-1">
+                  {/* FACADE SUB-CATEGORIES */}
+                  {activeCategoryMenu === "facade" && (
+                    <div className="grid grid-cols-1 gap-x-12 xl:gap-x-16 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+                      <div className="space-y-8 sm:space-y-9">
+                        {FACADE_SUBCATEGORIES.column1.map((item) => (
+                          <button
+                            key={item.title}
+                            type="button"
+                            onClick={() => handleSubcategoryClick("facade", item.tag, "facade-works")}
+                            className="group block w-full text-left transition-all duration-200"
+                          >
+                            <div className="flex items-center justify-between gap-3">
+                              <h4 className="text-[16px] font-semibold text-[#1067ab] transition-colors duration-200 group-hover:text-[#084771]">
                                 {item.title}
                               </h4>
-                              <p className="mt-0.5 text-[12px] leading-tight text-[#6f7887]">
-                                {item.description}
-                              </p>
-                            </button>
-                          ))}
-                        </div>
-
-                        <div className="space-y-4">
-                          {FACADE_SUBCATEGORIES.column2.map((item) => (
-                            <button
-                              key={item.title}
-                              type="button"
-                              onClick={() => handleSubcategoryClick("facade", item.tag, "facade-works")}
-                              className="group block w-full text-left transition-transform duration-200 hover:translate-x-1"
-                            >
-                              <h4 className="text-[15px] font-medium text-[#1067ab] group-hover:text-[#0c4e83]">
-                                {item.title}
-                              </h4>
-                              <p className="mt-0.5 text-[12px] leading-tight text-[#6f7887]">
-                                {item.description}
-                              </p>
-                            </button>
-                          ))}
-                        </div>
-
-                        <div className="space-y-4">
-                          {FACADE_SUBCATEGORIES.column3.map((item) => (
-                            <button
-                              key={item.title}
-                              type="button"
-                              onClick={() => handleSubcategoryClick("facade", item.tag, "facade-works")}
-                              className="group block w-full text-left transition-transform duration-200 hover:translate-x-1"
-                            >
-                              <h4 className="text-[15px] font-medium text-[#1067ab] group-hover:text-[#0c4e83]">
-                                {item.title}
-                              </h4>
-                              <p className="mt-0.5 text-[12px] leading-tight text-[#6f7887]">
-                                {item.description}
-                              </p>
-                            </button>
-                          ))}
-                        </div>
+                              <span className="text-[#1067ab] opacity-60 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100 text-sm font-semibold">
+                                &gt;
+                              </span>
+                            </div>
+                            <p className="mt-1.5 text-[13px] sm:text-[13.5px] leading-relaxed text-[#59667a]">
+                              {item.description}
+                            </p>
+                          </button>
+                        ))}
                       </div>
-                    )}
 
-                    {/* CIVIL SUB-CATEGORIES (User-specified subcategories) */}
-                    {activeCategoryMenu === "civil" && (
-                      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        <div className="space-y-4">
-                          {CIVIL_SUBCATEGORIES.column1.map((item) => (
-                            <button
-                              key={item.title}
-                              type="button"
-                              onClick={() => handleSubcategoryClick("civil", item.tag, "civil-construction")}
-                              className="group block w-full text-left transition-transform duration-200 hover:translate-x-1"
-                            >
-                              <h4 className="text-[15px] font-medium text-[#1067ab] group-hover:text-[#0c4e83]">
+                      <div className="space-y-8 sm:space-y-9">
+                        {FACADE_SUBCATEGORIES.column2.map((item) => (
+                          <button
+                            key={item.title}
+                            type="button"
+                            onClick={() => handleSubcategoryClick("facade", item.tag, "facade-works")}
+                            className="group block w-full text-left transition-all duration-200"
+                          >
+                            <div className="flex items-center justify-between gap-3">
+                              <h4 className="text-[16px] font-semibold text-[#1067ab] transition-colors duration-200 group-hover:text-[#084771]">
                                 {item.title}
                               </h4>
-                              <p className="mt-0.5 text-[12px] leading-tight text-[#6f7887]">
-                                {item.description}
-                              </p>
-                            </button>
-                          ))}
-                        </div>
-
-                        <div className="space-y-4">
-                          {CIVIL_SUBCATEGORIES.column2.map((item) => (
-                            <button
-                              key={item.title}
-                              type="button"
-                              onClick={() => handleSubcategoryClick("civil", item.tag, "civil-construction")}
-                              className="group block w-full text-left transition-transform duration-200 hover:translate-x-1"
-                            >
-                              <h4 className="text-[15px] font-medium text-[#1067ab] group-hover:text-[#0c4e83]">
-                                {item.title}
-                              </h4>
-                              <p className="mt-0.5 text-[12px] leading-tight text-[#6f7887]">
-                                {item.description}
-                              </p>
-                            </button>
-                          ))}
-                        </div>
-
-                        <div className="space-y-4">
-                          {CIVIL_SUBCATEGORIES.column3.map((item) => (
-                            <button
-                              key={item.title}
-                              type="button"
-                              onClick={() => handleSubcategoryClick("civil", item.tag, "civil-construction")}
-                              className="group block w-full text-left transition-transform duration-200 hover:translate-x-1"
-                            >
-                              <h4 className="text-[15px] font-medium text-[#1067ab] group-hover:text-[#0c4e83]">
-                                {item.title}
-                              </h4>
-                              <p className="mt-0.5 text-[12px] leading-tight text-[#6f7887]">
-                                {item.description}
-                              </p>
-                            </button>
-                          ))}
-                        </div>
+                              <span className="text-[#1067ab] opacity-60 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100 text-sm font-semibold">
+                                &gt;
+                              </span>
+                            </div>
+                            <p className="mt-1.5 text-[13px] sm:text-[13.5px] leading-relaxed text-[#59667a]">
+                              {item.description}
+                            </p>
+                          </button>
+                        ))}
                       </div>
-                    )}
 
-                    {/* MECHANICAL SUB-CATEGORIES (User-specified subcategories) */}
-                    {activeCategoryMenu === "mechanical" && (
-                      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        <div className="space-y-4">
-                          {MECHANICAL_SUBCATEGORIES.column1.map((item) => (
-                            <button
-                              key={item.title}
-                              type="button"
-                              onClick={() => handleSubcategoryClick("mechanical", item.tag, "mechanical-works")}
-                              className="group block w-full text-left transition-transform duration-200 hover:translate-x-1"
-                            >
-                              <h4 className="text-[15px] font-medium text-[#1067ab] group-hover:text-[#0c4e83]">
+                      <div className="space-y-8 sm:space-y-9">
+                        {FACADE_SUBCATEGORIES.column3.map((item) => (
+                          <button
+                            key={item.title}
+                            type="button"
+                            onClick={() => handleSubcategoryClick("facade", item.tag, "facade-works")}
+                            className="group block w-full text-left transition-all duration-200"
+                          >
+                            <div className="flex items-center justify-between gap-3">
+                              <h4 className="text-[16px] font-semibold text-[#1067ab] transition-colors duration-200 group-hover:text-[#084771]">
                                 {item.title}
                               </h4>
-                              <p className="mt-0.5 text-[12px] leading-tight text-[#6f7887]">
-                                {item.description}
-                              </p>
-                            </button>
-                          ))}
-                        </div>
-
-                        <div className="space-y-4">
-                          {MECHANICAL_SUBCATEGORIES.column2.map((item) => (
-                            <button
-                              key={item.title}
-                              type="button"
-                              onClick={() => handleSubcategoryClick("mechanical", item.tag, "mechanical-works")}
-                              className="group block w-full text-left transition-transform duration-200 hover:translate-x-1"
-                            >
-                              <h4 className="text-[15px] font-medium text-[#1067ab] group-hover:text-[#0c4e83]">
-                                {item.title}
-                              </h4>
-                              <p className="mt-0.5 text-[12px] leading-tight text-[#6f7887]">
-                                {item.description}
-                              </p>
-                            </button>
-                          ))}
-                        </div>
-
-                        <div className="space-y-4">
-                          {MECHANICAL_SUBCATEGORIES.column3.map((item) => (
-                            <button
-                              key={item.title}
-                              type="button"
-                              onClick={() => handleSubcategoryClick("mechanical", item.tag, "mechanical-works")}
-                              className="group block w-full text-left transition-transform duration-200 hover:translate-x-1"
-                            >
-                              <h4 className="text-[15px] font-medium text-[#1067ab] group-hover:text-[#0c4e83]">
-                                {item.title}
-                              </h4>
-                              <p className="mt-0.5 text-[12px] leading-tight text-[#6f7887]">
-                                {item.description}
-                              </p>
-                            </button>
-                          ))}
-                        </div>
+                              <span className="text-[#1067ab] opacity-60 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100 text-sm font-semibold">
+                                &gt;
+                              </span>
+                            </div>
+                            <p className="mt-1.5 text-[13px] sm:text-[13.5px] leading-relaxed text-[#59667a]">
+                              {item.description}
+                            </p>
+                          </button>
+                        ))}
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
+
+                  {/* CIVIL SUB-CATEGORIES */}
+                  {activeCategoryMenu === "civil" && (
+                    <div className="grid grid-cols-1 gap-x-12 xl:gap-x-16 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+                      <div className="space-y-8 sm:space-y-9">
+                        {CIVIL_SUBCATEGORIES.column1.map((item) => (
+                          <button
+                            key={item.title}
+                            type="button"
+                            onClick={() => handleSubcategoryClick("civil", item.tag, "civil-construction")}
+                            className="group block w-full text-left transition-all duration-200"
+                          >
+                            <div className="flex items-center justify-between gap-3">
+                              <h4 className="text-[16px] font-semibold text-[#1067ab] transition-colors duration-200 group-hover:text-[#084771]">
+                                {item.title}
+                              </h4>
+                              <span className="text-[#1067ab] opacity-60 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100 text-sm font-semibold">
+                                &gt;
+                              </span>
+                            </div>
+                            <p className="mt-1.5 text-[13px] sm:text-[13.5px] leading-relaxed text-[#59667a]">
+                              {item.description}
+                            </p>
+                          </button>
+                        ))}
+                      </div>
+
+                      <div className="space-y-8 sm:space-y-9">
+                        {CIVIL_SUBCATEGORIES.column2.map((item) => (
+                          <button
+                            key={item.title}
+                            type="button"
+                            onClick={() => handleSubcategoryClick("civil", item.tag, "civil-construction")}
+                            className="group block w-full text-left transition-all duration-200"
+                          >
+                            <div className="flex items-center justify-between gap-3">
+                              <h4 className="text-[16px] font-semibold text-[#1067ab] transition-colors duration-200 group-hover:text-[#084771]">
+                                {item.title}
+                              </h4>
+                              <span className="text-[#1067ab] opacity-60 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100 text-sm font-semibold">
+                                &gt;
+                              </span>
+                            </div>
+                            <p className="mt-1.5 text-[13px] sm:text-[13.5px] leading-relaxed text-[#59667a]">
+                              {item.description}
+                            </p>
+                          </button>
+                        ))}
+                      </div>
+
+                      <div className="space-y-8 sm:space-y-9">
+                        {CIVIL_SUBCATEGORIES.column3.map((item) => (
+                          <button
+                            key={item.title}
+                            type="button"
+                            onClick={() => handleSubcategoryClick("civil", item.tag, "civil-construction")}
+                            className="group block w-full text-left transition-all duration-200"
+                          >
+                            <div className="flex items-center justify-between gap-3">
+                              <h4 className="text-[16px] font-semibold text-[#1067ab] transition-colors duration-200 group-hover:text-[#084771]">
+                                {item.title}
+                              </h4>
+                              <span className="text-[#1067ab] opacity-60 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100 text-sm font-semibold">
+                                &gt;
+                              </span>
+                            </div>
+                            <p className="mt-1.5 text-[13px] sm:text-[13.5px] leading-relaxed text-[#59667a]">
+                              {item.description}
+                            </p>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* MECHANICAL SUB-CATEGORIES (Wave Type Structures & PEB Industrial Construction Only) */}
+                  {activeCategoryMenu === "mechanical" && (
+                    <div className="grid grid-cols-1 gap-x-12 xl:gap-x-16 gap-y-10 sm:grid-cols-2 max-w-3xl">
+                      <div className="space-y-8 sm:space-y-9">
+                        {MECHANICAL_SUBCATEGORIES.column1.map((item) => (
+                          <button
+                            key={item.title}
+                            type="button"
+                            onClick={() => handleSubcategoryClick("mechanical", item.tag, "mechanical-works")}
+                            className="group block w-full text-left transition-all duration-200"
+                          >
+                            <div className="flex items-center justify-between gap-3">
+                              <h4 className="text-[16px] font-semibold text-[#1067ab] transition-colors duration-200 group-hover:text-[#084771]">
+                                {item.title}
+                              </h4>
+                              <span className="text-[#1067ab] opacity-60 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100 text-sm font-semibold">
+                                &gt;
+                              </span>
+                            </div>
+                            <p className="mt-1.5 text-[13px] sm:text-[13.5px] leading-relaxed text-[#59667a]">
+                              {item.description}
+                            </p>
+                          </button>
+                        ))}
+                      </div>
+
+                      <div className="space-y-8 sm:space-y-9">
+                        {MECHANICAL_SUBCATEGORIES.column2.map((item) => (
+                          <button
+                            key={item.title}
+                            type="button"
+                            onClick={() => handleSubcategoryClick("mechanical", item.tag, "mechanical-works")}
+                            className="group block w-full text-left transition-all duration-200"
+                          >
+                            <div className="flex items-center justify-between gap-3">
+                              <h4 className="text-[16px] font-semibold text-[#1067ab] transition-colors duration-200 group-hover:text-[#084771]">
+                                {item.title}
+                              </h4>
+                              <span className="text-[#1067ab] opacity-60 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100 text-sm font-semibold">
+                                &gt;
+                              </span>
+                            </div>
+                            <p className="mt-1.5 text-[13px] sm:text-[13.5px] leading-relaxed text-[#59667a]">
+                              {item.description}
+                            </p>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
-            </section>
-          )}
+            </div>
+          </section>
+        )}
       </div>
 
       {/* ─── 4 MAIN PROJECT SECTIONS (Images 3 & 4) ─────────────────────── */}
@@ -696,12 +715,16 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
               <div className="h-[1px] flex-1 bg-[#e0e3ea]" />
             </div>
 
-            {/* Project Grid (consistent with projects/sectors) */}
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-              {waterProjects.map((project) => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
-            </div>
+            {/* Project Grid or Empty State */}
+            {waterProjects.length > 0 ? (
+              <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                {waterProjects.map((project) => (
+                  <ProjectCard key={project.id} project={project} />
+                ))}
+              </div>
+            ) : (
+              <EmptyState description="No projects have been added under Water & Solid Waste Management yet. Projects published via the Admin Dashboard will appear here." />
+            )}
           </Container>
         </section>
 
@@ -747,19 +770,38 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
               </div>
             )}
 
-            {/* Project Grid (consistent with projects/sectors) */}
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-              {(selectedSubcategoryFilter?.section === "civil"
+            {/* Project Grid or Empty State */}
+            {(() => {
+              const displayed = selectedSubcategoryFilter?.section === "civil"
                 ? civilProjects.filter(
                     (p) =>
                       p.subcategoryTag.toUpperCase() ===
                       selectedSubcategoryFilter.tag.toUpperCase()
                   )
-                : civilProjects
-              ).map((project) => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
-            </div>
+                : civilProjects;
+
+              return displayed.length > 0 ? (
+                <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                  {displayed.map((project) => (
+                    <ProjectCard key={project.id} project={project} />
+                  ))}
+                </div>
+              ) : (
+                <EmptyState
+                  title="Nothing to see here right now"
+                  description={
+                    selectedSubcategoryFilter?.section === "civil"
+                      ? `No projects found under "${selectedSubcategoryFilter.tag}". Projects added via the Admin Dashboard will appear here.`
+                      : "No projects have been added under Civil Construction yet."
+                  }
+                  onClear={
+                    selectedSubcategoryFilter?.section === "civil"
+                      ? () => setSelectedSubcategoryFilter(null)
+                      : undefined
+                  }
+                />
+              );
+            })()}
           </Container>
         </section>
 
@@ -805,19 +847,38 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
               </div>
             )}
 
-            {/* Project Grid (consistent with projects/sectors) */}
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-              {(selectedSubcategoryFilter?.section === "mechanical"
+            {/* Project Grid or Empty State */}
+            {(() => {
+              const displayed = selectedSubcategoryFilter?.section === "mechanical"
                 ? mechanicalProjects.filter(
                     (p) =>
                       p.subcategoryTag.toUpperCase() ===
                       selectedSubcategoryFilter.tag.toUpperCase()
                   )
-                : mechanicalProjects
-              ).map((project) => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
-            </div>
+                : mechanicalProjects;
+
+              return displayed.length > 0 ? (
+                <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                  {displayed.map((project) => (
+                    <ProjectCard key={project.id} project={project} />
+                  ))}
+                </div>
+              ) : (
+                <EmptyState
+                  title="Nothing to see here right now"
+                  description={
+                    selectedSubcategoryFilter?.section === "mechanical"
+                      ? `No projects found under "${selectedSubcategoryFilter.tag}". Projects added via the Admin Dashboard will appear here.`
+                      : "No projects have been added under Mechanical Works yet."
+                  }
+                  onClear={
+                    selectedSubcategoryFilter?.section === "mechanical"
+                      ? () => setSelectedSubcategoryFilter(null)
+                      : undefined
+                  }
+                />
+              );
+            })()}
           </Container>
         </section>
 
@@ -864,22 +925,72 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
               </div>
             )}
 
-            {/* Project Grid (consistent with projects/sectors) */}
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-              {(selectedSubcategoryFilter?.section === "facade"
+            {/* Project Grid or Empty State */}
+            {(() => {
+              const displayed = selectedSubcategoryFilter?.section === "facade"
                 ? facadeProjects.filter(
                     (p) =>
                       p.subcategoryTag.toUpperCase() ===
                       selectedSubcategoryFilter.tag.toUpperCase()
                   )
-                : facadeProjects
-              ).map((project) => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
-            </div>
+                : facadeProjects;
+
+              return displayed.length > 0 ? (
+                <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                  {displayed.map((project) => (
+                    <ProjectCard key={project.id} project={project} />
+                  ))}
+                </div>
+              ) : (
+                <EmptyState
+                  title="Nothing to see here right now"
+                  description={
+                    selectedSubcategoryFilter?.section === "facade"
+                      ? `No projects found under "${selectedSubcategoryFilter.tag}". Projects added via the Admin Dashboard will appear here.`
+                      : "No projects have been added under Facade Works yet."
+                  }
+                  onClear={
+                    selectedSubcategoryFilter?.section === "facade"
+                      ? () => setSelectedSubcategoryFilter(null)
+                      : undefined
+                  }
+                />
+              );
+            })()}
           </Container>
         </section>
       </div>
+    </div>
+  );
+}
+
+function EmptyState({
+  title = "Nothing to see here right now",
+  description = "No projects have been added under this category yet. Projects published via the Admin Dashboard will appear here.",
+  onClear,
+}: {
+  title?: string;
+  description?: string;
+  onClear?: () => void;
+}) {
+  return (
+    <div className="mt-8 rounded-xl border border-dashed border-[#cbd5e1] bg-white/70 px-6 py-14 text-center">
+      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#f1f5f9] text-[#64748b]">
+        <FolderOpen className="h-6 w-6 text-[#94a3b8]" />
+      </div>
+      <h3 className="mt-3 text-[16px] font-semibold text-[#1e293b]">{title}</h3>
+      <p className="mx-auto mt-1 max-w-md text-[13.5px] leading-relaxed text-[#64748b]">
+        {description}
+      </p>
+      {onClear && (
+        <button
+          type="button"
+          onClick={onClear}
+          className="mt-4 inline-flex items-center rounded-md bg-[#1067ab] px-4 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-[#0c4e83]"
+        >
+          Clear Filter & View All
+        </button>
+      )}
     </div>
   );
 }

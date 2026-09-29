@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, FolderOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/layout/Container";
 
@@ -451,17 +451,17 @@ export function InnovationPageContent({ projects }: InnovationPageContentProps) 
             </div>
           </section>
 
-          {/* DROPDOWN DRAWER: Grey Background */}
+          {/* DROPDOWN DRAWER: Spacious Shapoorji Pallonji Inspired Menu */}
           {activeCategoryMenu && (
             <section
               onMouseEnter={clearCategoryTimeout}
-              className="border-b border-[#e5e7eb] bg-[#f0f3f7] py-10 transition-all duration-300 animate-in fade-in-50"
+              className="border-b border-[#e2e6ed] bg-[#f0f3f7] py-12 sm:py-14 md:py-16 transition-all duration-300 animate-in fade-in-50"
             >
               <div className="mx-auto max-w-[1720px] px-6 sm:px-10 xl:px-14 2xl:px-20">
-                <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-14 xl:gap-20">
+                <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-16 xl:gap-24">
                   {/* Left Column: Context description */}
                   <div className="w-full shrink-0 lg:w-[280px] xl:w-[320px]">
-                    <p className="text-[13px] leading-relaxed text-[#687182] md:text-[13.5px]">
+                    <p className="text-[14px] leading-[1.8] text-[#55657e]">
                       {activeCategoryMenu === "construction" &&
                         "Engineered for high velocity and dimensional precision, our advanced construction systems integrate offsite prefabrication, cold-formed framing, and high-tensile composite profiles."}
                       {activeCategoryMenu === "integrated" &&
@@ -471,59 +471,74 @@ export function InnovationPageContent({ projects }: InnovationPageContentProps) 
                     </p>
                   </div>
 
-                  {/* Right Column: Subcategory Items Grid */}
+                  {/* Right Column: Subcategory Items Grid (Spacious Layout) */}
                   <div className="min-w-0 flex-1">
                     {/* 1. CONSTRUCTION TECHNOLOGIES SUB-CATEGORIES */}
                     {activeCategoryMenu === "construction" && (
-                      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        <div className="space-y-4">
+                      <div className="grid grid-cols-1 gap-x-12 xl:gap-x-16 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+                        <div className="space-y-8 sm:space-y-9">
                           {CONSTRUCTION_SUBCATEGORIES.column1.map((item) => (
                             <button
                               key={item.title}
                               type="button"
                               onClick={() => handleSubcategoryClick("construction", item.tag, "construction-technologies")}
-                              className="group block w-full text-left transition-transform duration-200 hover:translate-x-1"
+                              className="group block w-full text-left transition-all duration-200"
                             >
-                              <h4 className="text-[15px] font-medium text-[#1067ab] group-hover:text-[#0c4e83]">
-                                {item.title}
-                              </h4>
-                              <p className="mt-0.5 text-[12px] leading-tight text-[#6f7887]">
+                              <div className="flex items-center justify-between gap-3">
+                                <h4 className="text-[16px] font-semibold text-[#1067ab] transition-colors duration-200 group-hover:text-[#084771]">
+                                  {item.title}
+                                </h4>
+                                <span className="text-[#1067ab] opacity-60 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100 text-sm font-semibold">
+                                  &gt;
+                                </span>
+                              </div>
+                              <p className="mt-1.5 text-[13px] sm:text-[13.5px] leading-relaxed text-[#59667a]">
                                 {item.description}
                               </p>
                             </button>
                           ))}
                         </div>
 
-                        <div className="space-y-4">
+                        <div className="space-y-8 sm:space-y-9">
                           {CONSTRUCTION_SUBCATEGORIES.column2.map((item) => (
                             <button
                               key={item.title}
                               type="button"
                               onClick={() => handleSubcategoryClick("construction", item.tag, "construction-technologies")}
-                              className="group block w-full text-left transition-transform duration-200 hover:translate-x-1"
+                              className="group block w-full text-left transition-all duration-200"
                             >
-                              <h4 className="text-[15px] font-medium text-[#1067ab] group-hover:text-[#0c4e83]">
-                                {item.title}
-                              </h4>
-                              <p className="mt-0.5 text-[12px] leading-tight text-[#6f7887]">
+                              <div className="flex items-center justify-between gap-3">
+                                <h4 className="text-[16px] font-semibold text-[#1067ab] transition-colors duration-200 group-hover:text-[#084771]">
+                                  {item.title}
+                                </h4>
+                                <span className="text-[#1067ab] opacity-60 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100 text-sm font-semibold">
+                                  &gt;
+                                </span>
+                              </div>
+                              <p className="mt-1.5 text-[13px] sm:text-[13.5px] leading-relaxed text-[#59667a]">
                                 {item.description}
                               </p>
                             </button>
                           ))}
                         </div>
 
-                        <div className="space-y-4">
+                        <div className="space-y-8 sm:space-y-9">
                           {CONSTRUCTION_SUBCATEGORIES.column3.map((item) => (
                             <button
                               key={item.title}
                               type="button"
                               onClick={() => handleSubcategoryClick("construction", item.tag, "construction-technologies")}
-                              className="group block w-full text-left transition-transform duration-200 hover:translate-x-1"
+                              className="group block w-full text-left transition-all duration-200"
                             >
-                              <h4 className="text-[15px] font-medium text-[#1067ab] group-hover:text-[#0c4e83]">
-                                {item.title}
-                              </h4>
-                              <p className="mt-0.5 text-[12px] leading-tight text-[#6f7887]">
+                              <div className="flex items-center justify-between gap-3">
+                                <h4 className="text-[16px] font-semibold text-[#1067ab] transition-colors duration-200 group-hover:text-[#084771]">
+                                  {item.title}
+                                </h4>
+                                <span className="text-[#1067ab] opacity-60 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100 text-sm font-semibold">
+                                  &gt;
+                                </span>
+                              </div>
+                              <p className="mt-1.5 text-[13px] sm:text-[13.5px] leading-relaxed text-[#59667a]">
                                 {item.description}
                               </p>
                             </button>
@@ -534,37 +549,47 @@ export function InnovationPageContent({ projects }: InnovationPageContentProps) 
 
                     {/* 2. INTEGRATED SYSTEMS SUB-CATEGORIES */}
                     {activeCategoryMenu === "integrated" && (
-                      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        <div className="space-y-4">
+                      <div className="grid grid-cols-1 gap-x-12 xl:gap-x-16 gap-y-10 sm:grid-cols-2 max-w-3xl">
+                        <div className="space-y-8 sm:space-y-9">
                           {INTEGRATED_SUBCATEGORIES.column1.map((item) => (
                             <button
                               key={item.title}
                               type="button"
                               onClick={() => handleSubcategoryClick("integrated", item.tag, "integrated-systems")}
-                              className="group block w-full text-left transition-transform duration-200 hover:translate-x-1"
+                              className="group block w-full text-left transition-all duration-200"
                             >
-                              <h4 className="text-[15px] font-medium text-[#1067ab] group-hover:text-[#0c4e83]">
-                                {item.title}
-                              </h4>
-                              <p className="mt-0.5 text-[12px] leading-tight text-[#6f7887]">
+                              <div className="flex items-center justify-between gap-3">
+                                <h4 className="text-[16px] font-semibold text-[#1067ab] transition-colors duration-200 group-hover:text-[#084771]">
+                                  {item.title}
+                                </h4>
+                                <span className="text-[#1067ab] opacity-60 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100 text-sm font-semibold">
+                                  &gt;
+                                </span>
+                              </div>
+                              <p className="mt-1.5 text-[13px] sm:text-[13.5px] leading-relaxed text-[#59667a]">
                                 {item.description}
                               </p>
                             </button>
                           ))}
                         </div>
 
-                        <div className="space-y-4">
+                        <div className="space-y-8 sm:space-y-9">
                           {INTEGRATED_SUBCATEGORIES.column2.map((item) => (
                             <button
                               key={item.title}
                               type="button"
                               onClick={() => handleSubcategoryClick("integrated", item.tag, "integrated-systems")}
-                              className="group block w-full text-left transition-transform duration-200 hover:translate-x-1"
+                              className="group block w-full text-left transition-all duration-200"
                             >
-                              <h4 className="text-[15px] font-medium text-[#1067ab] group-hover:text-[#0c4e83]">
-                                {item.title}
-                              </h4>
-                              <p className="mt-0.5 text-[12px] leading-tight text-[#6f7887]">
+                              <div className="flex items-center justify-between gap-3">
+                                <h4 className="text-[16px] font-semibold text-[#1067ab] transition-colors duration-200 group-hover:text-[#084771]">
+                                  {item.title}
+                                </h4>
+                                <span className="text-[#1067ab] opacity-60 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100 text-sm font-semibold">
+                                  &gt;
+                                </span>
+                              </div>
+                              <p className="mt-1.5 text-[13px] sm:text-[13.5px] leading-relaxed text-[#59667a]">
                                 {item.description}
                               </p>
                             </button>
@@ -575,37 +600,47 @@ export function InnovationPageContent({ projects }: InnovationPageContentProps) 
 
                     {/* 3. ENGINEERING EXCELLENCE SUB-CATEGORIES */}
                     {activeCategoryMenu === "engineering" && (
-                      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        <div className="space-y-4">
+                      <div className="grid grid-cols-1 gap-x-12 xl:gap-x-16 gap-y-10 sm:grid-cols-2 max-w-3xl">
+                        <div className="space-y-8 sm:space-y-9">
                           {ENGINEERING_SUBCATEGORIES.column1.map((item) => (
                             <button
                               key={item.title}
                               type="button"
                               onClick={() => handleSubcategoryClick("engineering", item.tag, "engineering-excellence")}
-                              className="group block w-full text-left transition-transform duration-200 hover:translate-x-1"
+                              className="group block w-full text-left transition-all duration-200"
                             >
-                              <h4 className="text-[15px] font-medium text-[#1067ab] group-hover:text-[#0c4e83]">
-                                {item.title}
-                              </h4>
-                              <p className="mt-0.5 text-[12px] leading-tight text-[#6f7887]">
+                              <div className="flex items-center justify-between gap-3">
+                                <h4 className="text-[16px] font-semibold text-[#1067ab] transition-colors duration-200 group-hover:text-[#084771]">
+                                  {item.title}
+                                </h4>
+                                <span className="text-[#1067ab] opacity-60 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100 text-sm font-semibold">
+                                  &gt;
+                                </span>
+                              </div>
+                              <p className="mt-1.5 text-[13px] sm:text-[13.5px] leading-relaxed text-[#59667a]">
                                 {item.description}
                               </p>
                             </button>
                           ))}
                         </div>
 
-                        <div className="space-y-4">
+                        <div className="space-y-8 sm:space-y-9">
                           {ENGINEERING_SUBCATEGORIES.column2.map((item) => (
                             <button
                               key={item.title}
                               type="button"
                               onClick={() => handleSubcategoryClick("engineering", item.tag, "engineering-excellence")}
-                              className="group block w-full text-left transition-transform duration-200 hover:translate-x-1"
+                              className="group block w-full text-left transition-all duration-200"
                             >
-                              <h4 className="text-[15px] font-medium text-[#1067ab] group-hover:text-[#0c4e83]">
-                                {item.title}
-                              </h4>
-                              <p className="mt-0.5 text-[12px] leading-tight text-[#6f7887]">
+                              <div className="flex items-center justify-between gap-3">
+                                <h4 className="text-[16px] font-semibold text-[#1067ab] transition-colors duration-200 group-hover:text-[#084771]">
+                                  {item.title}
+                                </h4>
+                                <span className="text-[#1067ab] opacity-60 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100 text-sm font-semibold">
+                                  &gt;
+                                </span>
+                              </div>
+                              <p className="mt-1.5 text-[13px] sm:text-[13.5px] leading-relaxed text-[#59667a]">
                                 {item.description}
                               </p>
                             </button>
@@ -664,19 +699,38 @@ export function InnovationPageContent({ projects }: InnovationPageContentProps) 
               </div>
             )}
 
-            {/* Project Grid */}
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-              {(selectedSubcategoryFilter?.section === "construction"
+            {/* Project Grid or Empty State */}
+            {(() => {
+              const displayed = selectedSubcategoryFilter?.section === "construction"
                 ? constructionProjects.filter(
                     (p) =>
                       p.subcategoryTag.toUpperCase() ===
                       selectedSubcategoryFilter.tag.toUpperCase()
                   )
-                : constructionProjects
-              ).map((project) => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
-            </div>
+                : constructionProjects;
+
+              return displayed.length > 0 ? (
+                <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                  {displayed.map((project) => (
+                    <ProjectCard key={project.id} project={project} />
+                  ))}
+                </div>
+              ) : (
+                <EmptyState
+                  title="Nothing to see here right now"
+                  description={
+                    selectedSubcategoryFilter?.section === "construction"
+                      ? `No projects have been added under "${selectedSubcategoryFilter.tag}" yet.`
+                      : "No projects have been added under Construction Technologies yet."
+                  }
+                  onClear={
+                    selectedSubcategoryFilter?.section === "construction"
+                      ? () => setSelectedSubcategoryFilter(null)
+                      : undefined
+                  }
+                />
+              );
+            })()}
           </Container>
         </section>
 
@@ -722,19 +776,38 @@ export function InnovationPageContent({ projects }: InnovationPageContentProps) 
               </div>
             )}
 
-            {/* Project Grid */}
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-              {(selectedSubcategoryFilter?.section === "integrated"
+            {/* Project Grid or Empty State */}
+            {(() => {
+              const displayed = selectedSubcategoryFilter?.section === "integrated"
                 ? integratedProjects.filter(
                     (p) =>
                       p.subcategoryTag.toUpperCase() ===
                       selectedSubcategoryFilter.tag.toUpperCase()
                   )
-                : integratedProjects
-              ).map((project) => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
-            </div>
+                : integratedProjects;
+
+              return displayed.length > 0 ? (
+                <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                  {displayed.map((project) => (
+                    <ProjectCard key={project.id} project={project} />
+                  ))}
+                </div>
+              ) : (
+                <EmptyState
+                  title="Nothing to see here right now"
+                  description={
+                    selectedSubcategoryFilter?.section === "integrated"
+                      ? `No projects have been added under "${selectedSubcategoryFilter.tag}" yet.`
+                      : "No projects have been added under Integrated Systems yet."
+                  }
+                  onClear={
+                    selectedSubcategoryFilter?.section === "integrated"
+                      ? () => setSelectedSubcategoryFilter(null)
+                      : undefined
+                  }
+                />
+              );
+            })()}
           </Container>
         </section>
 
@@ -780,22 +853,72 @@ export function InnovationPageContent({ projects }: InnovationPageContentProps) 
               </div>
             )}
 
-            {/* Project Grid */}
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-              {(selectedSubcategoryFilter?.section === "engineering"
+            {/* Project Grid or Empty State */}
+            {(() => {
+              const displayed = selectedSubcategoryFilter?.section === "engineering"
                 ? engineeringProjects.filter(
                     (p) =>
                       p.subcategoryTag.toUpperCase() ===
                       selectedSubcategoryFilter.tag.toUpperCase()
                   )
-                : engineeringProjects
-              ).map((project) => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
-            </div>
+                : engineeringProjects;
+
+              return displayed.length > 0 ? (
+                <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                  {displayed.map((project) => (
+                    <ProjectCard key={project.id} project={project} />
+                  ))}
+                </div>
+              ) : (
+                <EmptyState
+                  title="Nothing to see here right now"
+                  description={
+                    selectedSubcategoryFilter?.section === "engineering"
+                      ? `No projects have been added under "${selectedSubcategoryFilter.tag}" yet.`
+                      : "No projects have been added under Engineering Excellence yet."
+                  }
+                  onClear={
+                    selectedSubcategoryFilter?.section === "engineering"
+                      ? () => setSelectedSubcategoryFilter(null)
+                      : undefined
+                  }
+                />
+              );
+            })()}
           </Container>
         </section>
       </div>
+    </div>
+  );
+}
+
+function EmptyState({
+  title = "Nothing to see here right now",
+  description = "No projects have been added under this category yet. Projects published via the Admin Dashboard will appear here.",
+  onClear,
+}: {
+  title?: string;
+  description?: string;
+  onClear?: () => void;
+}) {
+  return (
+    <div className="mt-8 rounded-xl border border-dashed border-[#cbd5e1] bg-white/70 px-6 py-14 text-center">
+      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#f1f5f9] text-[#64748b]">
+        <FolderOpen className="h-6 w-6 text-[#94a3b8]" />
+      </div>
+      <h3 className="mt-3 text-[16px] font-semibold text-[#1e293b]">{title}</h3>
+      <p className="mx-auto mt-1 max-w-md text-[13.5px] leading-relaxed text-[#64748b]">
+        {description}
+      </p>
+      {onClear && (
+        <button
+          type="button"
+          onClick={onClear}
+          className="mt-4 inline-flex items-center rounded-md bg-[#1067ab] px-4 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-[#0c4e83]"
+        >
+          Clear Filter & View All
+        </button>
+      )}
     </div>
   );
 }

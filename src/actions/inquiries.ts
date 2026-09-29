@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { contactFormSchema, type ContactFormInput } from "@/lib/validations/contact";
+import { sendContactInquiryNotificationEmail } from "@/lib/email";
 import type { ActionResult } from "@/types";
 
 async function requireUser() {
@@ -42,6 +43,21 @@ export async function submitInquiryAction(
   if (error) {
     console.error("Error inserting inquiry:", error);
     return { success: false, error: error.message };
+  }
+
+  // Trigger email notification to info@bluechiptechno.com
+  try {
+    await sendContactInquiryNotificationEmail({
+      name: input.name,
+      company_name: input.company_name,
+      email: input.email,
+      phone: input.phone,
+      service: input.service,
+      location: input.location,
+      message: input.message,
+    });
+  } catch (emailErr) {
+    console.error("[Inquiry Email Notification Error]:", emailErr);
   }
 
   revalidatePath("/admin");

@@ -258,7 +258,7 @@ export interface AboutStat {
 }
 
 export const ABOUT_STATS: AboutStat[] = [
-  { id: "1", label: "years of experience", value: "20+" },
+  { id: "1", label: "years of experience", value: "30+" },
   { id: "2", label: "major projects", value: "100+" },
   { id: "3", label: "nationwide presence", value: "Pan-India" },
   { id: "4", label: "skilled professionals", value: "350+" },

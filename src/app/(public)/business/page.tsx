@@ -21,238 +21,31 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-const CURATED_BUSINESS_PROJECTS: BusinessProjectItem[] = [
-  // ─── 1. Water & Solid Waste Management ──────────────────────────────
-  {
-    id: "water-1",
-    title: "Laying of RCC Hume Pipes for Industrial Project",
-    slug: "laying-of-rcc-hume-pipes",
-    category: "water",
-    subcategoryTag: "WATER & WASTE MANAGEMENT",
-    imageUrl: "/home/projects/oil.webp",
-    location: "Dahej, Gujarat",
-    year: 2023,
-  },
-  {
-    id: "water-2",
-    title: "Construction, Supply & Laying of M30 Grade RCC Manhole",
-    slug: "construction-supply-laying-of-m30",
-    category: "water",
-    subcategoryTag: "WATER & WASTE MANAGEMENT",
-    imageUrl: "/home/projects/commercialbuilding_sgcci.webp",
-    location: "Surat, Gujarat",
-    year: 2022,
-  },
-  {
-    id: "water-3",
-    title: "Civil Work for Construction of RCC Gutter",
-    slug: "civil-work-for-construction-of-rcc",
-    category: "water",
-    subcategoryTag: "WATER & WASTE MANAGEMENT",
-    imageUrl: "/home/projects/home-project-oil.webp",
-    location: "Bharuch, Gujarat",
-    year: 2021,
-  },
-  {
-    id: "water-4",
-    title: "Manufacturing Utility Corridor & Effluent Treatment",
-    slug: "manufacturing-utility-corridor",
-    category: "water",
-    subcategoryTag: "WATER & WASTE MANAGEMENT",
-    imageUrl: "/home/projects/power-plant.webp",
-    location: "Bharuch, Gujarat",
-    year: 2012,
-  },
-
-  // ─── 2. Civil Construction (Matches Image 3) ────────────────────────
-  {
-    id: "civil-1",
-    title: "One Indiabulls Park Corporate Campus",
-    slug: "one-indiabulls-park",
-    category: "civil",
-    subcategoryTag: "BUILDING CONSTRUCTION",
-    imageUrl: "/home/projects/school.webp",
-    location: "Mumbai, Maharashtra",
-    year: 2021,
-  },
-  {
-    id: "civil-2",
-    title: "Surat Diamond Association Trade Center",
-    slug: "surat-diamond-association",
-    category: "civil",
-    subcategoryTag: "BUILDING CONSTRUCTION",
-    imageUrl: "/home/projects/commercialbuilding_sgcci.webp",
-    location: "Surat, Gujarat",
-    year: 2025,
-  },
-  {
-    id: "civil-3",
-    title: "Civil & Structural Work for 400kV Switch Yard (5x800 MW TPS)",
-    slug: "civil-structural-architectural-work-for",
-    category: "civil",
-    subcategoryTag: "INDUSTRIAL CONSTRUCTION",
-    imageUrl: "/home/projects/oil.webp",
-    location: "Yadadri, Telangana",
-    year: 2022,
-  },
-  {
-    id: "civil-4",
-    title: "Institutional Academic Complex & Deep Piling Block",
-    slug: "institutional-academic-block",
-    category: "civil",
-    subcategoryTag: "PILING",
-    imageUrl: "/home/projects/home-project-airport.webp",
-    location: "Pune, Maharashtra",
-    year: 2023,
-  },
-  {
-    id: "civil-5",
-    title: "Rigid Cement Concrete (RCC) Road Using Sensor Paver",
-    slug: "rigid-cement-concrete-rcc-road-construction",
-    category: "civil",
-    subcategoryTag: "ROAD",
-    imageUrl: "/home/projects/PEB_kaviish_m1.webp",
-    location: "Hazira, Gujarat",
-    year: 2024,
-  },
-  {
-    id: "civil-6",
-    title: "Hotel Leela Luxury Towers & Elevated Reservoir Tanks",
-    slug: "hotel-leela",
-    category: "civil",
-    subcategoryTag: "ELEVATED WATER TANKS",
-    imageUrl: "/home/projects/residential.webp",
-    location: "Gandhinagar, Gujarat",
-    year: 2017,
-  },
-
-  // ─── 3. Mechanical Works ─────────────────────────────────────────────
-  {
-    id: "mech-1",
-    title: "EPC Pre-Engineered Building (PEB) Structure with Metal Roofing",
-    slug: "epc-pre-engineered-building-peb-structure-with",
-    category: "mechanical",
-    subcategoryTag: "PEB WAVE TYPE STRUCTURES",
-    imageUrl: "/home/projects/PEB_kaviish_m1.webp",
-    location: "Surat, Gujarat",
-    year: 2023,
-  },
-  {
-    id: "mech-2",
-    title: "Industrial Ventilation Louvers & Steel Innovation Center",
-    slug: "steel-innovation-center",
-    category: "mechanical",
-    subcategoryTag: "LOUVERS",
-    imageUrl: "/home/projects/facade.webp",
-    location: "Vadodara, Gujarat",
-    year: 2019,
-  },
-  {
-    id: "mech-3",
-    title: "High-Tensile Standing Seam Metal Roofing & Decking",
-    slug: "metal-roofing",
-    category: "mechanical",
-    subcategoryTag: "METAL SHEETS",
-    imageUrl: "/home/projects/power-plant.webp",
-    location: "Dahej, Gujarat",
-    year: 2022,
-  },
-  {
-    id: "mech-4",
-    title: "Smart Logistics Hub & Heavy Pre-Engineered Warehouse",
-    slug: "smart-logistics-hub",
-    category: "mechanical",
-    subcategoryTag: "PEB WAVE TYPE STRUCTURES",
-    imageUrl: "/home/projects/oil.webp",
-    location: "Nagpur, Maharashtra",
-    year: 2024,
-  },
-
-  // ─── 4. Facade Works ─────────────────────────────────────────────────
-  {
-    id: "facade-1",
-    title: "Facade Design & Execution for Airspace Above Gandhinagar Station",
-    slug: "facade-design-execution-for-airspace-gandhinagar",
-    category: "facade",
-    subcategoryTag: "STRUCTURAL GLAZING",
-    imageUrl: "/home/projects/facade.webp",
-    location: "Gandhinagar, Gujarat",
-    year: 2023,
-  },
-  {
-    id: "facade-2",
-    title: "Comprehensive Facade & Architectural Envelope (Indiabulls)",
-    slug: "comprehensive-facade-interior-works-indiabulls",
-    category: "facade",
-    subcategoryTag: "GLASS CLADDING",
-    imageUrl: "/home/projects/school.webp",
-    location: "Mumbai, Maharashtra",
-    year: 2021,
-  },
-  {
-    id: "facade-3",
-    title: "Specialized Facade & Architectural Metal Cladding at Airport",
-    slug: "specialized-epc-work-civil-mechanical-porbandar",
-    category: "facade",
-    subcategoryTag: "METAL CLADDING",
-    imageUrl: "/home/projects/home-project-airport.webp",
-    location: "Porbandar, Gujarat",
-    year: 2024,
-  },
-  {
-    id: "facade-4",
-    title: "Commercial Facade Engineering & Exterior Cladding",
-    slug: "facade-work-for-big-bazaar",
-    category: "facade",
-    subcategoryTag: "ACP",
-    imageUrl: "/home/projects/commercialbuilding_sgcci.webp",
-    location: "Surat, Gujarat",
-    year: 2020,
-  },
-  {
-    id: "facade-5",
-    title: "Hotel Leela Balustrades, SS Railing & Lift Glazing",
-    slug: "hotel-leela",
-    category: "facade",
-    subcategoryTag: "SS RAILING",
-    imageUrl: "/home/projects/residential.webp",
-    location: "Gandhinagar, Gujarat",
-    year: 2017,
-  },
-  {
-    id: "facade-6",
-    title: "Surat Diamond House Spider Glazing & GRC Feature Walls",
-    slug: "surat-diamond-house",
-    category: "facade",
-    subcategoryTag: "SPIDER GLAZING",
-    imageUrl: "/home/projects/home-project-oil.webp",
-    location: "Surat, Gujarat",
-    year: 2023,
-  },
-];
-
 const BUSINESS_CATEGORY_ID = "9de32e89-3987-40e9-ab53-12b5b78c0905";
 
 const FACADE_SLUGS = new Set([
   "stone-cladding",
-  "glass-cladding",
-  "grc",
-  "facade-innovation",
   "metal-cladding",
   "structural-glazing",
   "spider-glazing",
   "acp",
-  "lift-glazing",
+  "grc",
   "ss-railing",
+  "louvers",
+  "facade-innovation",
   "facade-engineering",
+  // Legacy slugs for backward compatibility:
+  "glass-cladding",
+  "lift-glazing",
 ]);
 
 const MECHANICAL_SLUGS = new Set([
+  "wave-type-structures",
+  "peb-industrial-construction",
   "peb-wave-type-structures",
-  "louvers",
-  "metal-sheets",
-  "mechanical-works",
   "peb-structures-shades",
+  "mechanical-works",
+  "metal-sheets",
 ]);
 
 const WATER_SLUGS = new Set([
@@ -260,6 +53,7 @@ const WATER_SLUGS = new Set([
   "water-waste-management",
   "etp-stp",
   "water",
+  "drainage-systems",
 ]);
 
 const CIVIL_SLUGS = new Set([
@@ -273,7 +67,6 @@ const CIVIL_SLUGS = new Set([
   "civil-construction",
   "epc",
   "piling-foundations",
-  "drainage-systems",
   "roads",
   "rigid-pavement-dlc-pqc",
   "flexible-pavement-bitumen",
@@ -285,6 +78,7 @@ const CIVIL_SLUGS = new Set([
 ]);
 
 const TAG_LOOKUP: Record<string, string> = {
+  // Civil
   piling: "PILING",
   "piling-foundations": "PILING",
   road: "ROAD",
@@ -300,22 +94,30 @@ const TAG_LOOKUP: Record<string, string> = {
   "water-supply-networks": "WATER NETWORK",
   "elevated-water-tanks": "ELEVATED WATER TANKS",
   "civil-construction": "BUILDING CONSTRUCTION",
-  "peb-wave-type-structures": "PEB WAVE TYPE STRUCTURES",
-  "peb-structures-shades": "PEB WAVE TYPE STRUCTURES",
-  louvers: "LOUVERS",
-  "metal-sheets": "METAL SHEETS",
-  "mechanical-works": "PEB WAVE TYPE STRUCTURES",
+
+  // Mechanical (Wave Type Structures & PEB Industrial Construction only)
+  "wave-type-structures": "WAVE TYPE STRUCTURES",
+  "peb-industrial-construction": "PEB INDUSTRIAL CONSTRUCTION",
+  "peb-wave-type-structures": "WAVE TYPE STRUCTURES",
+  "peb-structures-shades": "PEB INDUSTRIAL CONSTRUCTION",
+  "mechanical-works": "WAVE TYPE STRUCTURES",
+  "metal-sheets": "WAVE TYPE STRUCTURES",
+
+  // Facade (Louvers added; Glass Cladding & Lift Glazing removed/aliased)
   "stone-cladding": "STONE CLADDING",
-  "glass-cladding": "GLASS CLADDING",
-  grc: "GRC",
-  "facade-innovation": "INNOVATION",
   "metal-cladding": "METAL CLADDING",
   "structural-glazing": "STRUCTURAL GLAZING",
   "spider-glazing": "SPIDER GLAZING",
   acp: "ACP",
-  "lift-glazing": "LIFT GLAZING",
+  grc: "GRC",
   "ss-railing": "SS RAILING",
+  louvers: "LOUVERS",
+  "facade-innovation": "INNOVATION",
   "facade-engineering": "STRUCTURAL GLAZING",
+  "glass-cladding": "STONE CLADDING",
+  "lift-glazing": "STRUCTURAL GLAZING",
+
+  // Water
   "water-and-solid-waste-management": "WATER & WASTE MANAGEMENT",
   "water-waste-management": "WATER & WASTE MANAGEMENT",
   "etp-stp": "WATER & WASTE MANAGEMENT",
@@ -334,12 +136,25 @@ function mapDbProjectToBusinessItem(dbP: {
   const clientSlug = (dbP.client || "").toLowerCase();
 
   if (FACADE_SLUGS.has(clientSlug)) {
+    let subcategoryTag = TAG_LOOKUP[clientSlug] || "STRUCTURAL GLAZING";
+    if (clientSlug === "facade-engineering" && dbP.title) {
+      const lower = dbP.title.toLowerCase();
+      if (lower.includes("louver")) subcategoryTag = "LOUVERS";
+      else if (lower.includes("spider")) subcategoryTag = "SPIDER GLAZING";
+      else if (lower.includes("stone")) subcategoryTag = "STONE CLADDING";
+      else if (lower.includes("metal cladding")) subcategoryTag = "METAL CLADDING";
+      else if (lower.includes("acp")) subcategoryTag = "ACP";
+      else if (lower.includes("grc")) subcategoryTag = "GRC";
+      else if (lower.includes("railing")) subcategoryTag = "SS RAILING";
+      else if (lower.includes("structural")) subcategoryTag = "STRUCTURAL GLAZING";
+    }
+
     return {
       id: dbP.id,
       title: dbP.title,
       slug: dbP.slug,
       category: "facade",
-      subcategoryTag: TAG_LOOKUP[clientSlug] || "STRUCTURAL GLAZING",
+      subcategoryTag,
       imageUrl: dbP.thumbnail_url || "/home/projects/facade.webp",
       location: dbP.location || undefined,
       year: dbP.year || undefined,
@@ -352,7 +167,7 @@ function mapDbProjectToBusinessItem(dbP: {
       title: dbP.title,
       slug: dbP.slug,
       category: "mechanical",
-      subcategoryTag: TAG_LOOKUP[clientSlug] || "PEB WAVE TYPE STRUCTURES",
+      subcategoryTag: TAG_LOOKUP[clientSlug] || "WAVE TYPE STRUCTURES",
       imageUrl: dbP.thumbnail_url || "/home/projects/power-plant.webp",
       location: dbP.location || undefined,
       year: dbP.year || undefined,
@@ -391,7 +206,7 @@ function mapDbProjectToBusinessItem(dbP: {
 export default async function BusinessPage() {
   const supabase = await createClient();
 
-  let projects = CURATED_BUSINESS_PROJECTS;
+  const businessProjects: BusinessProjectItem[] = [];
 
   try {
     const { data: dbProjects } = await supabase
@@ -401,50 +216,16 @@ export default async function BusinessPage() {
       .order("year", { ascending: false });
 
     if (dbProjects && dbProjects.length > 0) {
-      // Enhance curated projects with any live DB records where slugs match
-      const dbMap = new Map(dbProjects.map((p) => [p.slug, p]));
-
-      projects = CURATED_BUSINESS_PROJECTS.map((item) => {
-        const dbMatch = dbMap.get(item.slug);
-        if (dbMatch) {
-          return {
-            ...item,
-            title: dbMatch.title || item.title,
-            imageUrl: dbMatch.thumbnail_url || item.imageUrl,
-            location: dbMatch.location || item.location,
-            year: dbMatch.year || item.year,
-          };
-        }
-        return item;
-      });
-
-      // Dynamically append newly uploaded database projects not in curated list
-      const curatedSlugs = new Set(CURATED_BUSINESS_PROJECTS.map((p) => p.slug));
-      const newProjects: BusinessProjectItem[] = [];
-
       for (const dbP of dbProjects) {
-        if (curatedSlugs.has(dbP.slug)) continue;
-
-        const isBusiness =
-          dbP.category_id === BUSINESS_CATEGORY_ID ||
-          FACADE_SLUGS.has(dbP.client || "") ||
-          MECHANICAL_SLUGS.has(dbP.client || "") ||
-          WATER_SLUGS.has(dbP.client || "") ||
-          CIVIL_SLUGS.has(dbP.client || "");
-
-        if (isBusiness) {
-          const item = mapDbProjectToBusinessItem(dbP);
-          if (item) {
-            newProjects.push(item);
-          }
+        const item = mapDbProjectToBusinessItem(dbP);
+        if (item) {
+          businessProjects.push(item);
         }
       }
-
-      projects = [...projects, ...newProjects];
     }
   } catch (error) {
     console.error("Error loading business projects from database:", error);
   }
 
-  return <BusinessPageContent projects={projects} />;
+  return <BusinessPageContent projects={businessProjects} />;
 }

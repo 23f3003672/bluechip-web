@@ -9,9 +9,9 @@
 /* ─── Theme Tokens ──────────────────────────────────────────────── */
 @theme inline {
   /* Font */
-  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "Poppins", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", monospace;
+  --font-sans: var(--font-sans), "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-sans), "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
 
   /* Brand colors — map to CSS vars below */
   --color-background: var(--background);

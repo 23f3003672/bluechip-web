@@ -4,8 +4,8 @@ export function DeliverExcellenceSection() {
   const stats = [
     {
       label: "years of experience",
-      value: "20+",
-      numericValue: 20,
+      value: "30+",
+      numericValue: 30,
       suffix: "+",
       id: "experience",
     },

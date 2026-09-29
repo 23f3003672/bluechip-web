@@ -198,11 +198,11 @@ export function InsidersAdminSection({
 
       {/* CREATE DIALOG */}
       <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>New B&apos;CHIP Insiders Feature</DialogTitle>
-            <DialogDescription>
-              Add a moment, behind-the-scenes view, or milestone to The People or The Experience galleries.
+        <DialogContent className="flex flex-col h-[90vh] max-h-[92vh] sm:max-w-3xl lg:max-w-4xl p-0 gap-0 overflow-hidden">
+          <DialogHeader className="shrink-0 px-6 sm:px-8 py-5 border-b border-border/80 bg-muted/20">
+            <DialogTitle className="text-xl font-bold tracking-tight text-foreground">New B&apos;CHIP Insiders Feature</DialogTitle>
+            <DialogDescription className="text-xs sm:text-sm text-muted-foreground">
+              Add a new feature to the gallery.
             </DialogDescription>
           </DialogHeader>
 
@@ -222,11 +222,11 @@ export function InsidersAdminSection({
           if (!open) setEditingItem(null);
         }}
       >
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Edit B&apos;CHIP Insiders Feature</DialogTitle>
-            <DialogDescription>
-              Modify feature content, category, subcategory section, or media.
+        <DialogContent className="flex flex-col h-[90vh] max-h-[92vh] sm:max-w-3xl lg:max-w-4xl p-0 gap-0 overflow-hidden">
+          <DialogHeader className="shrink-0 px-6 sm:px-8 py-5 border-b border-border/80 bg-muted/20">
+            <DialogTitle className="text-xl font-bold tracking-tight text-foreground">Edit B&apos;CHIP Insiders Feature</DialogTitle>
+            <DialogDescription className="text-xs sm:text-sm text-muted-foreground">
+              Update feature details and media.
             </DialogDescription>
           </DialogHeader>
 

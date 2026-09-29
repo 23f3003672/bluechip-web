@@ -5,6 +5,15 @@ import { useRouter } from "next/navigation";
 import { useForm, useWatch, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
+import {
+  Image as ImageIcon,
+  Search,
+  X,
+  Check,
+  Trash2,
+  Link as LinkIcon,
+  ExternalLink,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -47,13 +56,19 @@ function VisionaryForm({
   submitLabel,
   isSubmitting,
   onSubmit,
+  onCancel,
 }: {
   initialValues?: VisionaryFormValues;
   mediaItems: Media[];
   submitLabel: string;
   isSubmitting: boolean;
   onSubmit: (values: VisionaryFormValues) => Promise<void>;
+  onCancel?: () => void;
 }) {
+  const [isPickerOpen, setIsPickerOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showManualInput, setShowManualInput] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -72,8 +87,26 @@ function VisionaryForm({
 
   const imageUrlValue = useWatch({ control, name: "image_url" });
 
+  const filteredMedia = searchQuery.trim()
+    ? mediaItems.filter(
+        (m) =>
+          m.filename.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (m.alt_text && m.alt_text.toLowerCase().includes(searchQuery.toLowerCase()))
+      )
+    : mediaItems;
+
+  const getMediaName = (url: string) => {
+    const match = mediaItems.find((m) => m.url === url);
+    if (match) return match.filename;
+    try {
+      return decodeURIComponent(new URL(url).pathname.split("/").pop() || url);
+    } catch {
+      return url;
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-2">
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-1.5">
           <Label>Name</Label>
@@ -87,31 +120,197 @@ function VisionaryForm({
         </div>
       </div>
 
-      <div className="space-y-1.5">
-        <Label>Image URL</Label>
-        <Input {...register("image_url")} />
-        {errors.image_url && <p className="text-xs text-destructive">{errors.image_url.message}</p>}
-        
-        <div className="rounded-md border border-border bg-muted/20 p-2">
-          <p className="mb-1 text-xs font-medium text-muted-foreground">Pick from uploaded media</p>
-          <select
-            value={imageUrlValue ?? ""}
-            onChange={(event) =>
-              setValue("image_url", event.target.value, {
-                shouldDirty: true,
-                shouldTouch: true,
-              })
-            }
-            className="h-8 w-full rounded-md border border-input bg-background px-2 text-sm"
+      {/* Visual Photograph Section */}
+      <div className="space-y-2">
+        <div className="flex items-center justify-between">
+          <Label>Photograph</Label>
+          <button
+            type="button"
+            onClick={() => setShowManualInput(!showManualInput)}
+            className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground hover:underline"
           >
-            <option value="">Select image URL</option>
-            {mediaItems.map((item) => (
-              <option key={item.id} value={item.url}>
-                {item.filename}
-              </option>
-            ))}
-          </select>
+            <LinkIcon className="size-3" />
+            {showManualInput ? "Hide Manual URL" : "Enter URL manually"}
+          </button>
         </div>
+
+        {imageUrlValue ? (
+          <div className="flex items-center gap-4 rounded-lg border border-border bg-muted/20 p-3">
+            <div className="relative size-16 shrink-0 overflow-hidden rounded-md border border-border bg-black/5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={imageUrlValue}
+                alt="Selected photograph"
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="truncate text-xs font-medium text-foreground">
+                {getMediaName(imageUrlValue)}
+              </p>
+              <p className="truncate font-mono text-[11px] text-muted-foreground" title={imageUrlValue}>
+                {imageUrlValue}
+              </p>
+              <div className="mt-2 flex items-center gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsPickerOpen(!isPickerOpen)}
+                  className="h-7 text-xs"
+                >
+                  <ImageIcon className="size-3 mr-1" />
+                  {isPickerOpen ? "Close Picker" : "Change Image"}
+                </Button>
+                <a
+                  href={imageUrlValue}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex h-7 items-center gap-1 rounded-md border border-input bg-background px-2 text-xs text-muted-foreground hover:text-foreground"
+                >
+                  <ExternalLink className="size-3" />
+                  Preview
+                </a>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() =>
+                    setValue("image_url", "", {
+                      shouldDirty: true,
+                      shouldTouch: true,
+                    })
+                  }
+                  className="h-7 text-xs text-destructive hover:bg-destructive/10"
+                >
+                  <Trash2 className="size-3 mr-1" />
+                  Remove
+                </Button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="flex items-center justify-between rounded-lg border border-dashed border-border p-3.5">
+            <div className="flex items-center gap-2.5">
+              <div className="flex size-9 items-center justify-center rounded-full bg-muted text-muted-foreground">
+                <ImageIcon className="size-4" />
+              </div>
+              <p className="text-xs text-muted-foreground">No photograph selected</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setIsPickerOpen(true)}
+                className="h-8 gap-1.5 text-xs font-medium"
+              >
+                <ImageIcon className="size-3.5" />
+                Select Image
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* Visual Media Picker Drawer */}
+        {isPickerOpen && (
+          <div className="rounded-lg border border-border bg-card p-3 shadow-xs space-y-3">
+            <div className="flex items-center justify-between gap-2 border-b border-border/60 pb-2">
+              <div className="relative flex-1">
+                <Search className="pointer-events-none absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  placeholder="Search image filename..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="h-7 pl-8 text-xs"
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery("")}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="size-3" />
+                  </button>
+                )}
+              </div>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsPickerOpen(false)}
+                className="h-7 px-2 text-xs"
+              >
+                <X className="size-3.5" />
+              </Button>
+            </div>
+
+            <div className="max-h-52 overflow-y-auto">
+              {filteredMedia.length > 0 ? (
+                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
+                  {filteredMedia.map((item) => {
+                    const isSelected = imageUrlValue === item.url;
+                    return (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => {
+                          setValue("image_url", item.url, {
+                            shouldDirty: true,
+                            shouldTouch: true,
+                          });
+                          setIsPickerOpen(false);
+                        }}
+                        className={`group relative flex flex-col overflow-hidden rounded-md border text-left transition-all ${
+                          isSelected
+                            ? "border-primary ring-2 ring-primary bg-primary/5"
+                            : "border-border/80 bg-background hover:border-primary/60"
+                        }`}
+                      >
+                        <div className="aspect-square w-full overflow-hidden bg-black/5 relative">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={item.url}
+                            alt={item.filename}
+                            loading="lazy"
+                            className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
+                          />
+                          {isSelected && (
+                            <div className="absolute top-1 right-1 flex size-4 items-center justify-center rounded-full bg-primary text-white shadow-xs">
+                              <Check className="size-2.5 stroke-[3]" />
+                            </div>
+                          )}
+                        </div>
+                        <div className="p-1 bg-background border-t border-border/40">
+                          <p className="truncate text-[10px] text-foreground" title={item.filename}>
+                            {item.filename}
+                          </p>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="py-6 text-center text-xs text-muted-foreground">
+                  No images found
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Manual URL Input */}
+        {showManualInput && (
+          <div className="pt-1">
+            <Input
+              placeholder="Paste image URL here"
+              className="h-8 text-xs font-mono"
+              {...register("image_url")}
+            />
+          </div>
+        )}
+
+        {errors.image_url && <p className="text-xs text-destructive">{errors.image_url.message}</p>}
       </div>
 
       <div className="space-y-1.5">
@@ -119,8 +318,15 @@ function VisionaryForm({
         <Textarea rows={4} {...register("bio")} />
       </div>
 
-      <div className="flex justify-end">
-        <Button type="submit" disabled={isSubmitting}>{isSubmitting ? "Saving..." : submitLabel}</Button>
+      <div className="flex justify-end gap-2 pt-2">
+        {onCancel && (
+          <Button type="button" variant="outline" onClick={onCancel} disabled={isSubmitting}>
+            Cancel
+          </Button>
+        )}
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Saving..." : submitLabel}
+        </Button>
       </div>
     </form>
   );
@@ -216,6 +422,7 @@ export function VisionariesAdminModule({
             mediaItems={mediaItems}
             submitLabel="Create"
             isSubmitting={isPending}
+            onCancel={() => setCreateOpen(false)}
             onSubmit={async (values) => {
               startTransition(async () => {
                 const result = await createVisionaryAction(values);
@@ -243,6 +450,7 @@ export function VisionariesAdminModule({
               mediaItems={mediaItems}
               submitLabel="Save Changes"
               isSubmitting={isPending}
+              onCancel={() => setEditing(null)}
               initialValues={{
                 name: editing.name,
                 role: editing.designation,

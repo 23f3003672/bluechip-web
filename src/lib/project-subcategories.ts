@@ -37,9 +37,8 @@ export const NAVBAR_MEGA_MENU: Record<MegaMenuKey, MegaMenuColumn[]> = {
       title: "Mechanical Works",
       href: "/business#mechanical-works",
       items: [
-        { label: "PEB Wave Type Structures", slug: "peb-wave-type-structures" },
-        { label: "Louvers", slug: "louvers" },
-        { label: "Metal Sheets", slug: "metal-sheets" },
+        { label: "Wave Type Structures", slug: "wave-type-structures" },
+        { label: "PEB Industrial Construction", slug: "peb-industrial-construction" },
       ],
     },
     {
@@ -47,15 +46,14 @@ export const NAVBAR_MEGA_MENU: Record<MegaMenuKey, MegaMenuColumn[]> = {
       href: "/business#facade-works",
       items: [
         { label: "Stone Cladding", slug: "stone-cladding" },
-        { label: "Glass Cladding", slug: "glass-cladding" },
-        { label: "GRC", slug: "grc" },
-        { label: "Innovation", slug: "facade-innovation" },
         { label: "Metal Cladding", slug: "metal-cladding" },
         { label: "Structural Glazing", slug: "structural-glazing" },
         { label: "Spider Glazing", slug: "spider-glazing" },
         { label: "ACP", slug: "acp" },
-        { label: "Lift Glazing", slug: "lift-glazing" },
+        { label: "GRC", slug: "grc" },
         { label: "SS Railing", slug: "ss-railing" },
+        { label: "Louvers", slug: "louvers" },
+        { label: "Innovation", slug: "facade-innovation" },
       ],
     },
     {
@@ -183,6 +181,10 @@ const LEGACY_PROJECT_SUBCATEGORIES: ProjectSubcategory[] = [
   { slug: "sewage-networks", label: "Sewage Networks", megaKey: "business", columnTitle: "Civil Construction" },
   { slug: "water-supply-networks", label: "Water Supply Networks", megaKey: "business", columnTitle: "Civil Construction" },
   { slug: "cable-trenches", label: "Cable Trenches", megaKey: "business", columnTitle: "Civil Construction" },
+  { slug: "peb-wave-type-structures", label: "Wave Type Structures", megaKey: "business", columnTitle: "Mechanical Works" },
+  { slug: "metal-sheets", label: "Metal Sheets", megaKey: "business", columnTitle: "Mechanical Works" },
+  { slug: "glass-cladding", label: "Glass Cladding", megaKey: "business", columnTitle: "Facade Works" },
+  { slug: "lift-glazing", label: "Lift Glazing", megaKey: "business", columnTitle: "Facade Works" },
 ];
 
 export const PRIMARY_PROJECT_SUBCATEGORIES: ProjectSubcategory[] = Object.entries(NAVBAR_MEGA_MENU).flatMap(

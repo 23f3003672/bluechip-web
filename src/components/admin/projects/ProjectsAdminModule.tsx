@@ -122,10 +122,10 @@ export function ProjectsAdminModule({
       </div>
 
       <Dialog open={createOpen} onOpenChange={setCreateOpen}>
-        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-3xl">
-          <DialogHeader>
-            <DialogTitle>Create Project</DialogTitle>
-            <DialogDescription>Add a new project record.</DialogDescription>
+        <DialogContent className="flex flex-col h-[90vh] max-h-[92vh] sm:max-w-4xl lg:max-w-5xl p-0 gap-0 overflow-hidden">
+          <DialogHeader className="shrink-0 px-6 sm:px-8 py-5 border-b border-border/80 bg-muted/20">
+            <DialogTitle className="text-xl font-bold tracking-tight text-foreground">Create Project</DialogTitle>
+            <DialogDescription className="text-xs sm:text-sm text-muted-foreground">Add a new project.</DialogDescription>
           </DialogHeader>
           <ProjectForm
             categories={categories}
@@ -133,15 +133,16 @@ export function ProjectsAdminModule({
             isSubmitting={isPending}
             submitLabel="Create Project"
             onSubmit={handleCreate}
+            onCancel={() => setCreateOpen(false)}
           />
         </DialogContent>
       </Dialog>
 
       <Dialog open={Boolean(editingProject)} onOpenChange={(open) => !open && setEditingProject(null)}>
-        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-3xl">
-          <DialogHeader>
-            <DialogTitle>Edit Project</DialogTitle>
-            <DialogDescription>Update selected project details.</DialogDescription>
+        <DialogContent className="flex flex-col h-[90vh] max-h-[92vh] sm:max-w-4xl lg:max-w-5xl p-0 gap-0 overflow-hidden">
+          <DialogHeader className="shrink-0 px-6 sm:px-8 py-5 border-b border-border/80 bg-muted/20">
+            <DialogTitle className="text-xl font-bold tracking-tight text-foreground">Edit Project</DialogTitle>
+            <DialogDescription className="text-xs sm:text-sm text-muted-foreground">Update project details.</DialogDescription>
           </DialogHeader>
           {editingProject && (
             <ProjectForm
@@ -163,6 +164,7 @@ export function ProjectsAdminModule({
                 featured: editingProject.featured,
               }}
               onSubmit={handleUpdate}
+              onCancel={() => setEditingProject(null)}
             />
           )}
         </DialogContent>

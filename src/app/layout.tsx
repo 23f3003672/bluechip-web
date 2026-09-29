@@ -1,16 +1,22 @@
 import type { Metadata, Viewport } from "next";
-import { Poppins } from "next/font/google";
+import { Poppins, Geist_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { PageTransitionWrapper } from "@/components/ui/page-transition-wrapper";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/lib/constants";
 import "./globals.css";
 
-/* ─── Font ───────────────────────────────────────────────────────── */
+/* ─── Fonts ──────────────────────────────────────────────────────── */
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
   variable: "--font-sans",
+  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -104,7 +110,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={poppins.variable} suppressHydrationWarning data-scroll-behavior="smooth">
+    <html lang="en" className={`${poppins.variable} ${geistMono.variable}`} suppressHydrationWarning data-scroll-behavior="smooth">
       <head>
         <JsonLd />
       </head>

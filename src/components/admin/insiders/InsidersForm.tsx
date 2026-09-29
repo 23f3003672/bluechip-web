@@ -1,25 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useForm, type Resolver } from "react-hook-form";
+import { useEffect, useMemo, useState } from "react";
+import { useForm, useWatch, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
+import {
+  Image as ImageIcon,
+  ExternalLink,
+  Link as LinkIcon,
+  Search,
+  Check,
+  X,
+  Trash2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { MediaSelector } from "../media/MediaSelector";
-import {
   insidersItemFormSchema,
   type InsidersItemFormValues,
 } from "@/lib/validations/insiders";
+import { slugify } from "@/lib/utils";
 import type { Media, InsidersItem } from "@/types";
 
 interface InsidersFormProps {
@@ -50,15 +51,6 @@ const SUBCATEGORIES_BY_CATEGORY: Record<
   ],
 };
 
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/[\s_-]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
 export function InsidersForm({
   initialValues,
   media,
@@ -67,13 +59,15 @@ export function InsidersForm({
   onCancel,
 }: InsidersFormProps) {
   const isEditing = Boolean(initialValues?.id);
-  const [imageMode, setImageMode] = useState<"library" | "url">("url");
+  const [isPickerOpen, setIsPickerOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showManualInput, setShowManualInput] = useState(false);
 
   const {
     register,
     handleSubmit,
     setValue,
-    watch,
+    control,
     formState: { errors },
   } = useForm<InsidersItemFormValues>({
     resolver: zodResolver(insidersItemFormSchema) as Resolver<InsidersItemFormValues>,
@@ -91,12 +85,12 @@ export function InsidersForm({
     },
   });
 
-  const selectedCategory = (watch("category") ?? "the-people") as
+  const selectedCategory = (useWatch({ control, name: "category" }) ?? "the-people") as
     | "the-people"
     | "the-experience";
-  const selectedSubcategory = watch("subcategory");
-  const imageUrl = watch("image_url");
-  const currentTitle = watch("title");
+  const selectedSubcategory = useWatch({ control, name: "subcategory" });
+  const imageUrlValue = useWatch({ control, name: "image_url" });
+  const currentTitle = useWatch({ control, name: "title" });
 
   // Auto-slugify when creating new item
   useEffect(() => {
@@ -105,7 +99,7 @@ export function InsidersForm({
     }
   }, [currentTitle, isEditing, setValue]);
 
-  // Adjust subcategory when category changes if current subcategory is invalid for new category
+  // Adjust subcategory when category changes
   useEffect(() => {
     const validSubcats = SUBCATEGORIES_BY_CATEGORY[selectedCategory] ?? [];
     const isValid = validSubcats.some((sub) => sub.value === selectedSubcategory);
@@ -114,252 +108,382 @@ export function InsidersForm({
     }
   }, [selectedCategory, selectedSubcategory, setValue]);
 
+  const filteredMedia = useMemo(() => {
+    if (!searchQuery.trim()) return media;
+    const q = searchQuery.toLowerCase();
+    return media.filter(
+      (m) =>
+        m.filename.toLowerCase().includes(q) ||
+        (m.alt_text && m.alt_text.toLowerCase().includes(q))
+    );
+  }, [media, searchQuery]);
+
+  const getMediaName = (url: string) => {
+    const match = media.find((m) => m.url === url);
+    if (match) return match.filename;
+    try {
+      return decodeURIComponent(new URL(url).pathname.split("/").pop() || url);
+    } catch {
+      return url;
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      {/* Category & Subcategory */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="space-y-2">
-          <Label htmlFor="category" className="text-sm font-semibold">
-            Category <span className="text-red-500">*</span>
-          </Label>
-          <Select
-            value={selectedCategory}
-            onValueChange={(val) => {
-              if (val) {
-                setValue("category", val as "the-people" | "the-experience", {
-                  shouldValidate: true,
-                });
-              }
-            }}
-          >
-            <SelectTrigger id="category">
-              <SelectValue placeholder="Select Category" />
-            </SelectTrigger>
-            <SelectContent>
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col flex-1 min-h-0 overflow-hidden">
+      {/* SCROLLABLE FORM BODY */}
+      <div className="flex-1 overflow-y-auto px-6 sm:px-8 py-5 space-y-5">
+        {/* Category & Subcategory */}
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="space-y-1.5">
+            <Label htmlFor="category">
+              Category <span className="text-destructive">*</span>
+            </Label>
+            <select
+              id="category"
+              {...register("category")}
+              className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm font-medium"
+            >
               {CATEGORY_OPTIONS.map((cat) => (
-                <SelectItem key={cat.value} value={cat.value}>
+                <option key={cat.value} value={cat.value}>
                   {cat.label}
-                </SelectItem>
+                </option>
               ))}
-            </SelectContent>
-          </Select>
-          {errors.category && (
-            <p className="text-xs text-red-500">{errors.category.message}</p>
-          )}
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="subcategory" className="text-sm font-semibold">
-            Subcategory (Section) <span className="text-red-500">*</span>
-          </Label>
-          <Select
-            value={selectedSubcategory}
-            onValueChange={(val) => {
-              if (val) {
-                setValue("subcategory", val as any, { shouldValidate: true });
-              }
-            }}
-          >
-            <SelectTrigger id="subcategory">
-              <SelectValue placeholder="Select Subcategory" />
-            </SelectTrigger>
-            <SelectContent>
-              {(SUBCATEGORIES_BY_CATEGORY[selectedCategory] ?? []).map((subcat) => (
-                <SelectItem key={subcat.value} value={subcat.value}>
-                  {subcat.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {errors.subcategory && (
-            <p className="text-xs text-red-500">{errors.subcategory.message}</p>
-          )}
-        </div>
-      </div>
-
-      {/* Title & Slug */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="space-y-2">
-          <Label htmlFor="title" className="text-sm font-semibold">
-            Title <span className="text-red-500">*</span>
-          </Label>
-          <Input
-            id="title"
-            placeholder="e.g. Strategic Annual Leadership Assembly"
-            {...register("title")}
-          />
-          {errors.title && (
-            <p className="text-xs text-red-500">{errors.title.message}</p>
-          )}
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="slug" className="text-sm font-semibold">
-            Slug <span className="text-red-500">*</span>
-          </Label>
-          <Input
-            id="slug"
-            placeholder="e.g. strategic-annual-leadership-assembly"
-            {...register("slug")}
-          />
-          {errors.slug && (
-            <p className="text-xs text-red-500">{errors.slug.message}</p>
-          )}
-        </div>
-      </div>
-
-      {/* Location & Year */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div className="space-y-2 sm:col-span-2">
-          <Label htmlFor="location" className="text-sm font-semibold">
-            Location
-          </Label>
-          <Input
-            id="location"
-            placeholder="e.g. Surat Headquarters or Dahej, Gujarat"
-            {...register("location")}
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="year" className="text-sm font-semibold">
-            Year
-          </Label>
-          <Input
-            id="year"
-            placeholder="e.g. 2025"
-            {...register("year")}
-          />
-        </div>
-      </div>
-
-      {/* Description */}
-      <div className="space-y-2">
-        <Label htmlFor="description" className="text-sm font-semibold">
-          Description / Caption
-        </Label>
-        <Textarea
-          id="description"
-          rows={3}
-          placeholder="Brief narrative highlighting the significance of this moment or perspective..."
-          {...register("description")}
-        />
-      </div>
-
-      {/* Image Selection */}
-      <div className="space-y-3 rounded-lg border border-border p-4 bg-muted/20">
-        <div className="flex items-center justify-between">
-          <Label className="text-sm font-semibold">
-            Feature Image <span className="text-red-500">*</span>
-          </Label>
-          <div className="flex gap-2 text-xs">
-            <button
-              type="button"
-              className={`px-2.5 py-1 rounded border ${
-                imageMode === "url"
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-background text-muted-foreground border-border"
-              }`}
-              onClick={() => setImageMode("url")}
-            >
-              Image URL / Path
-            </button>
-            <button
-              type="button"
-              className={`px-2.5 py-1 rounded border ${
-                imageMode === "library"
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-background text-muted-foreground border-border"
-              }`}
-              onClick={() => setImageMode("library")}
-            >
-              Media Library ({media.length})
-            </button>
-          </div>
-        </div>
-
-        {imageMode === "url" ? (
-          <div className="space-y-2">
-            <Input
-              placeholder="e.g. /about/about-mission-1.webp or https://..."
-              {...register("image_url")}
-            />
-            {errors.image_url && (
-              <p className="text-xs text-red-500">{errors.image_url.message}</p>
+            </select>
+            {errors.category && (
+              <p className="text-xs text-destructive">{errors.category.message}</p>
             )}
           </div>
-        ) : (
-          <div className="max-h-60 overflow-y-auto pr-1">
-            <MediaSelector
-              media={media}
-              value={media.find((m) => m.url === imageUrl)?.id}
-              onChange={(mediaId) => {
-                const item = media.find((m) => m.id === mediaId);
-                if (item) {
-                  setValue("image_url", item.url, { shouldValidate: true });
-                }
-              }}
-            />
-          </div>
-        )}
 
-        {/* Live Preview */}
-        {imageUrl && (
-          <div className="mt-3 flex items-center gap-4 rounded-md border border-border bg-background p-2">
-            <div className="relative h-16 w-24 overflow-hidden rounded bg-muted">
-              <Image
-                src={imageUrl}
-                alt="Preview"
-                fill
-                className="object-cover"
-                unoptimized
+          <div className="space-y-1.5">
+            <Label htmlFor="subcategory">
+              Subcategory <span className="text-destructive">*</span>
+            </Label>
+            <select
+              id="subcategory"
+              {...register("subcategory")}
+              className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm font-medium"
+            >
+              {(SUBCATEGORIES_BY_CATEGORY[selectedCategory] ?? []).map((subcat) => (
+                <option key={subcat.value} value={subcat.value}>
+                  {subcat.label}
+                </option>
+              ))}
+            </select>
+            {errors.subcategory && (
+              <p className="text-xs text-destructive">{errors.subcategory.message}</p>
+            )}
+          </div>
+        </div>
+
+        {/* Feature Story & Details */}
+        <div className="space-y-4 pt-2">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-1.5">
+              <Label htmlFor="title">
+                Title <span className="text-destructive">*</span>
+              </Label>
+              <Input
+                id="title"
+                className="h-10 text-sm font-medium"
+                {...register("title")}
+              />
+              {errors.title && (
+                <p className="text-xs text-destructive">{errors.title.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="slug">
+                Slug <span className="text-destructive">*</span>
+              </Label>
+              <Input
+                id="slug"
+                className="h-10 text-xs font-mono"
+                {...register("slug")}
+              />
+              {errors.slug && (
+                <p className="text-xs text-destructive">{errors.slug.message}</p>
+              )}
+            </div>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-1.5">
+              <Label htmlFor="location">
+                Location
+              </Label>
+              <Input
+                id="location"
+                className="h-10 text-sm"
+                {...register("location")}
               />
             </div>
-            <div className="flex-1 truncate text-xs text-muted-foreground">
-              <span className="font-medium text-foreground">Selected:</span> {imageUrl}
+
+            <div className="space-y-1.5">
+              <Label htmlFor="year">
+                Year / Date
+              </Label>
+              <Input
+                id="year"
+                className="h-10 text-sm font-medium"
+                {...register("year")}
+              />
             </div>
           </div>
-        )}
-      </div>
 
-      {/* Published & Sort Order */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
-        <div className="flex items-center gap-2">
-          <input
-            id="published"
-            type="checkbox"
-            className="h-4 w-4 rounded border-border text-primary focus:ring-primary"
-            {...register("published")}
-          />
-          <Label htmlFor="published" className="text-sm font-medium cursor-pointer">
-            Published (visible on public site)
-          </Label>
+          <div className="space-y-1.5">
+            <Label htmlFor="description">
+              Description
+            </Label>
+            <Textarea
+              id="description"
+              rows={3}
+              className="resize-y text-sm leading-relaxed"
+              {...register("description")}
+            />
+          </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Label htmlFor="sort_order" className="text-sm font-medium">
-            Sort Order:
-          </Label>
-          <Input
-            id="sort_order"
-            type="number"
-            className="w-20"
-            {...register("sort_order")}
-          />
+        {/* Feature Image Asset */}
+        <div className="space-y-2 pt-2">
+          <div className="flex items-center justify-between">
+            <Label>Feature Image</Label>
+            <button
+              type="button"
+              onClick={() => setShowManualInput(!showManualInput)}
+              className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground hover:underline"
+            >
+              <LinkIcon className="size-3" />
+              {showManualInput ? "Hide Manual URL" : "Enter URL manually"}
+            </button>
+          </div>
+
+          {/* Active Image Preview / Empty State */}
+          {imageUrlValue ? (
+            <div className="flex items-center gap-4 rounded-lg border border-border bg-muted/20 p-3">
+              <div className="relative aspect-[4/3] w-32 sm:w-40 shrink-0 overflow-hidden rounded-md border border-border bg-black/5">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={imageUrlValue}
+                  alt="Feature photo preview"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <p className="truncate text-xs font-medium text-foreground">
+                  {getMediaName(imageUrlValue)}
+                </p>
+                <p className="truncate font-mono text-[11px] text-muted-foreground" title={imageUrlValue}>
+                  {imageUrlValue}
+                </p>
+
+                <div className="pt-2 flex flex-wrap items-center gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setIsPickerOpen(!isPickerOpen)}
+                    className="h-7 text-xs font-medium"
+                  >
+                    <ImageIcon className="size-3 mr-1" />
+                    {isPickerOpen ? "Close Picker" : "Change Image"}
+                  </Button>
+
+                  <a
+                    href={imageUrlValue}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex h-7 items-center gap-1 rounded-md border border-input bg-background px-2 text-xs text-muted-foreground hover:text-foreground"
+                  >
+                    <ExternalLink className="size-3" />
+                    Preview
+                  </a>
+
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setValue("image_url", "", { shouldDirty: true, shouldTouch: true, shouldValidate: true })}
+                    className="h-7 text-xs text-destructive hover:bg-destructive/10"
+                  >
+                    <Trash2 className="size-3 mr-1" />
+                    Remove
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between rounded-lg border border-dashed border-border p-3.5">
+              <div className="flex items-center gap-2.5">
+                <div className="flex size-9 items-center justify-center rounded-full bg-muted text-muted-foreground">
+                  <ImageIcon className="size-4" />
+                </div>
+                <p className="text-xs text-muted-foreground">No feature image selected</p>
+              </div>
+
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setIsPickerOpen(true)}
+                className="h-8 gap-1.5 text-xs font-medium"
+              >
+                <ImageIcon className="size-3.5" />
+                Select Image
+              </Button>
+            </div>
+          )}
+
+          {errors.image_url && (
+            <p className="text-xs text-destructive">{errors.image_url.message}</p>
+          )}
+
+          {/* VISUAL MEDIA PICKER DRAWER */}
+          {isPickerOpen && (
+            <div className="rounded-lg border border-border bg-card p-3 shadow-xs space-y-3">
+              <div className="flex items-center justify-between gap-2 border-b border-border/60 pb-2">
+                <div className="relative flex-1">
+                  <Search className="pointer-events-none absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    placeholder="Search media by filename..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="h-7 pl-8 text-xs"
+                  />
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setSearchQuery("")}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                    >
+                      <X className="size-3" />
+                    </button>
+                  )}
+                </div>
+
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsPickerOpen(false)}
+                  className="h-7 px-2 text-xs"
+                >
+                  <X className="size-3.5" />
+                </Button>
+              </div>
+
+              <div className="max-h-56 overflow-y-auto">
+                {filteredMedia.length > 0 ? (
+                  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
+                    {filteredMedia.map((item) => {
+                      const isSelected = imageUrlValue === item.url;
+                      return (
+                        <button
+                          key={item.id}
+                          type="button"
+                          onClick={() => {
+                            setValue("image_url", item.url, {
+                              shouldDirty: true,
+                              shouldTouch: true,
+                              shouldValidate: true,
+                            });
+                            setIsPickerOpen(false);
+                          }}
+                          className={`group relative flex flex-col overflow-hidden rounded-md border text-left transition-all ${
+                            isSelected
+                              ? "border-primary ring-2 ring-primary bg-primary/5"
+                              : "border-border/80 bg-background hover:border-primary/60"
+                          }`}
+                        >
+                          <div className="aspect-[4/3] w-full overflow-hidden bg-black/5 relative">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={item.url}
+                              alt={item.filename}
+                              loading="lazy"
+                              className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
+                            />
+                            {isSelected && (
+                              <div className="absolute top-1 right-1 flex size-4 items-center justify-center rounded-full bg-primary text-white shadow-xs">
+                                <Check className="size-2.5 stroke-[3]" />
+                              </div>
+                            )}
+                          </div>
+                          <div className="p-1 bg-background border-t border-border/40">
+                            <p className="truncate text-[10px] text-foreground" title={item.filename}>
+                              {item.filename}
+                            </p>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="py-6 text-center text-xs text-muted-foreground">
+                    No images found
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Manual Input Fallback */}
+          {showManualInput && (
+            <div className="pt-1">
+              <Input
+                placeholder="Paste image URL here"
+                className="h-8 text-xs font-mono"
+                {...register("image_url")}
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Publishing & Sort Sequence */}
+        <div className="space-y-4 pt-2">
+          <div className="grid gap-4 sm:grid-cols-2 items-center">
+            <label className="inline-flex items-center gap-2.5 cursor-pointer text-sm font-medium text-foreground">
+              <input
+                id="published"
+                type="checkbox"
+                className="size-4 rounded border-border accent-primary cursor-pointer"
+                {...register("published")}
+              />
+              <span>Published</span>
+            </label>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="sort_order">
+                Sort Order
+              </Label>
+              <Input
+                id="sort_order"
+                type="number"
+                className="h-10 text-sm font-semibold"
+                {...register("sort_order")}
+              />
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Buttons */}
-      <div className="flex justify-end gap-3 border-t border-border pt-4">
+      {/* PERMANENTLY FIXED FOOTER ACTION BAR */}
+      <div className="shrink-0 px-6 sm:px-8 py-4 border-t border-border bg-card flex items-center justify-between sm:justify-end gap-3 z-20">
         <Button
           type="button"
           variant="outline"
           disabled={isSubmitting}
           onClick={onCancel}
+          className="h-10 px-5 text-sm font-medium"
         >
           Cancel
         </Button>
-        <Button type="submit" disabled={isSubmitting}>
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="h-10 px-6 text-sm font-semibold shadow-sm"
+        >
           {isSubmitting
             ? "Saving..."
             : isEditing

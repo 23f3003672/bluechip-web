@@ -5,8 +5,21 @@ import { useRouter } from "next/navigation";
 import { useForm, useWatch, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import Image from "next/image";
-import { Plus, Pencil, Trash2, Video, Eye, EyeOff } from "lucide-react";
+import NextImage from "next/image";
+import {
+  Plus,
+  Pencil,
+  Trash2,
+  Video,
+  Eye,
+  EyeOff,
+  Image as ImageIcon,
+  ExternalLink,
+  Link as LinkIcon,
+  Search,
+  Check,
+  X,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -50,13 +63,19 @@ function SlideForm({
   submitLabel,
   isSubmitting,
   onSubmit,
+  onCancel,
 }: {
   initialValues?: HeroSlideFormValues;
   mediaItems: Media[];
   submitLabel: string;
   isSubmitting: boolean;
   onSubmit: (values: HeroSlideFormValues) => Promise<void>;
+  onCancel?: () => void;
 }) {
+  const [isPickerOpen, setIsPickerOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showManualInput, setShowManualInput] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -79,140 +98,352 @@ function SlideForm({
 
   const imageUrlValue = useWatch({ control, name: "image_url" });
 
+  const filteredMedia = (searchQuery.trim() ? mediaItems.filter(
+    (m) =>
+      m.filename.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (m.alt_text && m.alt_text.toLowerCase().includes(searchQuery.toLowerCase()))
+  ) : mediaItems);
+
+  const getMediaName = (url: string) => {
+    const match = mediaItems.find((m) => m.url === url);
+    if (match) return match.filename;
+    try {
+      return decodeURIComponent(new URL(url).pathname.split("/").pop() || url);
+    } catch {
+      return url;
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      {/* Background Image & Media Picker */}
-      <div className="space-y-1.5">
-        <Label>Background Image URL *</Label>
-        <Input
-          placeholder="/home/hero/hero-image-1.webp or Supabase storage URL"
-          {...register("image_url")}
-        />
-        {errors.image_url && (
-          <p className="text-xs text-destructive">{errors.image_url.message}</p>
-        )}
-
-        {imageUrlValue && (
-          <div className="relative mt-2 h-28 w-full overflow-hidden rounded-md border border-border bg-muted">
-            <Image
-              src={imageUrlValue}
-              alt="Preview"
-              fill
-              className="object-cover"
-              unoptimized
-            />
-          </div>
-        )}
-
-        {mediaItems.length > 0 && (
-          <div className="rounded-md border border-border bg-muted/20 p-2">
-            <p className="mb-1 text-xs font-medium text-muted-foreground">
-              Or choose from Media Library:
-            </p>
-            <select
-              value={imageUrlValue ?? ""}
-              onChange={(event) =>
-                setValue("image_url", event.target.value, {
-                  shouldDirty: true,
-                  shouldTouch: true,
-                })
-              }
-              className="h-8 w-full rounded-md border border-input bg-background px-2 text-sm"
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col flex-1 min-h-0 overflow-hidden">
+      {/* SCROLLABLE FORM BODY */}
+      <div className="flex-1 overflow-y-auto px-6 sm:px-8 py-5 space-y-5">
+        {/* HERO BACKGROUND VISUAL */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <Label>
+              Hero Background Image <span className="text-destructive">*</span>
+            </Label>
+            <button
+              type="button"
+              onClick={() => setShowManualInput(!showManualInput)}
+              className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground hover:underline"
             >
-              <option value="">Select an uploaded image</option>
-              {mediaItems.map((item) => (
-                <option key={item.id} value={item.url}>
-                  {item.filename}
-                </option>
-              ))}
-            </select>
+              <LinkIcon className="size-3" />
+              {showManualInput ? "Hide Manual URL" : "Enter URL manually"}
+            </button>
           </div>
+
+          {/* Image Preview / Empty State */}
+          {imageUrlValue ? (
+            <div className="flex items-center gap-4 rounded-lg border border-border bg-muted/20 p-3">
+              <div className="relative aspect-video w-32 sm:w-44 shrink-0 overflow-hidden rounded-md border border-border bg-black/5">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={imageUrlValue}
+                  alt="Hero slide preview"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <p className="truncate text-xs font-medium text-foreground">
+                  {getMediaName(imageUrlValue)}
+                </p>
+                <p className="truncate font-mono text-[11px] text-muted-foreground" title={imageUrlValue}>
+                  {imageUrlValue}
+                </p>
+
+                <div className="pt-2 flex flex-wrap items-center gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setIsPickerOpen(!isPickerOpen)}
+                    className="h-7 text-xs font-medium"
+                  >
+                    <ImageIcon className="size-3 mr-1" />
+                    {isPickerOpen ? "Close Picker" : "Change Image"}
+                  </Button>
+
+                  <a
+                    href={imageUrlValue}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex h-7 items-center gap-1 rounded-md border border-input bg-background px-2 text-xs text-muted-foreground hover:text-foreground"
+                  >
+                    <ExternalLink className="size-3" />
+                    Preview
+                  </a>
+
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setValue("image_url", "", { shouldDirty: true, shouldTouch: true, shouldValidate: true })}
+                    className="h-7 text-xs text-destructive hover:bg-destructive/10"
+                  >
+                    <Trash2 className="size-3 mr-1" />
+                    Remove
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between rounded-lg border border-dashed border-border p-3.5">
+              <div className="flex items-center gap-2.5">
+                <div className="flex size-9 items-center justify-center rounded-full bg-muted text-muted-foreground">
+                  <ImageIcon className="size-4" />
+                </div>
+                <p className="text-xs text-muted-foreground">No background image selected</p>
+              </div>
+
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setIsPickerOpen(true)}
+                className="h-8 gap-1.5 text-xs font-medium"
+              >
+                <ImageIcon className="size-3.5" />
+                Select Image
+              </Button>
+            </div>
+          )}
+
+          {errors.image_url && (
+            <p className="text-xs text-destructive">{errors.image_url.message}</p>
+          )}
+
+          {/* VISUAL MEDIA PICKER DRAWER */}
+          {isPickerOpen && (
+            <div className="rounded-lg border border-border bg-card p-3 shadow-xs space-y-3">
+              <div className="flex items-center justify-between gap-2 border-b border-border/60 pb-2">
+                <div className="relative flex-1">
+                  <Search className="pointer-events-none absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    placeholder="Search media by filename..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="h-7 pl-8 text-xs"
+                  />
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setSearchQuery("")}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                    >
+                      <X className="size-3" />
+                    </button>
+                  )}
+                </div>
+
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsPickerOpen(false)}
+                  className="h-7 px-2 text-xs"
+                >
+                  <X className="size-3.5" />
+                </Button>
+              </div>
+
+              <div className="max-h-56 overflow-y-auto">
+                {filteredMedia.length > 0 ? (
+                  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
+                    {filteredMedia.map((item) => {
+                      const isSelected = imageUrlValue === item.url;
+                      return (
+                        <button
+                          key={item.id}
+                          type="button"
+                          onClick={() => {
+                            setValue("image_url", item.url, {
+                              shouldDirty: true,
+                              shouldTouch: true,
+                              shouldValidate: true,
+                            });
+                            setIsPickerOpen(false);
+                          }}
+                          className={`group relative flex flex-col overflow-hidden rounded-md border text-left transition-all ${
+                            isSelected
+                              ? "border-primary ring-2 ring-primary bg-primary/5"
+                              : "border-border/80 bg-background hover:border-primary/60"
+                          }`}
+                        >
+                          <div className="aspect-[16/9] w-full overflow-hidden bg-black/5 relative">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={item.url}
+                              alt={item.filename}
+                              loading="lazy"
+                              className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
+                            />
+                            {isSelected && (
+                              <div className="absolute top-1 right-1 flex size-4 items-center justify-center rounded-full bg-primary text-white shadow-xs">
+                                <Check className="size-2.5 stroke-[3]" />
+                              </div>
+                            )}
+                          </div>
+                          <div className="p-1 bg-background border-t border-border/40">
+                            <p className="truncate text-[10px] text-foreground" title={item.filename}>
+                              {item.filename}
+                            </p>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="py-6 text-center text-xs text-muted-foreground">
+                    No images found
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Manual Input Fallback */}
+          {showManualInput && (
+            <div className="pt-1">
+              <Input
+                placeholder="Paste image URL here"
+                className="h-8 text-xs font-mono"
+                {...register("image_url")}
+              />
+            </div>
+          )}
+        </div>
+
+        {/* CONTENT FIELDS */}
+        <div className="space-y-4 pt-2">
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="space-y-1.5">
+              <Label htmlFor="category">
+                Category <span className="text-destructive">*</span>
+              </Label>
+              <Input
+                id="category"
+                className="h-10 text-sm font-medium"
+                {...register("category")}
+              />
+              {errors.category && (
+                <p className="text-xs text-destructive">{errors.category.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="project_name">
+                Project Name & Location <span className="text-destructive">*</span>
+              </Label>
+              <Input
+                id="project_name"
+                className="h-10 text-sm font-medium"
+                {...register("project_name")}
+              />
+              {errors.project_name && (
+                <p className="text-xs text-destructive">{errors.project_name.message}</p>
+              )}
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="tagline">
+              Tagline <span className="text-destructive">*</span>
+            </Label>
+            <Input
+              id="tagline"
+              className="h-10 text-sm"
+              {...register("tagline")}
+            />
+            {errors.tagline && (
+              <p className="text-xs text-destructive">{errors.tagline.message}</p>
+            )}
+          </div>
+        </div>
+
+        {/* INTERACTIONS & CAROUSEL SETTINGS */}
+        <div className="space-y-4 pt-2">
+          <div className="space-y-1.5">
+            <Label htmlFor="video_url">
+              Video Link (YouTube)
+            </Label>
+            <Input
+              id="video_url"
+              className="h-10 text-xs font-mono"
+              {...register("video_url")}
+            />
+            {errors.video_url && (
+              <p className="text-xs text-destructive">{errors.video_url.message}</p>
+            )}
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="space-y-1.5">
+              <Label htmlFor="project_href">
+                Projects Button Link
+              </Label>
+              <Input
+                id="project_href"
+                className="h-10 text-sm font-mono"
+                {...register("project_href")}
+              />
+              {errors.project_href && (
+                <p className="text-xs text-destructive">{errors.project_href.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="sort_order">
+                Display Order
+              </Label>
+              <Input
+                id="sort_order"
+                type="number"
+                min={1}
+                max={50}
+                className="h-10 text-sm font-semibold"
+                {...register("sort_order")}
+              />
+              {errors.sort_order && (
+                <p className="text-xs text-destructive">{errors.sort_order.message}</p>
+              )}
+            </div>
+          </div>
+
+          <div className="pt-1">
+            <label className="inline-flex items-center gap-2.5 cursor-pointer text-sm font-medium text-foreground">
+              <input
+                type="checkbox"
+                id="is_active"
+                className="size-4 rounded border-border accent-primary cursor-pointer"
+                {...register("is_active")}
+              />
+              <span>Active Slide</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      {/* PERMANENTLY FIXED FOOTER */}
+      <div className="shrink-0 px-6 sm:px-8 py-4 border-t border-border bg-card flex items-center justify-between sm:justify-end gap-3 z-20">
+        {onCancel && (
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onCancel}
+            disabled={isSubmitting}
+            className="h-10 px-5 text-sm font-medium"
+          >
+            Cancel
+          </Button>
         )}
-      </div>
-
-      {/* Category & Project Name */}
-      <div className="grid gap-4 md:grid-cols-2">
-        <div className="space-y-1.5">
-          <Label>Category * (e.g. Facade Engineering)</Label>
-          <Input placeholder="EPC Infrastructure" {...register("category")} />
-          {errors.category && (
-            <p className="text-xs text-destructive">{errors.category.message}</p>
-          )}
-        </div>
-
-        <div className="space-y-1.5">
-          <Label>Project Name / Location *</Label>
-          <Input
-            placeholder="Anand-Nadiad Bullet Train Station, Gujarat, India"
-            {...register("project_name")}
-          />
-          {errors.project_name && (
-            <p className="text-xs text-destructive">{errors.project_name.message}</p>
-          )}
-        </div>
-      </div>
-
-      {/* Tagline */}
-      <div className="space-y-1.5">
-        <Label>Project Tagline *</Label>
-        <Input
-          placeholder="Engineering India's High-Speed Future."
-          {...register("tagline")}
-        />
-        {errors.tagline && (
-          <p className="text-xs text-destructive">{errors.tagline.message}</p>
-        )}
-      </div>
-
-      {/* Video Walkthrough Link */}
-      <div className="space-y-1.5">
-        <Label>Project Walkthrough Video Link (YouTube)</Label>
-        <Input
-          placeholder="https://www.youtube.com/watch?v=ScMzIvxBSi4 or https://youtu.be/..."
-          {...register("video_url")}
-        />
-        <p className="text-[11px] text-muted-foreground">
-          Standard YouTube watch links will be automatically converted to embed format.
-        </p>
-        {errors.video_url && (
-          <p className="text-xs text-destructive">{errors.video_url.message}</p>
-        )}
-      </div>
-
-      {/* Destination Link & Sort Order */}
-      <div className="grid gap-4 md:grid-cols-2">
-        <div className="space-y-1.5">
-          <Label>"View Our Projects" Button Link</Label>
-          <Input placeholder="/projects" {...register("project_href")} />
-          {errors.project_href && (
-            <p className="text-xs text-destructive">{errors.project_href.message}</p>
-          )}
-        </div>
-
-        <div className="space-y-1.5">
-          <Label>Display Order (1 to 7+)</Label>
-          <Input type="number" min={1} max={50} {...register("sort_order")} />
-          {errors.sort_order && (
-            <p className="text-xs text-destructive">{errors.sort_order.message}</p>
-          )}
-        </div>
-      </div>
-
-      {/* Active Toggle */}
-      <div className="flex items-center gap-2 pt-1">
-        <input
-          type="checkbox"
-          id="is_active"
-          className="size-4 rounded border-border text-primary focus:ring-primary"
-          {...register("is_active")}
-        />
-        <Label htmlFor="is_active" className="cursor-pointer font-normal">
-          Active (Visible on homepage hero slider)
-        </Label>
-      </div>
-
-      <div className="flex justify-end gap-2 pt-2">
-        <Button type="submit" disabled={isSubmitting}>
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="h-10 px-6 text-sm font-semibold shadow-sm"
+        >
           {isSubmitting ? "Saving..." : submitLabel}
         </Button>
       </div>
@@ -329,7 +560,7 @@ export function HeroSlidesAdminModule({
                   <TableCell>
                     <div className="relative h-12 w-20 overflow-hidden rounded border border-border bg-muted">
                       {slide.image_url ? (
-                        <Image
+                        <NextImage
                           src={slide.image_url}
                           alt={slide.project_name}
                           fill
@@ -428,10 +659,10 @@ export function HeroSlidesAdminModule({
 
       {/* Create Dialog */}
       <Dialog open={createOpen} onOpenChange={setCreateOpen}>
-        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[620px]">
-          <DialogHeader>
-            <DialogTitle>Add Hero Slide</DialogTitle>
-            <DialogDescription>
+        <DialogContent className="flex flex-col h-[90vh] max-h-[92vh] sm:max-w-3xl lg:max-w-4xl p-0 gap-0 overflow-hidden">
+          <DialogHeader className="shrink-0 px-6 sm:px-8 py-5 border-b border-border/80 bg-muted/20">
+            <DialogTitle className="text-xl font-bold tracking-tight text-foreground">Add Hero Slide</DialogTitle>
+            <DialogDescription className="text-xs sm:text-sm text-muted-foreground">
               Add a new slide for the homepage hero carousel.
             </DialogDescription>
           </DialogHeader>
@@ -440,16 +671,17 @@ export function HeroSlidesAdminModule({
             submitLabel="Create Slide"
             isSubmitting={isPending}
             onSubmit={handleCreate}
+            onCancel={() => setCreateOpen(false)}
           />
         </DialogContent>
       </Dialog>
 
       {/* Edit Dialog */}
       <Dialog open={Boolean(editing)} onOpenChange={(open) => !open && setEditing(null)}>
-        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[620px]">
-          <DialogHeader>
-            <DialogTitle>Edit Hero Slide</DialogTitle>
-            <DialogDescription>Update slide content, images, and links.</DialogDescription>
+        <DialogContent className="flex flex-col h-[90vh] max-h-[92vh] sm:max-w-3xl lg:max-w-4xl p-0 gap-0 overflow-hidden">
+          <DialogHeader className="shrink-0 px-6 sm:px-8 py-5 border-b border-border/80 bg-muted/20">
+            <DialogTitle className="text-xl font-bold tracking-tight text-foreground">Edit Hero Slide</DialogTitle>
+            <DialogDescription className="text-xs sm:text-sm text-muted-foreground">Update slide content, images, and links.</DialogDescription>
           </DialogHeader>
           {editing && (
             <SlideForm
@@ -467,6 +699,7 @@ export function HeroSlidesAdminModule({
               submitLabel="Save Changes"
               isSubmitting={isPending}
               onSubmit={handleUpdate}
+              onCancel={() => setEditing(null)}
             />
           )}
         </DialogContent>
