@@ -19,19 +19,19 @@ const BUSINESS_LINKS = [
 ];
 
 const PROJECT_LINKS = [
-  { label: "Airports", href: "/projects/subcategory/airports" },
-  { label: "Power Plants", href: "/projects/subcategory/power-plants" },
-  { label: "Oil & Gas", href: "/projects/subcategory/oil-gas" },
-  { label: "Steel Plants", href: "/projects/subcategory/steel-plants" },
-  { label: "SEZ Infrastructure", href: "/projects/subcategory/sez-infrastructure" },
+  { label: "Airports", href: "/projects/sectors#airports" },
+  { label: "Power Plants", href: "/projects/sectors#power-plants" },
+  { label: "Oil & Gas", href: "/projects/sectors#oil-gas" },
+  { label: "Steel Plants", href: "/projects/sectors#steel-plants" },
+  { label: "SEZ Infrastructure", href: "/projects/sectors#sez-infrastructure" },
 
-  { label: "Commercial Buildings", href: "/projects/subcategory/commercial-buildings" },
-  { label: "Residential Buildings", href: "/projects/subcategory/residential-buildings" },
-  { label: "IT Campuses & Buildings", href: "/projects/subcategory/it-campuses-buildings" },
-  { label: "Hospitality", href: "/projects/subcategory/hospitality" },
-  { label: "Schools", href: "/projects/subcategory/schools" },
-  { label: "Auditoriums", href: "/projects/subcategory/auditoriums" },
-  { label: "Statutory Buildings", href: "/projects/subcategory/statutory-buildings" },
+  { label: "Commercial Buildings", href: "/projects/urban-institutional#commercial-buildings" },
+  { label: "Residential Buildings", href: "/projects/urban-institutional#residential-buildings" },
+  { label: "IT Campuses & Buildings", href: "/projects/urban-institutional#it-campuses-buildings" },
+  { label: "Hospitality", href: "/projects/urban-institutional#hospitality" },
+  { label: "Schools", href: "/projects/urban-institutional#schools" },
+  { label: "Auditoriums", href: "/projects/urban-institutional#auditoriums" },
+  { label: "Statutory Buildings", href: "/projects/urban-institutional#statutory-buildings" },
 ];
 
 const INNOVATION_LINKS = [

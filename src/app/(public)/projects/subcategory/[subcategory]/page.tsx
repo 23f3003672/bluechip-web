@@ -23,7 +23,16 @@ export default async function ProjectSubcategoryPage(
     redirect("/business#mechanical-works");
   }
   if (subcategory === "facade-engineering" || subcategory === "facade-works") {
-    redirect("/business#facade-engineering");
+    redirect("/business#facade-works");
+  }
+  if (subcategory === "industrial" || subcategory === "sez-infra") {
+    redirect("/projects/sectors#sez-infrastructure");
+  }
+  if (subcategory === "commercial") {
+    redirect("/projects/urban-institutional#commercial-buildings");
+  }
+  if (subcategory === "airport") {
+    redirect("/projects/sectors#airports");
   }
 
   const item = PROJECT_SUBCATEGORY_MAP[subcategory];
@@ -32,14 +41,15 @@ export default async function ProjectSubcategoryPage(
     redirect("/projects");
   }
 
+  if (item.columnTitle === "Sectors") {
+    redirect(`/projects/sectors#${item.slug}`);
+  }
+
+  if (item.columnTitle === "Urban & Institutional") {
+    redirect(`/projects/urban-institutional#${item.slug}`);
+  }
+
   const routeMap: Record<string, string> = {
-    Sectors: "/projects/sectors",
-
-    "Urban & Institutional":
-      "/projects/urban-institutional",
-
-    "Civil Construction":
-      "/business#civil-construction",
 
     "Mechanical Works":
       "/business#mechanical-works",

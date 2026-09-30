@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 
 import { Container } from "@/components/layout/Container";
@@ -13,12 +14,87 @@ interface ProjectsGallerySectionProps {
   groups?: { label: string; slug: string; projects: JourneyProject[] }[];
 }
 
+const ALIAS_MAP: Record<string, string[]> = {
+  airports: ["airport"],
+  "oil-gas": ["oil-and-gas", "oil"],
+  "power-plants": ["power-plant", "power"],
+  "sez-infrastructure": ["sez-infra", "industrial", "sez"],
+  "steel-plants": ["steel-plant", "steel"],
+  "commercial-buildings": ["commercial", "commercial-building"],
+  schools: ["school"],
+  "residential-buildings": ["residential", "residential-building"],
+  "it-campuses-buildings": ["it-campuses", "it-campus"],
+  hospitality: ["hotel"],
+  auditoriums: ["auditorium"],
+  "statutory-buildings": ["statutory-building"],
+};
+
+const REVERSE_ALIAS_MAP: Record<string, string> = {
+  airport: "airports",
+  airports: "airports",
+  "oil-gas": "oil-gas",
+  "oil-and-gas": "oil-gas",
+  oil: "oil-gas",
+  "power-plants": "power-plants",
+  "power-plant": "power-plants",
+  power: "power-plants",
+  "sez-infrastructure": "sez-infrastructure",
+  "sez-infra": "sez-infrastructure",
+  sez: "sez-infrastructure",
+  industrial: "sez-infrastructure",
+  "steel-plants": "steel-plants",
+  "steel-plant": "steel-plants",
+  "commercial-buildings": "commercial-buildings",
+  "commercial-building": "commercial-buildings",
+  commercial: "commercial-buildings",
+  schools: "schools",
+  school: "schools",
+  "residential-buildings": "residential-buildings",
+  residential: "residential-buildings",
+  "it-campuses-buildings": "it-campuses-buildings",
+  hospitality: "hospitality",
+  auditoriums: "auditoriums",
+  "statutory-buildings": "statutory-buildings",
+};
+
 export function ProjectsGallerySection({
   title,
   description,
   projects,
   groups,
 }: ProjectsGallerySectionProps) {
+  useEffect(() => {
+    const handleHash = () => {
+      const rawHash = window.location.hash.replace(/^#/, "").toLowerCase().trim();
+      if (!rawHash) return;
+
+      const targetId = REVERSE_ALIAS_MAP[rawHash] || rawHash;
+      const el = document.getElementById(targetId) || document.getElementById(rawHash);
+      if (el) {
+        const header = document.querySelector("header");
+        const headerHeight = header ? header.getBoundingClientRect().height : 90;
+        const elementPosition = el.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 24;
+
+        window.scrollTo({
+          top: Math.max(0, offsetPosition),
+          behavior: "smooth",
+        });
+      }
+    };
+
+    handleHash();
+    const timer1 = setTimeout(handleHash, 100);
+    const timer2 = setTimeout(handleHash, 400);
+
+    window.addEventListener("hashchange", handleHash);
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      window.removeEventListener("hashchange", handleHash);
+    };
+  }, []);
+
   return (
     <section className="bg-white pb-16 min-h-screen">
       {/* HERO */}
@@ -47,26 +123,37 @@ export function ProjectsGallerySection({
       <Container className="px-6 pt-10 md:px-10">
         {groups && groups.length > 0 ? (
           <div className="flex flex-col gap-16">
-            {groups.map((group) => (
-              <div key={group.slug}>
-                <h2 className="mb-6 text-3xl font-semibold tracking-tight text-[#1f2a44]">
-                  {group.label}
-                </h2>
-                <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                  {group.projects.length > 0 ? (
-                    group.projects.map((project) => (
-                      <ProjectCard key={project.id} project={project} />
-                    ))
-                  ) : (
-                    <div className="col-span-full py-12 text-center rounded-2xl border border-dashed border-slate-200 bg-slate-50/60">
-                      <p className="text-sm font-medium text-slate-400">
-                        Nothing added here yet.
-                      </p>
-                    </div>
-                  )}
+            {groups.map((group) => {
+              const aliases = ALIAS_MAP[group.slug] || [];
+              return (
+                <div key={group.slug} id={group.slug} className="scroll-mt-28">
+                  {aliases.map((alias) => (
+                    <span
+                      key={alias}
+                      id={alias}
+                      className="block h-0 w-0 overflow-hidden scroll-mt-28"
+                      aria-hidden="true"
+                    />
+                  ))}
+                  <h2 className="mb-6 text-3xl font-semibold tracking-tight text-[#1f2a44]">
+                    {group.label}
+                  </h2>
+                  <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                    {group.projects.length > 0 ? (
+                      group.projects.map((project) => (
+                        <ProjectCard key={project.id} project={project} />
+                      ))
+                    ) : (
+                      <div className="col-span-full py-12 text-center rounded-2xl border border-dashed border-slate-200 bg-slate-50/60">
+                        <p className="text-sm font-medium text-slate-400">
+                          Nothing added here yet.
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         ) : (
           <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
