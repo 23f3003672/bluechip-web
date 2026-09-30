@@ -213,7 +213,7 @@ export const TRUSTED_BRANDS: TrustedBrand[] = [
   { id: "6", name: "Garud Gandhinagar", imageUrl: "/home/logos/garud-gandhinagar-logo.webp" },
   { id: "7", name: "Airports Authority of India", imageUrl: "/home/logos/aai.webp" },
   { id: "8", name: "Oil and Natural Gas Corporation", imageUrl: "/home/logos/ongc.webp" },
-
+  { id: "9", name: "Bharat Heavy Electricals Limited", imageUrl: "/home/logos/BHEL.webp" },
 ];
 
 /* ─── Journey Timeline ───────────────────────────────────────────── */
