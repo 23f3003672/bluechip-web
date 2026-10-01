@@ -15,6 +15,27 @@ export interface BusinessProjectItem {
   imageUrl: string;
   location?: string;
   year?: string | number;
+  createdAt?: string;
+}
+
+function parseProjectYear(val?: string | number): number {
+  if (typeof val === "number") return val;
+  if (!val) return 0;
+  const parsed = parseInt(String(val).trim(), 10);
+  return isNaN(parsed) ? 0 : parsed;
+}
+
+export function sortBusinessProjectsByDateDesc(items: BusinessProjectItem[]): BusinessProjectItem[] {
+  return [...items].sort((a, b) => {
+    const yearA = parseProjectYear(a.year);
+    const yearB = parseProjectYear(b.year);
+    if (yearB !== yearA) {
+      return yearB - yearA;
+    }
+    const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+    const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+    return timeB - timeA;
+  });
 }
 
 interface SubCategoryDef {
@@ -212,11 +233,11 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
     scrollToSection(sectionId);
   };
 
-  // Filter projects by category
-  const waterProjects = projects.filter((p) => p.category === "water");
-  const civilProjects = projects.filter((p) => p.category === "civil");
-  const mechanicalProjects = projects.filter((p) => p.category === "mechanical");
-  const facadeProjects = projects.filter((p) => p.category === "facade");
+  // Filter and sort projects by category (newest first, oldest last)
+  const facadeProjects = sortBusinessProjectsByDateDesc(projects.filter((p) => p.category === "facade"));
+  const civilProjects = sortBusinessProjectsByDateDesc(projects.filter((p) => p.category === "civil"));
+  const mechanicalProjects = sortBusinessProjectsByDateDesc(projects.filter((p) => p.category === "mechanical"));
+  const waterProjects = sortBusinessProjectsByDateDesc(projects.filter((p) => p.category === "water"));
 
   return (
     <div className="min-h-screen bg-white text-[#1f2a44]">
@@ -351,22 +372,34 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
               {/* Right Column: 4 Nav Category Links on ONE single row */}
               <div className="min-w-0 flex-1 pt-0.5">
                 <div className="flex items-center gap-x-8 overflow-x-auto whitespace-nowrap sm:gap-x-10 xl:gap-x-14 scrollbar-none">
-                  {/* 1. Water & Solid Waste Management (No subcategories, direct link) */}
-                  <button
-                    type="button"
-                    onMouseEnter={() => {
-                      clearCategoryTimeout();
-                      setActiveCategoryMenu(null);
-                    }}
-                    onClick={() => {
-                      clearCategoryTimeout();
-                      setActiveCategoryMenu(null);
-                      scrollToSection("water-and-solid-waste-management");
-                    }}
-                    className="shrink-0 text-[13px] font-semibold uppercase tracking-wider text-[#576070] transition-colors hover:text-[#1067ab] md:text-[14px]"
+                  {/* 1. Facade Works (Link + Chevron Toggle, opens on hover) */}
+                  <div
+                    className="inline-flex shrink-0 items-center gap-1"
+                    onMouseEnter={() => handleCategoryHover("facade")}
                   >
-                    Water & Solid Waste Management
-                  </button>
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection("facade-works")}
+                      className={cn(
+                        "text-[13px] font-semibold uppercase tracking-wider transition-colors hover:text-[#1067ab] md:text-[14px]",
+                        activeCategoryMenu === "facade" ? "text-[#1a253c]" : "text-[#576070]"
+                      )}
+                    >
+                      Facade Works
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => toggleCategoryDrawer("facade")}
+                      aria-label="Toggle Facade Works subcategories"
+                      className="p-1 text-[#6b7280] transition-colors hover:text-[#1a253c]"
+                    >
+                      {activeCategoryMenu === "facade" ? (
+                        <ChevronUp className="size-4" />
+                      ) : (
+                        <ChevronDown className="size-4" />
+                      )}
+                    </button>
+                  </div>
 
                   {/* 2. Civil Construction (Link + Chevron Toggle, opens on hover) */}
                   <div
@@ -426,34 +459,22 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
                     </button>
                   </div>
 
-                  {/* 4. Facade Works (Link + Chevron Toggle, opens on hover) */}
-                  <div
-                    className="inline-flex shrink-0 items-center gap-1"
-                    onMouseEnter={() => handleCategoryHover("facade")}
+                  {/* 4. Water & Solid Waste Management (No subcategories, direct link) */}
+                  <button
+                    type="button"
+                    onMouseEnter={() => {
+                      clearCategoryTimeout();
+                      setActiveCategoryMenu(null);
+                    }}
+                    onClick={() => {
+                      clearCategoryTimeout();
+                      setActiveCategoryMenu(null);
+                      scrollToSection("water-and-solid-waste-management");
+                    }}
+                    className="shrink-0 text-[13px] font-semibold uppercase tracking-wider text-[#576070] transition-colors hover:text-[#1067ab] md:text-[14px]"
                   >
-                    <button
-                      type="button"
-                      onClick={() => scrollToSection("facade-works")}
-                      className={cn(
-                        "text-[13px] font-semibold uppercase tracking-wider transition-colors hover:text-[#1067ab] md:text-[14px]",
-                        activeCategoryMenu === "facade" ? "text-[#1a253c]" : "text-[#576070]"
-                      )}
-                    >
-                      Facade Works
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => toggleCategoryDrawer("facade")}
-                      aria-label="Toggle Facade Works subcategories"
-                      className="p-1 text-[#6b7280] transition-colors hover:text-[#1a253c]"
-                    >
-                      {activeCategoryMenu === "facade" ? (
-                        <ChevronUp className="size-4" />
-                      ) : (
-                        <ChevronDown className="size-4" />
-                      )}
-                    </button>
-                  </div>
+                    Water & Solid Waste Management
+                  </button>
                 </div>
               </div>
             </div>
@@ -697,34 +718,83 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
       {/* ─── 4 MAIN PROJECT SECTIONS (Images 3 & 4) ─────────────────────── */}
       {/* Sized and styled to replicate the exact projects/sectors gallery */}
       <div className="space-y-20 py-12 md:space-y-28 md:py-20">
-        {/* SECTION 1: WATER & SOLID WASTE MANAGEMENT */}
+        {/* SECTION 1: FACADE WORKS */}
         <section
-          id="water-and-solid-waste-management"
+          id="facade-works"
           className="scroll-mt-[170px]"
-          aria-labelledby="water-heading"
+          aria-labelledby="facade-heading"
         >
+          <div id="facade-engineering" className="scroll-mt-[170px]" />
           <Container className="px-6 md:px-10">
             {/* Heading + divider line */}
             <div className="flex items-center gap-6">
               <h2
-                id="water-heading"
+                id="facade-heading"
                 className="shrink-0 text-2xl font-semibold tracking-tight text-[#1b253b] sm:text-3xl"
               >
-                Water & Solid Waste Management
+                Facade Works
               </h2>
               <div className="h-[1px] flex-1 bg-[#e0e3ea]" />
             </div>
 
-            {/* Project Grid or Empty State */}
-            {waterProjects.length > 0 ? (
-              <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                {waterProjects.map((project) => (
-                  <ProjectCard key={project.id} project={project} />
-                ))}
+            {/* Active subcategory filter feedback if any */}
+            {selectedSubcategoryFilter?.section === "facade" && (
+              <div className="mt-4 flex items-center gap-3">
+                <span className="text-xs font-semibold uppercase text-[#64748b]">Filtered by:</span>
+                <span className="inline-flex items-center gap-2 rounded-full bg-[#1067ab]/10 px-3 py-1 text-xs font-medium text-[#1067ab]">
+                  {selectedSubcategoryFilter.tag}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedSubcategoryFilter(null)}
+                    className="ml-1 font-bold hover:text-black"
+                  >
+                    ×
+                  </button>
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setSelectedSubcategoryFilter(null)}
+                  className="text-xs text-[#1067ab] underline hover:text-[#0b4d82]"
+                >
+                  Show All Facade Projects
+                </button>
               </div>
-            ) : (
-              <EmptyState description="No projects have been added under Water & Solid Waste Management yet. Projects published via the Admin Dashboard will appear here." />
             )}
+
+            {/* Project Grid or Empty State */}
+            {(() => {
+              const displayed = sortBusinessProjectsByDateDesc(
+                selectedSubcategoryFilter?.section === "facade"
+                  ? facadeProjects.filter(
+                      (p) =>
+                        p.subcategoryTag.toUpperCase() ===
+                        selectedSubcategoryFilter.tag.toUpperCase()
+                    )
+                  : facadeProjects
+              );
+
+              return displayed.length > 0 ? (
+                <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                  {displayed.map((project) => (
+                    <ProjectCard key={project.id} project={project} />
+                  ))}
+                </div>
+              ) : (
+                <EmptyState
+                  title="Nothing to see here right now"
+                  description={
+                    selectedSubcategoryFilter?.section === "facade"
+                      ? `No projects found under "${selectedSubcategoryFilter.tag}". Projects added via the Admin Dashboard will appear here.`
+                      : "No projects have been added under Facade Works yet."
+                  }
+                  onClear={
+                    selectedSubcategoryFilter?.section === "facade"
+                      ? () => setSelectedSubcategoryFilter(null)
+                      : undefined
+                  }
+                />
+              );
+            })()}
           </Container>
         </section>
 
@@ -772,13 +842,15 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
 
             {/* Project Grid or Empty State */}
             {(() => {
-              const displayed = selectedSubcategoryFilter?.section === "civil"
-                ? civilProjects.filter(
-                    (p) =>
-                      p.subcategoryTag.toUpperCase() ===
-                      selectedSubcategoryFilter.tag.toUpperCase()
-                  )
-                : civilProjects;
+              const displayed = sortBusinessProjectsByDateDesc(
+                selectedSubcategoryFilter?.section === "civil"
+                  ? civilProjects.filter(
+                      (p) =>
+                        p.subcategoryTag.toUpperCase() ===
+                        selectedSubcategoryFilter.tag.toUpperCase()
+                    )
+                  : civilProjects
+              );
 
               return displayed.length > 0 ? (
                 <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
@@ -849,13 +921,15 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
 
             {/* Project Grid or Empty State */}
             {(() => {
-              const displayed = selectedSubcategoryFilter?.section === "mechanical"
-                ? mechanicalProjects.filter(
-                    (p) =>
-                      p.subcategoryTag.toUpperCase() ===
-                      selectedSubcategoryFilter.tag.toUpperCase()
-                  )
-                : mechanicalProjects;
+              const displayed = sortBusinessProjectsByDateDesc(
+                selectedSubcategoryFilter?.section === "mechanical"
+                  ? mechanicalProjects.filter(
+                      (p) =>
+                        p.subcategoryTag.toUpperCase() ===
+                        selectedSubcategoryFilter.tag.toUpperCase()
+                    )
+                  : mechanicalProjects
+              );
 
               return displayed.length > 0 ? (
                 <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
@@ -882,81 +956,34 @@ export function BusinessPageContent({ projects }: BusinessPageContentProps) {
           </Container>
         </section>
 
-        {/* SECTION 4: FACADE WORKS */}
+        {/* SECTION 4: WATER & SOLID WASTE MANAGEMENT */}
         <section
-          id="facade-works"
+          id="water-and-solid-waste-management"
           className="scroll-mt-[170px]"
-          aria-labelledby="facade-heading"
+          aria-labelledby="water-heading"
         >
-          <div id="facade-engineering" className="scroll-mt-[170px]" />
           <Container className="px-6 md:px-10">
             {/* Heading + divider line */}
             <div className="flex items-center gap-6">
               <h2
-                id="facade-heading"
+                id="water-heading"
                 className="shrink-0 text-2xl font-semibold tracking-tight text-[#1b253b] sm:text-3xl"
               >
-                Facade Works
+                Water & Solid Waste Management
               </h2>
               <div className="h-[1px] flex-1 bg-[#e0e3ea]" />
             </div>
 
-            {/* Active subcategory filter feedback if any */}
-            {selectedSubcategoryFilter?.section === "facade" && (
-              <div className="mt-4 flex items-center gap-3">
-                <span className="text-xs font-semibold uppercase text-[#64748b]">Filtered by:</span>
-                <span className="inline-flex items-center gap-2 rounded-full bg-[#1067ab]/10 px-3 py-1 text-xs font-medium text-[#1067ab]">
-                  {selectedSubcategoryFilter.tag}
-                  <button
-                    type="button"
-                    onClick={() => setSelectedSubcategoryFilter(null)}
-                    className="ml-1 font-bold hover:text-black"
-                  >
-                    ×
-                  </button>
-                </span>
-                <button
-                  type="button"
-                  onClick={() => setSelectedSubcategoryFilter(null)}
-                  className="text-xs text-[#1067ab] underline hover:text-[#0b4d82]"
-                >
-                  Show All Facade Projects
-                </button>
-              </div>
-            )}
-
             {/* Project Grid or Empty State */}
-            {(() => {
-              const displayed = selectedSubcategoryFilter?.section === "facade"
-                ? facadeProjects.filter(
-                    (p) =>
-                      p.subcategoryTag.toUpperCase() ===
-                      selectedSubcategoryFilter.tag.toUpperCase()
-                  )
-                : facadeProjects;
-
-              return displayed.length > 0 ? (
-                <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                  {displayed.map((project) => (
-                    <ProjectCard key={project.id} project={project} />
-                  ))}
-                </div>
-              ) : (
-                <EmptyState
-                  title="Nothing to see here right now"
-                  description={
-                    selectedSubcategoryFilter?.section === "facade"
-                      ? `No projects found under "${selectedSubcategoryFilter.tag}". Projects added via the Admin Dashboard will appear here.`
-                      : "No projects have been added under Facade Works yet."
-                  }
-                  onClear={
-                    selectedSubcategoryFilter?.section === "facade"
-                      ? () => setSelectedSubcategoryFilter(null)
-                      : undefined
-                  }
-                />
-              );
-            })()}
+            {waterProjects.length > 0 ? (
+              <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                {waterProjects.map((project) => (
+                  <ProjectCard key={project.id} project={project} />
+                ))}
+              </div>
+            ) : (
+              <EmptyState description="No projects have been added under Water & Solid Waste Management yet. Projects published via the Admin Dashboard will appear here." />
+            )}
           </Container>
         </section>
       </div>

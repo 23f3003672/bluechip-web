@@ -50,7 +50,15 @@ export function ProjectsTimelineSection({
     
     // Use featured projects to only show the "best looking" ones
     const featured = list.filter(p => p.featured);
-    return featured.length > 0 ? featured : list;
+    const source = featured.length > 0 ? featured : list;
+    return [...source].sort((a, b) => {
+      const yearA = a.year ?? 0;
+      const yearB = b.year ?? 0;
+      if (yearB !== yearA) return yearB - yearA;
+      const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+      return timeB - timeA;
+    });
   }, [activeFilter, initialProjects]);
 
   const tiles = useMemo(

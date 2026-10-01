@@ -66,6 +66,7 @@ function mapDbProjectToInnovationItem(dbP: {
   location?: string | null;
   year?: string | number | null;
   category_id?: string | null;
+  created_at?: string;
 }): InnovationProjectItem | null {
   const clientSlug = (dbP.client || "").toLowerCase();
 
@@ -79,6 +80,7 @@ function mapDbProjectToInnovationItem(dbP: {
       imageUrl: dbP.thumbnail_url || "/home/projects/school.webp",
       location: dbP.location || undefined,
       year: dbP.year || undefined,
+      createdAt: dbP.created_at,
     };
   }
 
@@ -92,6 +94,7 @@ function mapDbProjectToInnovationItem(dbP: {
       imageUrl: dbP.thumbnail_url || "/home/projects/PEB_kaviish_m1.webp",
       location: dbP.location || undefined,
       year: dbP.year || undefined,
+      createdAt: dbP.created_at,
     };
   }
 
@@ -105,6 +108,7 @@ function mapDbProjectToInnovationItem(dbP: {
       imageUrl: dbP.thumbnail_url || "/home/projects/home-project-airport.webp",
       location: dbP.location || undefined,
       year: dbP.year || undefined,
+      createdAt: dbP.created_at,
     };
   }
 
@@ -118,6 +122,7 @@ function mapDbProjectToInnovationItem(dbP: {
       imageUrl: dbP.thumbnail_url || "/home/projects/school.webp",
       location: dbP.location || undefined,
       year: dbP.year || undefined,
+      createdAt: dbP.created_at,
     };
   }
 
@@ -132,9 +137,10 @@ export default async function InnovationPage() {
   try {
     const { data: dbProjects } = await supabase
       .from("projects")
-      .select("id, title, slug, thumbnail_url, client, location, year, category_id")
+      .select("id, title, slug, thumbnail_url, client, location, year, category_id, created_at")
       .eq("published", true)
-      .order("year", { ascending: false });
+      .order("year", { ascending: false, nullsFirst: false })
+      .order("created_at", { ascending: false });
 
     if (dbProjects && dbProjects.length > 0) {
       for (const dbP of dbProjects) {

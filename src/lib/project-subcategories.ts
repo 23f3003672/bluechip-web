@@ -21,6 +21,21 @@ export interface ProjectSubcategory {
 export const NAVBAR_MEGA_MENU: Record<MegaMenuKey, MegaMenuColumn[]> = {
   business: [
     {
+      title: "Facade Works",
+      href: "/business#facade-works",
+      items: [
+        { label: "Stone Cladding", slug: "stone-cladding" },
+        { label: "Metal Cladding", slug: "metal-cladding" },
+        { label: "Structural Glazing", slug: "structural-glazing" },
+        { label: "Spider Glazing", slug: "spider-glazing" },
+        { label: "ACP", slug: "acp" },
+        { label: "GRC", slug: "grc" },
+        { label: "SS Railing", slug: "ss-railing" },
+        { label: "Louvers", slug: "louvers" },
+        { label: "Innovation", slug: "facade-innovation" },
+      ],
+    },
+    {
       title: "Civil Construction",
       href: "/business#civil-construction",
       items: [
@@ -39,21 +54,6 @@ export const NAVBAR_MEGA_MENU: Record<MegaMenuKey, MegaMenuColumn[]> = {
       items: [
         { label: "Wave Type Structures", slug: "wave-type-structures" },
         { label: "PEB Industrial Construction", slug: "peb-industrial-construction" },
-      ],
-    },
-    {
-      title: "Facade Works",
-      href: "/business#facade-works",
-      items: [
-        { label: "Stone Cladding", slug: "stone-cladding" },
-        { label: "Metal Cladding", slug: "metal-cladding" },
-        { label: "Structural Glazing", slug: "structural-glazing" },
-        { label: "Spider Glazing", slug: "spider-glazing" },
-        { label: "ACP", slug: "acp" },
-        { label: "GRC", slug: "grc" },
-        { label: "SS Railing", slug: "ss-railing" },
-        { label: "Louvers", slug: "louvers" },
-        { label: "Innovation", slug: "facade-innovation" },
       ],
     },
     {

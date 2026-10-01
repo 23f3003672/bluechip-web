@@ -132,6 +132,7 @@ function mapDbProjectToBusinessItem(dbP: {
   location?: string | null;
   year?: string | number | null;
   category_id?: string | null;
+  created_at?: string;
 }): BusinessProjectItem | null {
   const clientSlug = (dbP.client || "").toLowerCase();
 
@@ -158,6 +159,7 @@ function mapDbProjectToBusinessItem(dbP: {
       imageUrl: dbP.thumbnail_url || "/home/projects/facade.webp",
       location: dbP.location || undefined,
       year: dbP.year || undefined,
+      createdAt: dbP.created_at,
     };
   }
 
@@ -171,6 +173,7 @@ function mapDbProjectToBusinessItem(dbP: {
       imageUrl: dbP.thumbnail_url || "/home/projects/power-plant.webp",
       location: dbP.location || undefined,
       year: dbP.year || undefined,
+      createdAt: dbP.created_at,
     };
   }
 
@@ -184,6 +187,7 @@ function mapDbProjectToBusinessItem(dbP: {
       imageUrl: dbP.thumbnail_url || "/home/projects/oil.webp",
       location: dbP.location || undefined,
       year: dbP.year || undefined,
+      createdAt: dbP.created_at,
     };
   }
 
@@ -197,6 +201,7 @@ function mapDbProjectToBusinessItem(dbP: {
       imageUrl: dbP.thumbnail_url || "/home/projects/school.webp",
       location: dbP.location || undefined,
       year: dbP.year || undefined,
+      createdAt: dbP.created_at,
     };
   }
 
@@ -211,9 +216,10 @@ export default async function BusinessPage() {
   try {
     const { data: dbProjects } = await supabase
       .from("projects")
-      .select("id, title, slug, thumbnail_url, client, location, year, category_id")
+      .select("id, title, slug, thumbnail_url, client, location, year, category_id, created_at")
       .eq("published", true)
-      .order("year", { ascending: false });
+      .order("year", { ascending: false, nullsFirst: false })
+      .order("created_at", { ascending: false });
 
     if (dbProjects && dbProjects.length > 0) {
       for (const dbP of dbProjects) {

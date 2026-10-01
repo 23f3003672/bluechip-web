@@ -57,6 +57,17 @@ const REVERSE_ALIAS_MAP: Record<string, string> = {
   "statutory-buildings": "statutory-buildings",
 };
 
+function sortJourneyProjectsByDateDesc(items: JourneyProject[]): JourneyProject[] {
+  return [...items].sort((a, b) => {
+    const yearA = typeof a.year === "number" ? a.year : parseInt(String(a.year || a.locationYear?.match(/\d{4}/)?.[0] || 0), 10) || 0;
+    const yearB = typeof b.year === "number" ? b.year : parseInt(String(b.year || b.locationYear?.match(/\d{4}/)?.[0] || 0), 10) || 0;
+    if (yearB !== yearA) return yearB - yearA;
+    const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+    const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+    return timeB - timeA;
+  });
+}
+
 export function ProjectsGallerySection({
   title,
   description,
@@ -125,6 +136,7 @@ export function ProjectsGallerySection({
           <div className="flex flex-col gap-16">
             {groups.map((group) => {
               const aliases = ALIAS_MAP[group.slug] || [];
+              const sortedProjects = sortJourneyProjectsByDateDesc(group.projects);
               return (
                 <div key={group.slug} id={group.slug} className="scroll-mt-28">
                   {aliases.map((alias) => (
@@ -139,8 +151,8 @@ export function ProjectsGallerySection({
                     {group.label}
                   </h2>
                   <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                    {group.projects.length > 0 ? (
-                      group.projects.map((project) => (
+                    {sortedProjects.length > 0 ? (
+                      sortedProjects.map((project) => (
                         <ProjectCard key={project.id} project={project} />
                       ))
                     ) : (
@@ -158,7 +170,7 @@ export function ProjectsGallerySection({
         ) : (
           <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {projects && projects.length > 0 ? (
-              projects.map((project) => (
+              sortJourneyProjectsByDateDesc(projects).map((project) => (
                 <ProjectCard key={project.id} project={project} />
               ))
             ) : (

@@ -12,10 +12,10 @@ const COMPANY_LINKS = [
 ];
 
 const BUSINESS_LINKS = [
-  { label: "Water & Solid Waste Management", href: "/business#water-and-solid-waste-management" },
+  { label: "Facade Works", href: "/business#facade-works" },
   { label: "Civil Construction", href: "/business#civil-construction" },
   { label: "Mechanical Works", href: "/business#mechanical-works" },
-  { label: "Facade Works", href: "/business#facade-works" },
+  { label: "Water & Solid Waste Management", href: "/business#water-and-solid-waste-management" },
 ];
 
 const PROJECT_LINKS = [

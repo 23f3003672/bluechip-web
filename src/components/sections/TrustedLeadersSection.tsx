@@ -81,6 +81,7 @@ export function TrustedLeadersSection() {
                     alt={brand.name}
                     width={420}
                     height={200}
+                    unoptimized
                     className="h-auto max-h-[48px] w-auto max-w-[140px] object-contain transition-transform duration-500 hover:scale-105 sm:max-h-[60px] sm:max-w-[170px] lg:max-h-[70px] lg:max-w-[200px]"
                   />
                 </div>

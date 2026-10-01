@@ -11,6 +11,7 @@ export default async function AdminProjectsPage() {
     supabase
       .from("projects")
       .select("id, title, slug, description, excerpt, thumbnail_url, gallery, category_id, client, location, year, featured, published, sort_order, created_at, updated_at")
+      .order("year", { ascending: false, nullsFirst: false })
       .order("created_at", { ascending: false }),
     supabase.from("categories").select("id, name, slug, description, created_at").order("name"),
     supabase

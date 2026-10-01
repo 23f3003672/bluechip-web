@@ -10,10 +10,20 @@ export async function getProjectsForSubcategory(subcategorySlug: string) {
       .select("id, title, slug, description, excerpt, thumbnail_url, gallery, category_id, client, location, year, featured, published, sort_order, created_at, updated_at")
       .eq("published", true)
       .eq("client", subcategorySlug)
-      .order("year", { ascending: false });
+      .order("year", { ascending: false, nullsFirst: false })
+      .order("created_at", { ascending: false });
 
     if (dbProjects && dbProjects.length > 0) {
-      return dbProjects.map(mapProjectToJourneyProject);
+      return dbProjects
+        .map(mapProjectToJourneyProject)
+        .sort((a, b) => {
+          const yearA = a.year ?? 0;
+          const yearB = b.year ?? 0;
+          if (yearB !== yearA) return yearB - yearA;
+          const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+          const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+          return timeB - timeA;
+        });
     }
   } catch (error) {
     console.error("Error fetching projects for subcategory:", error);
@@ -38,10 +48,20 @@ export async function getProjectsByColumnTitle(columnTitle: string) {
       .select("id, title, slug, description, excerpt, thumbnail_url, gallery, category_id, client, location, year, featured, published, sort_order, created_at, updated_at")
       .eq("published", true)
       .in("client", slugs)
-      .order("year", { ascending: false });
+      .order("year", { ascending: false, nullsFirst: false })
+      .order("created_at", { ascending: false });
 
     if (dbProjects && dbProjects.length > 0) {
-      return dbProjects.map(mapProjectToJourneyProject);
+      return dbProjects
+        .map(mapProjectToJourneyProject)
+        .sort((a, b) => {
+          const yearA = a.year ?? 0;
+          const yearB = b.year ?? 0;
+          if (yearB !== yearA) return yearB - yearA;
+          const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+          const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+          return timeB - timeA;
+        });
     }
   } catch (error) {
     console.error("Error fetching projects for column:", error);

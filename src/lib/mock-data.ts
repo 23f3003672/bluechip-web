@@ -565,6 +565,8 @@ export interface JourneyProject {
   heroImageUrl: string;
   featured?: boolean;
   gallery?: string[];
+  year?: number | null;
+  createdAt?: string;
 }
 
 export const JOURNEY_PROJECTS: JourneyProject[] = [

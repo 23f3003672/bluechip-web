@@ -45,7 +45,12 @@ export function ProjectsAdminModule({
   const [editingProject, setEditingProject] = useState<Project | null>(null);
 
   const projects = useMemo(
-    () => [...initialProjects].sort((a, b) => (b.year ?? 0) - (a.year ?? 0)),
+    () =>
+      [...initialProjects].sort((a, b) => {
+        const yearDiff = (b.year ?? 0) - (a.year ?? 0);
+        if (yearDiff !== 0) return yearDiff;
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      }),
     [initialProjects]
   );
 

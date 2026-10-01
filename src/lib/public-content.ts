@@ -66,6 +66,8 @@ export function mapProjectToJourneyProject(project: Project): JourneyProject {
       "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1400&q=80",
     featured: project.featured,
     gallery: project.gallery || [],
+    year: project.year,
+    createdAt: project.created_at,
   };
 }
 

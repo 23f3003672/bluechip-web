@@ -27,10 +27,18 @@ export default async function ProjectsPage() {
     .from("projects")
     .select("id, title, slug, description, excerpt, thumbnail_url, gallery, category_id, client, location, year, featured, published, sort_order, created_at, updated_at")
     .eq("published", true)
-    .order("year", { ascending: false });
+    .order("year", { ascending: false, nullsFirst: false })
+    .order("created_at", { ascending: false });
 
   const records = data?.length
-    ? data.map(mapProjectToJourneyProject)
+    ? data.map(mapProjectToJourneyProject).sort((a, b) => {
+        const yearA = a.year ?? 0;
+        const yearB = b.year ?? 0;
+        if (yearB !== yearA) return yearB - yearA;
+        const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+        const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+        return timeB - timeA;
+      })
     : [];
 
   return <ProjectsTimelineSection initialProjects={records} />;

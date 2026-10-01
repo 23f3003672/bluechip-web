@@ -15,6 +15,27 @@ export interface InnovationProjectItem {
   imageUrl: string;
   location?: string;
   year?: string | number;
+  createdAt?: string;
+}
+
+function parseProjectYear(val?: string | number): number {
+  if (typeof val === "number") return val;
+  if (!val) return 0;
+  const parsed = parseInt(String(val).trim(), 10);
+  return isNaN(parsed) ? 0 : parsed;
+}
+
+export function sortInnovationProjectsByDateDesc(items: InnovationProjectItem[]): InnovationProjectItem[] {
+  return [...items].sort((a, b) => {
+    const yearA = parseProjectYear(a.year);
+    const yearB = parseProjectYear(b.year);
+    if (yearB !== yearA) {
+      return yearB - yearA;
+    }
+    const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+    const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+    return timeB - timeA;
+  });
 }
 
 interface SubCategoryDef {
@@ -229,10 +250,10 @@ export function InnovationPageContent({ projects }: InnovationPageContentProps) 
     scrollToSection(sectionId);
   };
 
-  // Filter projects by category
-  const constructionProjects = projects.filter((p) => p.category === "construction");
-  const integratedProjects = projects.filter((p) => p.category === "integrated");
-  const engineeringProjects = projects.filter((p) => p.category === "engineering");
+  // Filter and sort projects by category (newest first, oldest last)
+  const constructionProjects = sortInnovationProjectsByDateDesc(projects.filter((p) => p.category === "construction"));
+  const integratedProjects = sortInnovationProjectsByDateDesc(projects.filter((p) => p.category === "integrated"));
+  const engineeringProjects = sortInnovationProjectsByDateDesc(projects.filter((p) => p.category === "engineering"));
 
   return (
     <div className="min-h-screen bg-white text-[#1f2a44]">
@@ -701,13 +722,15 @@ export function InnovationPageContent({ projects }: InnovationPageContentProps) 
 
             {/* Project Grid or Empty State */}
             {(() => {
-              const displayed = selectedSubcategoryFilter?.section === "construction"
-                ? constructionProjects.filter(
-                    (p) =>
-                      p.subcategoryTag.toUpperCase() ===
-                      selectedSubcategoryFilter.tag.toUpperCase()
-                  )
-                : constructionProjects;
+              const displayed = sortInnovationProjectsByDateDesc(
+                selectedSubcategoryFilter?.section === "construction"
+                  ? constructionProjects.filter(
+                      (p) =>
+                        p.subcategoryTag.toUpperCase() ===
+                        selectedSubcategoryFilter.tag.toUpperCase()
+                    )
+                  : constructionProjects
+              );
 
               return displayed.length > 0 ? (
                 <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
@@ -778,13 +801,15 @@ export function InnovationPageContent({ projects }: InnovationPageContentProps) 
 
             {/* Project Grid or Empty State */}
             {(() => {
-              const displayed = selectedSubcategoryFilter?.section === "integrated"
-                ? integratedProjects.filter(
-                    (p) =>
-                      p.subcategoryTag.toUpperCase() ===
-                      selectedSubcategoryFilter.tag.toUpperCase()
-                  )
-                : integratedProjects;
+              const displayed = sortInnovationProjectsByDateDesc(
+                selectedSubcategoryFilter?.section === "integrated"
+                  ? integratedProjects.filter(
+                      (p) =>
+                        p.subcategoryTag.toUpperCase() ===
+                        selectedSubcategoryFilter.tag.toUpperCase()
+                    )
+                  : integratedProjects
+              );
 
               return displayed.length > 0 ? (
                 <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
@@ -855,13 +880,15 @@ export function InnovationPageContent({ projects }: InnovationPageContentProps) 
 
             {/* Project Grid or Empty State */}
             {(() => {
-              const displayed = selectedSubcategoryFilter?.section === "engineering"
-                ? engineeringProjects.filter(
-                    (p) =>
-                      p.subcategoryTag.toUpperCase() ===
-                      selectedSubcategoryFilter.tag.toUpperCase()
-                  )
-                : engineeringProjects;
+              const displayed = sortInnovationProjectsByDateDesc(
+                selectedSubcategoryFilter?.section === "engineering"
+                  ? engineeringProjects.filter(
+                      (p) =>
+                        p.subcategoryTag.toUpperCase() ===
+                        selectedSubcategoryFilter.tag.toUpperCase()
+                    )
+                  : engineeringProjects
+              );
 
               return displayed.length > 0 ? (
                 <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
