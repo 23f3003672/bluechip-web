@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
   // Allow LAN/dev access so HMR and internal dev assets work over local IPs.
   allowedDevOrigins: ["localhost", "127.0.0.1", "192.168.29.76", ...extraAllowedDevOrigins],
   images: {
+    unoptimized: true,
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 2592000,
     qualities: [60, 75],

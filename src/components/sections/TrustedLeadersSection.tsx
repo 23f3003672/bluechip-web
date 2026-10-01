@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { TRUSTED_BRANDS } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
@@ -76,12 +75,12 @@ export function TrustedLeadersSection() {
 
               {brand.imageUrl ? (
                 <div className="flex h-[80px] w-full items-center justify-center overflow-hidden sm:h-[100px] lg:h-[120px]">
-                  <Image
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={brand.imageUrl}
                     alt={brand.name}
-                    width={420}
-                    height={200}
-                    unoptimized
+                    loading="eager"
+                    decoding="sync"
                     className="h-auto max-h-[48px] w-auto max-w-[140px] object-contain transition-transform duration-500 hover:scale-105 sm:max-h-[60px] sm:max-w-[170px] lg:max-h-[70px] lg:max-w-[200px]"
                   />
                 </div>
@@ -92,6 +91,22 @@ export function TrustedLeadersSection() {
               )}
             </div>
           ))}
+        </div>
+
+        {/* Hidden eager preloader for all brand logos to guarantee immediate browser caching */}
+        <div className="hidden" aria-hidden="true">
+          {TRUSTED_BRANDS.map((brand) =>
+            brand.imageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={`preload-${brand.id}`}
+                src={brand.imageUrl}
+                alt=""
+                loading="eager"
+                decoding="sync"
+              />
+            ) : null
+          )}
         </div>
       </div>
     </section>
