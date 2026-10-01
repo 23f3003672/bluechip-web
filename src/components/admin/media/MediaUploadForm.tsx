@@ -25,10 +25,12 @@ export function MediaUploadForm({ uploadMediaAction, onUploaded }: MediaUploadFo
     const file = formData.get("file");
 
     if (file instanceof File) {
-      toast.loading("Compressing image...", { id: "media-compress" });
+      const origSizeMB = (file.size / (1024 * 1024)).toFixed(1);
+      toast.loading(`Optimizing image (${origSizeMB} MB)...`, { id: "media-compress" });
       const webpFile = await convertImageToWebP(file);
       formData.set("file", webpFile);
-      toast.dismiss("media-compress");
+      const newSizeKB = Math.round(webpFile.size / 1024);
+      toast.success(`Optimized to ${newSizeKB} KB WebP`, { id: "media-compress" });
     }
 
     startTransition(async () => {
